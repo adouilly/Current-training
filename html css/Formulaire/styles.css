@@ -43,9 +43,12 @@
 }
 
 .form-container {
-    max-width: 400px;
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    max-width: 250px;
     margin: 50px auto;
-    padding: 20px;
+    padding: 60px;
     background-color: #000000;
     border-radius: 25px;
     border: 2px, solid;

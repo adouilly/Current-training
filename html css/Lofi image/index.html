@@ -1,14 +1,52 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Hello World! -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lofidesign</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Ajout de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Ajout du contenus -->
+    <div class="container">
+        <div class="image-upload">
+            <input type="file" id="imageInput" accept="image/*">
+            <label for="imageInput" class="upload-label">
+                <i class="fas fa-upload"></i>
+                Choisir une image
+            </label>
+        </div>
+
+        <div class="image-containers">
+            <div class="original-image">
+                <h2>Image Originale</h2>
+                <div id="originalImageContainer"></div>
+            </div>
+
+            <div class="modified-image">
+                <h2>Image Lofi</h2>
+                <div id="modifiedImageContainer"></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="applyLofi" class="lofi-btn">Appliquer effet Lofi</button>
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="contrast">Contraste</label>
+                    <input type="range" id="contrast" min="0" max="200" value="100">
+                </div>
+                <div class="filter-group">
+                    <label for="brightness">Luminosité</label>
+                    <input type="range" id="brightness" min="0" max="200" value="100">
+                </div>
+                <div class="filter-group">
+                    <label for="saturation">Saturation</label>
+                    <input type="range" id="saturation" min="0" max="200" value="80">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
+</html>
