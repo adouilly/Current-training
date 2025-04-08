@@ -26,3 +26,7 @@
 .nav a:hover {
     background-color: #000000;
 }
+
+.nav a.active {
+    color: #00ff00; /* Couleur pour le lien actif */
+}
