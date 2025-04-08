@@ -69,4 +69,94 @@ document.addEventListener('DOMContentLoaded', () => {
         saturationSlider.value = 80;
         updateLofiEffect();
     });
+
+    // Ajouter les nouveaux boutons de filtres
+    const purpleBtn = document.getElementById('applyPurple');
+    const blueBtn = document.getElementById('applyBlue');
+    const pinkBtn = document.getElementById('applyPink');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // Définir les présets de filtres
+    const filterPresets = {
+        lofi: {
+            contrast: 120,
+            brightness: 90,
+            saturation: 80,
+            sepia: 30,
+            hueRotate: 340
+        },
+        purple: {
+            contrast: 110,
+            brightness: 95,
+            saturation: 85,
+            sepia: 20,
+            hueRotate: 280
+        },
+        blue: {
+            contrast: 115,
+            brightness: 85,
+            saturation: 90,
+            sepia: 15,
+            hueRotate: 220
+        },
+        pink: {
+            contrast: 105,
+            brightness: 100,
+            saturation: 95,
+            sepia: 10,
+            hueRotate: 320
+        }
+    };
+
+    // Fonction pour appliquer les présets
+    function applyPreset(preset) {
+        const settings = filterPresets[preset];
+        contrastSlider.value = settings.contrast;
+        brightnessSlider.value = settings.brightness;
+        saturationSlider.value = settings.saturation;
+        updateLofiEffect();
+    }
+
+    // Ajouter les événements pour les nouveaux boutons
+    purpleBtn.addEventListener('click', () => applyPreset('purple'));
+    blueBtn.addEventListener('click', () => applyPreset('blue'));
+    pinkBtn.addEventListener('click', () => applyPreset('pink'));
+
+    // Fonction de téléchargement
+    downloadBtn.addEventListener('click', () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = modifiedImage.naturalWidth;
+        canvas.height = modifiedImage.naturalHeight;
+        
+        // Appliquer les filtres sur le canvas
+        ctx.filter = modifiedImage.style.filter;
+        ctx.drawImage(modifiedImage, 0, 0);
+        
+        // Créer le lien de téléchargement
+        const link = document.createElement('a');
+        link.download = 'lofi-image.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+
+    // Fonction de réinitialisation
+    function resetImage() {
+        if (!modifiedImage) return;
+        
+        // Réinitialiser les sliders aux valeurs par défaut
+        contrastSlider.value = 100;
+        brightnessSlider.value = 100;
+        saturationSlider.value = 100;
+        
+        // Réinitialiser l'image modifiée
+        modifiedImage.style.filter = 'none';
+        
+        // Mettre à jour l'affichage
+        updateLofiEffect();
+    }
+
+    // Ajouter l'événement pour le bouton reset
+    resetBtn.addEventListener('click', resetImage);
 });

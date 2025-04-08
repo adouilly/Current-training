@@ -30,7 +30,17 @@
         </div>
 
         <div class="controls">
-            <button id="applyLofi" class="lofi-btn">Appliquer effet Lofi</button>
+            <div class="filter-buttons">
+                <button id="resetBtn" class="filter-btn reset">
+                    <i class="fas fa-undo"></i>
+                    Réinitialiser
+                </button>
+                <button id="applyLofi" class="filter-btn">Effet Lofi</button>
+                <button id="applyPurple" class="filter-btn">Violet Dream</button>
+                <button id="applyBlue" class="filter-btn">Blue Night</button>
+                <button id="applyPink" class="filter-btn">Pink Sunset</button>
+            </div>
+            
             <div class="filters">
                 <div class="filter-group">
                     <label for="contrast">Contraste</label>
@@ -45,6 +55,11 @@
                     <input type="range" id="saturation" min="0" max="200" value="80">
                 </div>
             </div>
+            
+            <button id="downloadBtn" class="download-btn">
+                <i class="fas fa-download"></i>
+                Télécharger
+            </button>
         </div>
     </div>
     <script src="script.js"></script>
