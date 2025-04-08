@@ -13,7 +13,8 @@
     align-items: center; /* Centre verticalement */
     background-color: #000000;
     padding: 20px;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Orbitron';
+    position: relative; /* Ajout pour le slider */
 }
 
 .nav a {
@@ -21,8 +22,22 @@
     text-decoration: none;
     padding: 1rem;
     margin: 20px; /* Ajoute un peu d'espace entre les liens */
+    position: relative; /* Ajout pour le slider */
+    transition: color 0.3s ease; /* Animation de la couleur */
 }
 
 .nav a:hover {
     background-color: #000000;
+}
+
+.slider {
+    position: absolute;
+    bottom: 0;
+    height: 4px;
+    background: #fff;
+    transition: 0.3s;
+}
+
+.nav a.active {
+    color: #00ff00; /* Couleur pour le lien actif */
 }
