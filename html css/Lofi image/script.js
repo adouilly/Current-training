@@ -42,19 +42,33 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateLofiEffect() {
         if (!modifiedImage) return;
 
+        // Récupérer les valeurs actuelles
         const contrast = contrastSlider.value;
         const brightness = brightnessSlider.value;
         const saturation = saturationSlider.value;
+        
+        // Récupérer les valeurs sepia et hueRotate du preset actif
+        let sepia = 30;
+        let hueRotate = 340;
+        
+        // Si un preset est actif, utiliser ses valeurs
+        if (currentPreset && filterPresets[currentPreset]) {
+            sepia = filterPresets[currentPreset].sepia;
+            hueRotate = filterPresets[currentPreset].hueRotate;
+        }
 
-        // Appliquer les filtres CSS
+        // Appliquer les filtres CSS avec les bonnes valeurs
         modifiedImage.style.filter = `
             contrast(${contrast}%)
             brightness(${brightness}%)
             saturate(${saturation}%)
-            sepia(30%)
-            hue-rotate(340deg)
+            sepia(${sepia}%)
+            hue-rotate(${hueRotate}deg)
         `;
     }
+
+    // Ajouter une variable pour suivre le preset actif
+    let currentPreset = null;
 
     // Écouter les changements des sliders
     contrastSlider.addEventListener('input', updateLofiEffect);
@@ -111,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fonction pour appliquer les présets
     function applyPreset(preset) {
+        currentPreset = preset;
         const settings = filterPresets[preset];
         contrastSlider.value = settings.contrast;
         brightnessSlider.value = settings.brightness;
@@ -145,15 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetImage() {
         if (!modifiedImage) return;
         
-        // Réinitialiser les sliders aux valeurs par défaut
+        currentPreset = null;
         contrastSlider.value = 100;
         brightnessSlider.value = 100;
         saturationSlider.value = 100;
         
-        // Réinitialiser l'image modifiée
         modifiedImage.style.filter = 'none';
-        
-        // Mettre à jour l'affichage
         updateLofiEffect();
     }
 
