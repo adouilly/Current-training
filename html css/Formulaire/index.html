@@ -6,9 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulaire</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Ajout de Font Awesome pour les icônes -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <!-- Ajout du contenus -->
+    <nav class="nav">
+        <a href="#hello" class="active">Hello</a>
+        <a href="#world">World</a>
+        <div class="slider"></div>
+    </nav>
+
+    <div class="form-container">
+        <form class="choice-form">
+            <div class="checkbox-group">
+                <input type="checkbox" id="hello-check" name="hello">
+                <label for="hello-check">HELLO</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="world-check" name="world">
+                <label for="world-check">WORLD</label>
+            </div>
+
+            <button type="submit">Choisir</button>
+        </form>
+    </div>
 </body>
+</html>
