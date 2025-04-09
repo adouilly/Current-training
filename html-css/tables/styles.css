@@ -1,0 +1,17 @@
+body {
+    min-height: 100vh;  /* Prend toute la hauteur de la fenêtre */
+    display: flex;  /* Active le modèle flexbox */
+    justify-content: center;  /* Centre horizontalement */
+    align-items: center;  /* Centre verticalement */
+    margin: 0;  /* Supprime les marges par défaut */
+}
+
+table {
+    margin: 0 auto;  /* Centre le tableau horizontalement */
+    border-collapse: collapse;  /* Fusionne les bordures des cellules */
+}
+
+th, td {
+    padding: 10px;  /* Ajoute un peu d'espace dans les cellules */
+    text-align: center;  /* Centre le texte dans les cellules */
+}
