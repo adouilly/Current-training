@@ -38,19 +38,3 @@ tr:last-child td:first-child {
 tr:last-child td:last-child {
     border-bottom-right-radius: 25px;
 }
-
-input {
-    width: 90%;
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-input:focus {
-    outline: none;
-    border-color: #007bff;
-}
-
-input[type="number"] {
-    text-align: right;
-}
