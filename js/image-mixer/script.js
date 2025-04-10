@@ -16,27 +16,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fonction pour afficher une image
     function displayImage(file, container) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const img = new Image();
-            img.src = e.target.result;
-            container.innerHTML = '';
-            container.appendChild(img);
-            return img;
-        };
-        reader.readAsDataURL(file);
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    container.innerHTML = '';
+                    container.appendChild(img);
+                    resolve(img);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
     }
 
     // Gestionnaires d'événements pour le upload d'images
-    contentImage.addEventListener('change', (e) => {
+    contentImage.addEventListener('change', async (e) => {
         if (e.target.files[0]) {
-            originalImg = displayImage(e.target.files[0], originalContainer);
+            originalImg = await displayImage(e.target.files[0], originalContainer);
         }
     });
 
-    styleImage.addEventListener('change', (e) => {
+    styleImage.addEventListener('change', async (e) => {
         if (e.target.files[0]) {
-            styleImg = displayImage(e.target.files[0], styleContainer);
+            styleImg = await displayImage(e.target.files[0], styleContainer);
         }
     });
 
@@ -69,13 +73,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Événements pour les boutons
     generateBtn.addEventListener('click', generateStylizedImage);
 
-    resetBtn.addEventListener('click', () => {
-        if (resultImg) {
-            resultContainer.innerHTML = '';
-            promptInput.value = '';
-            styleStrength.value = 50;
-        }
-    });
+    function resetAll() {
+        // Réinitialiser les images
+        originalImg = null;
+        styleImg = null;
+        resultImg = null;
+        
+        // Vider les conteneurs
+        originalContainer.innerHTML = '';
+        styleContainer.innerHTML = '';
+        resultContainer.innerHTML = '';
+        
+        // Réinitialiser les inputs
+        contentImage.value = '';
+        styleImage.value = '';
+        promptInput.value = '';
+        styleStrength.value = 50;
+    }
+
+    resetBtn.addEventListener('click', resetAll);
 
     downloadBtn.addEventListener('click', () => {
         if (resultImg) {

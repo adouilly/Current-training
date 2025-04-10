@@ -83,6 +83,17 @@ body {
     align-items: center;
     justify-content: center;
     background-color: #f9f9f9;
+    overflow: hidden;
+}
+
+#originalImageContainer img,
+#styleImageContainer img,
+#resultImageContainer img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    margin: auto;
 }
 
 /* Section contrôles */
