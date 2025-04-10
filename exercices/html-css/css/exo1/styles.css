@@ -1,0 +1,37 @@
+h1 {
+    color: black; /* Couleur par défaut du titre */
+    transition: color 0.3s; /* Animation optionnelle pour une transition en douceur */
+  }
+  
+  h1:hover {
+    color: rgb(238, 16, 83); /* Couleur au passage de la souris */
+  }
+
+p {
+    color: #2053df;
+    font-size: 16px;
+  }
+
+  .important {
+    font-weight: bold;
+    color: red;
+  }
+
+  #spécial {
+    color: rgb(12, 168, 59);
+    text-decoration: underline; 
+  }
+
+  .conteneur p {
+    margin-left: 20px;
+    font-style: italic;
+  }
+
+  .conteneur {
+    background-color: #e6e1e1;
+    width: 100%;
+  }
+  .texte-infos {
+    color: red;
+    font-weight: bold;
+  }
