@@ -62,7 +62,8 @@ p{}
 
 #lightgrey-title{
     text-transform: uppercase;
-    color: #525252;}
+    color: #525252;
+    margin-left: 20px;}
 
 #adresse-destinataire {
     text-align: left;
@@ -76,4 +77,29 @@ p{}
     overflow: hidden;  /* Assure que tout reste dans les limites des bords arrondis */
 margin-left: 20px;
 margin-right: 20px;
+}
+
+#tableau-facture {
+    margin-left: 20px;
+    margin-right: 20px;
+    width: calc(100% - 40px);  /* Largeur totale moins les marges */
+    border-collapse: collapse;  /* Élimine l'espace entre les cellules */
+}
+
+/* Cibler la première colonne */
+#tableau-facture td:first-child,
+#tableau-facture th:first-child {
+    width: 40%;  /* La première colonne occupe 40% */
+}
+
+/* Style général des cellules */
+#tableau-facture th,
+#tableau-facture td {
+    padding: 8px;
+    text-align: left;
+}
+
+/* Style pour l'entête du tableau */
+#tableau-facture th {
+    font-weight: bold;
 }
