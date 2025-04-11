@@ -41,6 +41,13 @@ h1 {
                blink .75s step-end infinite;
 }
 
+h1 .highlight {
+    text-decoration: underline;
+    /* Vous pouvez personnaliser le soulignement */
+    text-decoration-color: #ffffff;  /* Même couleur que le texte */
+    text-decoration-thickness: 2px;  /* Épaisseur de la ligne */
+}
+
 .soustitre {
     text-align: center;
     color: rgb(255, 255, 255);
