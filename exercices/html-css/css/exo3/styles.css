@@ -1,20 +1,27 @@
-/* Définition des polices */
+/* ===== VARIABLES GLOBALES ET TYPOGRAPHIE ===== */
 :root {
     --title-font: 'Playfair Display', serif;
     --heading-font: 'Poppins', sans-serif;
     --body-font: 'Space Mono', monospace;
 }
 
-h1, h2, h3 {
-    font-family: var(--title-font);
-}
-
-/* Retirer les marges par défaut */
+/* ===== RESET ET STYLES DE BASE ===== */
 body {
     margin: 0;
     padding: 0;
 }
 
+/* ===== TYPOGRAPHIE GENERALE ===== */
+h1, h2, h3 {
+    font-family: var(--title-font);
+}
+
+p {
+    font-family: var(--body-font);
+    line-height: 1.6;
+}
+
+/* ===== HEADER ===== */
 header {
     background: linear-gradient(to right, #4646ff, #8a2be2);
     padding: 20px;
@@ -22,11 +29,7 @@ header {
     border-bottom-right-radius: 25px;
     margin-bottom: 25px;  
 }
-p {
-    font-family: var(--body-font);
-}
 
-/* Effet de typing sur le H1 */
 h1 {
     text-align: center;
     color: rgb(255, 255, 255);
@@ -38,6 +41,12 @@ h1 {
                blink .75s step-end infinite;
 }
 
+.soustitre {
+    text-align: center;
+    color: rgb(255, 255, 255);
+}
+
+/* ===== ANIMATIONS ===== */
 @keyframes typing {
     from { width: 0 }
     to { width: 100% }
@@ -48,27 +57,7 @@ h1 {
     50% { border-color: rgb(255, 255, 255) }
 }
 
-.soustitre {
-    text-align: center;
-    color: rgb(255, 255, 255);
-}
-
-h2 {color: royalblue;
-    border-bottom: 2px solid #333;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-footer {
-    background: linear-gradient(to right, #4646ff, #8a2be2);
-    color: rgb(255, 255, 255);
-    text-align: center;
-    padding: 5px 0;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
+/* ===== SECTIONS ET CONTENEURS ===== */
 .section-container {
     padding: 20px;
     margin: 0 50px 40px 50px; 
@@ -81,73 +70,56 @@ footer {
     border-bottom: 2px solid #333;
     padding-bottom: 10px;
     margin-bottom: 30px;
-    
 }
 
+/* ===== CONTENEURS DE CARTES ===== */
+/* Style pour cartes en grille (horizontale avec wrap) */
 .cards-container {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
+    width: 100%;
 }
 
+/* Style pour cartes en colonne (verticale) */
 .cards-containerspe {
     display: flex;
     gap: 20px;
     flex-direction: column;
+    width: 100%;
 }
 
-.card {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 20px;
-    flex: 1;
-    min-width: 300px;
-}
-
-.card h3 {
-    color: royalblue;
-    margin-bottom: 15px;
-}
-
-.card p {
-    line-height: 1.6;
-}
-
-.cards-container article {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 20px;
-    flex: 1;
-    min-width: 300px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* Ajout optionnel d'une ombre légère */
-}
-
-.cards-container article h3 {
-    color: royalblue;
-    margin-bottom: 15px;
-}
-
-.cards-container article p {
-    line-height: 1.6;
-}
-
+/* ===== STYLE DES CARTES ===== */
+/* Style commun pour tous les articles */
+.cards-container article,
 .cards-containerspe article {
     background-color: #ffffff;
     border-radius: 10px;
     padding: 20px;
-    width: 100%;
+    box-sizing: border-box;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/* Spécificités pour les cartes en grille */
+.cards-container article {
+    flex: 1 1 300px;
+    max-width: 100%;
+}
+
+/* Spécificités pour les cartes en colonne */
+.cards-containerspe article {
+    width: 100%;
+}
+
+/* Titres et textes dans les cartes */
+.cards-container article h3,
 .cards-containerspe article h3 {
     color: royalblue;
     margin-bottom: 15px;
 }
 
-.cards-containerspe article p {
-    line-height: 1.6;
-}
-
+/* ===== POLICES SPÉCIFIQUES ===== */
+/* Google Fonts - Poppins */
 #card-poppinslight {
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
@@ -168,6 +140,7 @@ footer {
     font-style: italic;
 }
 
+/* Polices locales */
 #card-openregular {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
@@ -188,29 +161,45 @@ footer {
     font-weight: 700;
 }
 
-#card-espacementletters {
-    letter-spacing: 4px;
+/* ===== TECHNIQUES TYPOGRAPHIQUES ===== */
+/* Les styles spécifiques pour chaque technique */
+#card-espacementletters p {
+    letter-spacing: 2px;
 }
 
-#card-lineheight {
-    line-height: 6;
+#card-lineheight p {
+    line-height: 2;
 }
 
-#card-firstletter {
-    font-size: 50px;
-    float: left;
-    line-height: 1;
-    margin-right: 10px;
+#card-fulltables p {
+    column-count: 2;
+    column-gap: 20px;
 }
 
-#card-effectstext {
-    text-shadow: 2px 2px 4px #000000, 0 0 25px #ffffff, 0 0 5px #ffffff;
+#card-firstletter p::first-letter {
+    font-size: 2em;
+    font-weight: bold;
+    color: royalblue;
 }
 
-#card-responsive {
-    font-size: 20px;
-    padding: 10px;
-    background-color: #e0e0e0;
-    border-radius: 5px;
-    transition: all 0.3s ease;
+#card-effectstext p {
+    text-decoration: underline wavy royalblue;
+}
+
+/* ===== RESPONSIVE TYPOGRAPHY ===== */
+#card-responsive h3 {
+    font-size: calc(1rem + 1vw);
+}
+
+#card-responsive p {
+    font-size: calc(0.8rem + 0.5vw);
+}
+
+/* ===== PIED DE PAGE ===== */
+footer {
+    background: linear-gradient(to right, #4646ff, #8a2be2);
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 5px 0;
+    width: 100%;
 }

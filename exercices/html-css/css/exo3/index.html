@@ -1,24 +1,34 @@
-<!-- HTML5 -->
+<!-- Document Type HTML5 -->
 <!doctype html>
 <html lang="fr">
 <head>
+    <!-- Métadonnées essentielles -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Formation DWWM">
     <meta name="author" content="adouilly">
     <title>Exercice difficile CSS</title>
+    
+    <!-- Chargement des polices Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Space+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <!-- Reset CSS des navigateurs -->
+    <link rel="stylesheet" href="reset.css">
+    <!-- Chargement du fichier CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- En-tête de page avec titre principal -->
     <header>
-<h1>Typographie avancée</h1>
-<p class="soustitre">trucs et astuces pour une typo web professionnelle</p>
+        <h1>Typographie avancée</h1>
+        <p class="soustitre">trucs et astuces pour une typo web professionnelle</p>
     </header>
+    
+    <!-- Contenu principal -->
     <main>
-
+        <!-- Section 1: Google Fonts -->
         <section class="section-container">
             <h2>Google Fonts</h2>
             <p>Cette section utilise la police Googlefont Poppins dans différentes variantes</p>
@@ -42,6 +52,7 @@
             </div>
         </section>
 
+        <!-- Section 2: Polices locales -->
         <section class="section-container">
             <h2>Polices locales</h2>
             <p>Cette section utilise les polices locales chargées via @font-face</p>
@@ -65,6 +76,7 @@
             </div>
         </section>
 
+        <!-- Section 3: Techniques typographiques -->
         <section class="section-container">
             <h2>Techniques typographiques</h2>
             <p>Cette section présente des techniques de typo avancées</p>
@@ -92,17 +104,20 @@
             </div>
         </section>
 
+        <!-- Section 4: Typographie responsive -->
         <section class="section-container">
             <h2>Typographie responsive</h2>
             <p>Cette section montre comment la typographie peut s'adapter à la taille de l'écran</p>
             <div class="cards-container">
                 <article id="card-responsive">
                     <h3>Ce titre s'adapte à la taille de l'écran</h3>
-                    <p>Ce tesxte s'adapte à la taille de l'écran, on peut vérifier en modifiant la taille de la fenetre</p>
+                    <p>Ce texte s'adapte à la taille de l'écran, on peut vérifier en modifiant la taille de la fenetre</p>
                 </article>
             </div>
         </section>
     </main>
+    
+    <!-- Pied de page -->
     <footer>
         <p>© 2025 - cours DWWM</p>
     </footer>
