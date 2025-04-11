@@ -1,0 +1,79 @@
+/* Style pour l'entête */
+.facture-entete {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;  /* Changement à flex-start pour un meilleur contrôle */
+    width: 100%;
+    padding: 20px;
+}
+
+/* Style pour le bloc gauche (TechSolutions) */
+#left-bloc {
+    /* Maintenant il restera à gauche */
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Style pour le bloc droit (Facture) */
+#right-bloc {
+    /* Maintenant il restera à droite */
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Style pour les titres */
+h1, h2 {
+    margin: 0;               /* Supprime toutes les marges */
+    padding: 0;              /* Supprime tout le padding */
+    line-height: 1;          /* Fixe une hauteur de ligne identique */
+    font-size: 1.8em;        /* Définit explicitement la même taille pour les deux */
+}
+
+/* Ajouter de l'espace sous les titres avant le contenu suivant */
+h1 + p, h2 + p {
+    margin-top: 15px;        /* Espace entre le titre et le paragraphe suivant */
+}
+
+h1 {
+    color: darkblue;
+    font-family: arial;
+    font-weight: bold;
+}
+
+h2 {
+    color: rgb(139, 0, 0);
+    font-family: arial;
+    font-weight: bold;
+}
+
+h3{}
+
+h4{color: #000}
+
+p{}
+
+.lightgrey{ color: rgb(107, 107, 107);}
+
+.darkestgrey{color: #525252;}
+
+#lightgrey-title{
+    text-transform: uppercase;
+    color: #525252;}
+
+#adresse-destinataire {
+    text-align: left;
+    font-size: 0.8em;
+    color: #000;
+    background-color: rgb(178, 221, 224);
+    border-radius: 25px;
+    border-left: 2px solid #000;  /* Barre noire sur le côté gauche */
+    padding: 15px;  /* Espace intérieur pour éviter que le texte ne touche les bords */
+    position: relative;
+    overflow: hidden;  /* Assure que tout reste dans les limites des bords arrondis */
+margin-left: 20px;
+margin-right: 20px;
+}

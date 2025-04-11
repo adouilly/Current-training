@@ -21,43 +21,96 @@
 </head>
 <body>
     <!-- En-tête de page avec titre principal -->
-    <header>
-        <article id="left-bloc">
-        <h1> TECHSOLUTIONS SAS</h1>
+    <header class="facture-entete">
+        <div id="left-bloc">
+        <h1> TechSOLUTIONS SAS</h1>
         <p class="lightgrey">123 avenue de la libération<br>75001, Paris, France </p>
         <p class="lightgrey">Email : Jonjon@wanadoo.fr <br>Tel : XX XX XX XX XX </p>
         <p class="lightgrey">SIRET : 120 056 265565 </p>
-        </article>
-    <article id="right-bloc">
+        </div>
+        <div id="right-bloc">
         <h2> Facture</h2>
         <p class="darkestgrey">Facture N° : FA-d54-5565 </p>
         <p class="darkestgrey">Date : 10/05/2025 </p>
         <p class="darkestgrey">Échéance : 10/06/2025  </p>
-    </article>
+    </div>
     </header>
     
     <!-- Contenu principal -->
     <main>
         <!-- Section 1: destinataire -->
         <section id="destinataire">
-            <h3>Facturer à :</h3>
-            <div id="adresse destinataire">
+            <h3 id="lightgrey-title">Facturer à :</h3>
+            <div id="adresse-destinataire">
                 <h4>Digital Innovations SARL</h4>
                 <p id="textdestinataire">52 rue des poulettes<br>69006, Lyon, France<br>SIRET : 54454 64646 64644</p>
             </div>
         </section>
 
         <!-- Section 2: Tableau prix -->
-        <section class="">
-         <div class="">
-                
-            </div>
+        <section id="tableau-facture">
+            <table>
+                <tr>
+                    <th>Description</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Total HT</th>
+                </tr>
+                <tr>
+                    <td>Développement site e-commerce, Design et développement Responsive</td>
+                    <td>1</td>
+                    <td>6500,00€</td>
+                    <td>6500,00€</td>
+                </tr>
+                <tr>
+                    <td>Api intégration paiement, liason bancaire paramétrée</td>
+                    <td>1</td>
+                    <td>1200,00€</td>
+                    <td>1200,00€</td>
+                </tr>
+                <tr>
+                    <td>Hébergement prenium, Scaleway + 12 mois</td>
+                    <td>12</td>
+                    <td>150,00€</td>
+                    <td>1800,00€</td>
+                </tr>
+                <tr>
+                    <td>Formation utilisateur session de 4h (TARIF HORAIRE)</td>
+                    <td>8</td>
+                    <td>120,00€</td>
+                    <td>960,00€</td>
+                </tr>
+                <tr>
+                    <td>Sous-total : (Hors Taxes)</td>
+                    <td></td>
+                    <td></td>
+                    <td>10460,00€</td>
+                </tr>
+                <tr>
+                    <td>TVA 20%</td>
+                    <td></td>
+                    <td></td>
+                    <td>2092,00€</td>
+                </tr>
+                <tr>
+                    <td>Total TTC</td>
+                    <td></td>
+                    <td></td>
+                    <td>12552,00€</td>
+                </tr>
+            </table>
         </section>
 
         <!-- Section 3: Conditions facturation -->
-        <section class="">
-           <div class="">
-                
+        <section id="paiement">
+           <div id="info-paiement">
+                <h3>Information de paiement</h3>
+                <p><strong>IBAN </strong>FR 12545 54544 56565 64845</p>
+                <p><strong>BIC </strong>AGIPRFFR</p>
+            </div>
+            <div id="conditions-paiement">
+                <h3>Conditions de paiement</h3>
+                <p>Paiement du à 30 jours à édition de facture, un intéret de 10% sera appliqué sur les paiements après la date d'échéance <br>Nous vous remercions pour votre confiance. </p>
             </div>
         </section>
     </main>
