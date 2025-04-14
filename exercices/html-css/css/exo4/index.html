@@ -2,122 +2,125 @@
 <!doctype html>
 <html lang="fr">
 <head>
-    <!-- Métadonnées essentielles -->
+    <!-- Métadonnées essentielles / Essential metadata -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Formation DWWM">
+    <meta name="description" content="Modèle de facture professionnelle / Professional invoice template">
     <meta name="author" content="adouilly">
-    <title>Exercice difficile Tables</title>
+    <title>Facture TechSOLUTIONS</title>
     
-    <!-- Chargement des polices Google Fonts -->
+    <!-- Chargement des polices Google Fonts / Loading Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     
-    <!-- Reset CSS des navigateurs -->
+    <!-- Chargement des fichiers CSS / Loading CSS files -->
     <link rel="stylesheet" href="reset.css">
-    <!-- Chargement du fichier CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- En-tête de page avec titre principal -->
-    <header class="facture-entete">
-        <div id="left-bloc">
-        <h1> TechSOLUTIONS SAS</h1>
-        <p class="lightgrey">123 avenue de la libération<br>75001, Paris, France </p>
-        <p class="lightgrey">Email : Jonjon@wanadoo.fr <br>Tel : XX XX XX XX XX </p>
-        <p class="lightgrey">SIRET : 120 056 265565 </p>
-        </div>
-        <div id="right-bloc">
-        <h2> Facture</h2>
-        <p class="darkestgrey">Facture N° : FA-d54-5565 </p>
-        <p class="darkestgrey">Date : 10/05/2025 </p>
-        <p class="darkestgrey">Échéance : 10/06/2025  </p>
+    <!-- Conteneur principal / Main container -->
+    <div class="facture-wrapper">
+        <!-- En-tête avec informations entreprise et facture 
+             Header with company and invoice information -->
+        <header class="facture-entete">
+            <!-- Bloc gauche: informations société / Left block: company information -->
+            <div id="left-bloc">
+                <h1>TechSOLUTIONS SAS</h1>
+                <p class="lightgrey">123 avenue de la libération<br>75001, Paris, France</p>
+                <p class="lightgrey">Email: Jonjon@wanadoo.fr<br>Tel: XX XX XX XX XX</p>
+                <p class="lightgrey">SIRET: 120 056 265565</p>
+            </div>
+            
+            <!-- Bloc droit: informations facture / Right block: invoice information -->
+            <div id="right-bloc">
+                <h2>Facture</h2>
+                <p class="darkestgrey">Facture N°: FA-d54-5565</p>
+                <p class="darkestgrey">Date: 10/05/2025</p>
+                <p class="darkestgrey">Échéance: 10/06/2025</p>
+            </div>
+        </header>
+        
+        <!-- Contenu principal / Main content -->
+        <main>
+            <!-- Section destinataire / Recipient section -->
+            <section id="destinataire">
+                <h4 id="lightgrey-title">Facturer à</h4>
+                <div id="adresse-destinataire">
+                    <p><strong>ABC Corporation</strong><br>
+                    456 rue du Commerce<br>
+                    69001, Lyon, France<br>
+                    Email: contact@abc-corp.fr<br>
+                    Tel: XX XX XX XX XX</p>
+                </div>
+            </section>
+            
+            <!-- Section tableau de facturation / Billing table section -->
+            <section>
+                <table id="tableau-facture">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Quantité</th>
+                            <th>Prix unitaire</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Développement site web</td>
+                            <td>1</td>
+                            <td>8500,00€</td>
+                            <td>8500,00€</td>
+                        </tr>
+                        <tr>
+                            <td>Maintenance annuelle</td>
+                            <td>1</td>
+                            <td>2000,00€</td>
+                            <td>2000,00€</td>
+                        </tr>
+                        <tr>
+                            <td>Formation utilisateurs</td>
+                            <td>3</td>
+                            <td>350,00€</td>
+                            <td>1050,00€</td>
+                        </tr>
+                        <tr>
+                            <td>Total HT</td>
+                            <td></td>
+                            <td></td>
+                            <td>11550,00€</td>
+                        </tr>
+                        <tr>
+                            <td>TVA (20%)</td>
+                            <td></td>
+                            <td></td>
+                            <td>1002,00€</td>
+                        </tr>
+                        <tr>
+                            <td>Total TTC</td>
+                            <td></td>
+                            <td></td>
+                            <td>12552,00€</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section conditions de paiement / Payment terms section -->
+            <section id="paiement">
+               <div id="info-paiement">
+                    <h3>Information de paiement</h3>
+                    <p><strong>IBAN </strong>FR 12545 54544 56565 64845</p>
+                    <p><strong>BIC </strong>AGIPRFFR</p>
+                    <p><strong>BANQUE </strong>BNP</p>
+                </div>
+                <div id="conditions-paiement">
+                    <h3>Conditions de paiement</h3>
+                    <p>Paiement dû à 30 jours à édition de facture, un intérêt de 10% sera appliqué sur les paiements après la date d'échéance.<br>Nous vous remercions pour votre confiance!</p>
+                </div>
+            </section>
+        </main>
     </div>
-    </header>
-    
-    <!-- Contenu principal -->
-    <main>
-        <!-- Section 1: destinataire -->
-        <section id="destinataire">
-            <h3 id="lightgrey-title">Facturer à :</h3>
-            <div id="adresse-destinataire">
-                <h4>Digital Innovations SARL</h4>
-                <p id="textdestinataire">52 rue des poulettes<br>69006, Lyon, France<br>SIRET : 54454 64646 64644</p>
-            </div>
-        </section>
-
-        <!-- Section 2: Tableau prix -->
-        <section id="tableau-facture">
-            <table>
-                <tr>
-                    <th>Description</th>
-                    <th>Quantité</th>
-                    <th>Prix unitaire</th>
-                    <th>Total HT</th>
-                </tr>
-                <tr>
-                    <td>Développement site e-commerce, Design et développement Responsive</td>
-                    <td>1</td>
-                    <td>6500,00€</td>
-                    <td>6500,00€</td>
-                </tr>
-                <tr>
-                    <td>Api intégration paiement, liason bancaire paramétrée</td>
-                    <td>1</td>
-                    <td>1200,00€</td>
-                    <td>1200,00€</td>
-                </tr>
-                <tr>
-                    <td>Hébergement prenium, Scaleway + 12 mois</td>
-                    <td>12</td>
-                    <td>150,00€</td>
-                    <td>1800,00€</td>
-                </tr>
-                <tr>
-                    <td>Formation utilisateur session de 4h (TARIF HORAIRE)</td>
-                    <td>8</td>
-                    <td>120,00€</td>
-                    <td>960,00€</td>
-                </tr>
-                <tr>
-                    <td>Sous-total : (Hors Taxes)</td>
-                    <td></td>
-                    <td></td>
-                    <td>10460,00€</td>
-                </tr>
-                <tr>
-                    <td>TVA 20%</td>
-                    <td></td>
-                    <td></td>
-                    <td>2092,00€</td>
-                </tr>
-                <tr>
-                    <td>Total TTC</td>
-                    <td></td>
-                    <td></td>
-                    <td>12552,00€</td>
-                </tr>
-            </table>
-        </section>
-
-        <!-- Section 3: Conditions facturation -->
-        <section id="paiement">
-           <div id="info-paiement">
-                <h3>Information de paiement</h3>
-                <p><strong>IBAN </strong>FR 12545 54544 56565 64845</p>
-                <p><strong>BIC </strong>AGIPRFFR</p>
-            </div>
-            <div id="conditions-paiement">
-                <h3>Conditions de paiement</h3>
-                <p>Paiement du à 30 jours à édition de facture, un intéret de 10% sera appliqué sur les paiements après la date d'échéance <br>Nous vous remercions pour votre confiance. </p>
-            </div>
-        </section>
-    </main>
-    
-    <!-- Pied de page -->
-    <footer>
-        <p>© 2025 - cours DWWM</p>
-    </footer>
 </body>
 </html>

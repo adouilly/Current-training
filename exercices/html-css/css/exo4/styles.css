@@ -1,105 +1,200 @@
-/* Style pour l'entête */
+/* ------ RÉGLAGES GÉNÉRAUX / GENERAL SETTINGS ------ */
+:root {
+    /* Définition des couleurs / Color definitions */
+    --background-color: #f4f4f4;
+    --primary-color: #ffffff;
+    --border-color: #000000;
+    --tech-blue: darkblue;
+    --facture-red: rgb(139, 0, 0);
+    --light-grey: rgb(107, 107, 107);
+    --dark-grey: #525252;
+    --highlight-bg: rgb(178, 221, 224);
+    
+    /* Espacement standard / Standard spacing */
+    --spacing-small: 3px;
+    --spacing-medium: 15px;
+    --spacing-large: 20px;
+    --spacing-xlarge: 30px;
+    
+    /* Bordures et ombres / Borders and shadows */
+    --border-radius: 15px;
+    --box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style pour le body / Body styling */
+body {
+    background-color: var(--background-color);
+    font-family: 'Roboto', 'Arial Narrow Bold', sans-serif;
+    margin: 25px;
+    padding: 25px;
+    line-height: 1.4;
+}
+
+/* Conteneur principal avec fond blanc et bords arrondis 
+   Main container with white background and rounded corners */
+.facture-wrapper {
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: var(--spacing-xlarge);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ------ STYLES D'ENTÊTE / HEADER STYLES ------ */
+/* Mise en page de l'entête / Header layout */
 .facture-entete {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;  /* Changement à flex-start pour un meilleur contrôle */
+    align-items: flex-start;
     width: 100%;
-    padding: 20px;
+    padding: var(--spacing-large);
 }
 
-/* Style pour le bloc gauche (TechSolutions) */
+/* Bloc gauche (informations société) / Left block (company info) */
 #left-bloc {
-    /* Maintenant il restera à gauche */
     text-align: left;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
 
-/* Style pour le bloc droit (Facture) */
+/* Informations de contact avec espacement approprié 
+   Contact info with appropriate spacing */
+#left-bloc p.lightgrey {
+    margin-bottom: var(--spacing-medium);
+    line-height: 1.3;
+}
+
+/* Espacement réduit entre les lignes d'un même groupe 
+   Reduced spacing between lines in the same group */
+#left-bloc p.lightgrey br {
+    display: block;
+    margin-top: var(--spacing-small);
+}
+
+/* Bloc droit (informations facture) / Right block (invoice info) */
 #right-bloc {
-    /* Maintenant il restera à droite */
     text-align: right;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    min-height: 200px; /* Pour équilibrer avec le bloc gauche / To balance with left block */
 }
 
-/* Style pour les titres */
+#right-bloc p.darkestgrey {
+    margin-bottom: var(--spacing-medium);
+    line-height: 1.3;
+}
+
+#right-bloc h2 {
+    margin-bottom: var(--spacing-large);
+}
+
+#right-bloc p.darkestgrey:last-child {
+    margin-bottom: 0;
+    padding-bottom: var(--spacing-medium);
+}
+
+/* ------ STYLES DE TYPOGRAPHIE / TYPOGRAPHY STYLES ------ */
+/* Style commun pour les titres h1 et h2 / Common style for h1 and h2 */
 h1, h2 {
-    margin: 0;               /* Supprime toutes les marges */
-    padding: 0;              /* Supprime tout le padding */
-    line-height: 1;          /* Fixe une hauteur de ligne identique */
-    font-size: 1.8em;        /* Définit explicitement la même taille pour les deux */
-}
-
-/* Ajouter de l'espace sous les titres avant le contenu suivant */
-h1 + p, h2 + p {
-    margin-top: 15px;        /* Espace entre le titre et le paragraphe suivant */
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-size: 1.8em;
 }
 
 h1 {
-    color: darkblue;
-    font-family: arial;
+    color: var(--tech-blue);
+    font-family: Arial, sans-serif;
     font-weight: bold;
 }
 
 h2 {
-    color: rgb(139, 0, 0);
-    font-family: arial;
+    color: var(--facture-red);
+    font-family: Arial, sans-serif;
     font-weight: bold;
 }
 
-h3{}
+/* Espacement après les titres / Spacing after titles */
+h1 + p, h2 + p {
+    margin-top: var(--spacing-medium);
+}
 
-h4{color: #000}
+h3 {
+    margin-bottom: var(--spacing-medium);
+    font-weight: bold;
+}
 
-p{}
+h4 {
+    color: #000;
+}
 
-.lightgrey{ color: rgb(107, 107, 107);}
+/* Classes de couleur de texte / Text color classes */
+.lightgrey { color: var(--light-grey); }
+.darkestgrey { color: var(--dark-grey); }
 
-.darkestgrey{color: #525252;}
-
-#lightgrey-title{
+#lightgrey-title {
     text-transform: uppercase;
-    color: #525252;
-    margin-left: 20px;}
+    color: var(--dark-grey);
+    margin-left: var(--spacing-large);
+}
 
+/* ------ STYLES DE SECTION / SECTION STYLES ------ */
+/* Bloc adresse destinataire / Recipient address block */
 #adresse-destinataire {
     text-align: left;
     font-size: 0.8em;
     color: #000;
-    background-color: rgb(178, 221, 224);
-    border-radius: 25px;
-    border-left: 2px solid #000;  /* Barre noire sur le côté gauche */
-    padding: 15px;  /* Espace intérieur pour éviter que le texte ne touche les bords */
+    background-color: var(--highlight-bg);
+    border-radius: var(--border-radius);
+    border-left: 2px solid var(--border-color);
+    padding: var(--spacing-medium);
     position: relative;
-    overflow: hidden;  /* Assure que tout reste dans les limites des bords arrondis */
-margin-left: 20px;
-margin-right: 20px;
+    overflow: hidden;
+    margin: 0 var(--spacing-large);
 }
 
+/* ------ STYLES DE TABLEAU / TABLE STYLES ------ */
 #tableau-facture {
-    margin-left: 20px;
-    margin-right: 20px;
-    width: calc(100% - 40px);  /* Largeur totale moins les marges */
-    border-collapse: collapse;  /* Élimine l'espace entre les cellules */
+    margin: 0 var(--spacing-large);
+    width: calc(100% - (var(--spacing-large) * 2));
+    border-collapse: collapse;
 }
 
-/* Cibler la première colonne */
+/* Largeur fixe pour la première colonne / Fixed width for first column */
 #tableau-facture td:first-child,
 #tableau-facture th:first-child {
-    width: 40%;  /* La première colonne occupe 40% */
+    width: 40%;
 }
 
-/* Style général des cellules */
+/* Style général des cellules / General cell styling */
 #tableau-facture th,
 #tableau-facture td {
     padding: 8px;
     text-align: left;
 }
 
-/* Style pour l'entête du tableau */
 #tableau-facture th {
     font-weight: bold;
+}
+
+/* ------ SECTION DE PAIEMENT / PAYMENT SECTION ------ */
+#paiement {
+    display: flex;
+    flex-direction: column; /* Ajout de cette ligne pour empiler les éléments */
+    margin: var(--spacing-large);
+}
+
+#info-paiement, 
+#conditions-paiement {
+    width: 100%; /* Changement de 48% à 100% */
+    margin-bottom: 20px; /* Ajoute de l'espace entre les deux sections */
+}
+
+#info-paiement strong {
+    display: inline-block;
+    width: 100px;           /* Largeur fixe pour tous les libellés */
+    text-align: left;
 }
