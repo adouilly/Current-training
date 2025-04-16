@@ -103,3 +103,40 @@ const Validators = {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = Validators;
 }
+
+// Fonction pour définir la date minimale dans le champ de date de livraison
+function setMinDeliveryDate() {
+    // Récupérer l'élément de date de livraison
+    const deliveryDateInput = document.getElementById('deliveryDate');
+    
+    // Si l'élément existe
+    if (deliveryDateInput) {
+        // Obtenir la date du jour au format YYYY-MM-DD
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Les mois commencent à 0
+        const day = String(today.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+        
+        // Définir la date minimale
+        deliveryDateInput.min = formattedDate;
+    }
+}
+
+// Appeler cette fonction au chargement initial de la page
+document.addEventListener('DOMContentLoaded', () => {
+    // Ajouter à vos fonctions existantes
+    setMinDeliveryDate();
+});
+
+// Appeler cette fonction également lors de la navigation vers l'étape qui contient le champ de date
+function showStep(step) {
+    // Votre code existant...
+    
+    // Si cette étape contient le champ de date de livraison, mettre à jour sa date minimale
+    if (document.querySelector(`.form-step[data-step="${step}"] #deliveryDate`)) {
+        setMinDeliveryDate();
+    }
+    
+    // Reste de votre code existant...
+}

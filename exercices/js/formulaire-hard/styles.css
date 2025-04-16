@@ -30,7 +30,6 @@ body {
     justify-content: center; /* Centre verticalement */
     align-items: center; /* Centre horizontalement */
     min-height: 100vh;
-    padding: 40px 30px; /* Réduire de 50px/40px à 40px/30px */
     position: relative;
     overflow-x: hidden;
     box-sizing: border-box;
@@ -194,7 +193,6 @@ header {
 
 .progress-line.active {
     background-color: var(--accent-color);
-    box-shadow: 0 0 10px var(--accent-color); /* Corriger la syntaxe */
 }
 
 /* Formulaire / Form */
@@ -266,7 +264,6 @@ form {
 }
 
 .form-field.checkbox-group {
-    background: rgba(255, 255, 255, 0.04); /* Opacité réduite de 0.05 à 0.04 */
     border-radius: var(--border-radius);
     padding: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
@@ -286,7 +283,6 @@ select,
 textarea {
     width: 100%;
     padding: var(--spacing-md);
-    background: rgba(255, 255, 255, 0.08); /* Opacité réduite de 0.15 à 0.08 */
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     font-size: 1rem;
@@ -299,11 +295,6 @@ textarea {
 /* Style uniforme pour tous les selects */
 select {
     appearance: none;
-    background-color: rgba(255, 255, 255, 0.08); /* Opacité légèrement baissée */
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 1em;
     padding-right: 2.5rem;
 }
 
@@ -490,12 +481,10 @@ select[multiple] {
 .form-notification.error {
     background: rgba(230, 57, 70, 0.2);
     color: white;
-    border-left: 4px solid var(--error-color); /* Corriger l'espace après var */
 }
 
 /* Repositionner la notification au-dessus du formulaire */
 .form-notification {
-    /* Modifier l'ordre d'affichage et le positionnement */
     order: -1; /* Place l'élément avant les autres dans un conteneur flex */
     margin-bottom: 10px; /* Espace de 10px entre la notification et le formulaire */
     width: 100%; /* Assure que la notification prend toute la largeur */
@@ -700,17 +689,18 @@ textarea:invalid:not(:focus):not(:placeholder-shown) {
 }
 
 .modal-header h2 {
-    color: white;
+    color: var(--accent-secondary); /* Utilise la même couleur que les h2 */
     font-size: 2.2rem;
     margin: 0;
-    text-shadow: 0 2px 10px rgba(115, 29, 76, 0.5);
+    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.5); /* Ombre claire pour meilleure lisibilité */
     animation: blink 1.5s infinite alternate;
+    font-weight: 700; /* Un peu plus gras pour plus de présence */
 }
 
-/* Animation de clignotement pour le titre */
+/* Animation de clignotement pour le titre - modifiée pour cette couleur */
 @keyframes blink {
-    0% { opacity: 0.7; text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
-    100% { opacity: 1; text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+    0% { opacity: 0.7; text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+    100% { opacity: 1; text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 20px rgba(115, 29, 76, 0.6); }
 }
 
 .modal-body {
@@ -784,7 +774,6 @@ textarea:invalid:not(:focus):not(:placeholder-shown) {
 
 /* Optimisations pour les transitions (plus spécifiques que 'all') */
 button {
-    /* Remplacer: transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); */
     transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -793,7 +782,6 @@ button {
 input:focus,
 select:focus,
 textarea:focus {
-    /* Remplacer: transition: all 0.3s ease; */
     transition: border-color 0.3s ease,
                 box-shadow 0.3s ease,
                 background 0.3s ease,
