@@ -1,19 +1,34 @@
 # Multi-Step Quote Form with Glassmorphism UI
 
 ## Project Overview
-
-This project implements a sophisticated multi-step quote request form with a modern glassmorphism design. The form features client-side validation, automatic data persistence, file uploads, step navigation, and a summary view before submission. The UI is fully responsive and follows accessibility best practices.
+A responsive multi-step form for quote requests featuring a modern glassmorphism design. This form guides users through a logical process to collect information while providing visual feedback.
 
 ## Key Features
+- **Multi-step navigation**: Intuitive progression through form steps with visual progress tracking
+- **Local storage persistence**: Automatically saves user input to resume later
+- **Real-time validation**: Immediate feedback on input errors
+- **File upload**: Support for reference documents (PDF, Word, images)
+- **Data summary**: Review all information before final submission
+- **Confirmation modal**: Professional success message upon completion
+- **Responsive design**: Optimized for all devices and screen sizes
+- **Glassmorphism UI**: Modern, translucent interface with subtle depth effects
 
-- **Multi-step navigation**: Intuitive progression through 4 form steps with visual feedback
-- **Local storage persistence**: Automatic saving of form data allowing users to resume their progress
-- **Real-time validation**: Client-side field validation with meaningful error messages
-- **File upload**: Support for document uploads with validation (PDF, Word, images)
-- **Data summary**: Comprehensive review of all information before final submission
-- **Responsive design**: Optimized for all devices without media queries
-- **Glassmorphism UI**: Modern, transparent UI with blur effects and subtle shadows
-- **Accessibility**: ARIA attributes, keyboard navigation, and motion preference respect
+## Technical Highlights
+- **Form navigation**: Smooth transitions between steps using CSS animations
+- **Data persistence**: Utilizes localStorage with automatic saving (setupAutoSave function)
+- **Validation**: Client-side validation with custom validators (validateInput function)
+- **File handling**: Size and type validation for document uploads (setupFileUpload function)
+- **Modern UI**: CSS variables, flexbox and backdrop-filter for glassmorphism effects
+
+## Setup Instructions
+1. Download or clone the repository
+2. No build process required - open index.html directly in a browser
+3. For form submission functionality, connect to your backend API (modify handleSubmit function)
+
+## Browser Compatibility
+- Works best in modern browsers that support CSS variables and backdrop-filter
+- Includes fallbacks for older browsers
+- Tested in Chrome, Firefox, Safari, and Edge
 
 ## Technical Implementation
 

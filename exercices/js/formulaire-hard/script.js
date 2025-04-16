@@ -557,10 +557,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         formData[input.name].splice(index, 1);
                     }
                 }
-            } else if (input.type === 'select-multiple') {
-                // Pour les sélections multiples, stocker un tableau de valeurs
-                // For multiple select, store array of values
-                formData[input.name] = Array.from(input.selectedOptions).map(option => option.value);
+            } else if (input.id === 'projectType') {
+                formData[input.name] = input.value;
             } else {
                 // Pour les autres types de champs, stocker la valeur
                 // For other field types, store the value
@@ -774,6 +772,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 showStep(stepToEdit);
             }
         });
+
+        // Ajouter cette partie après avoir inséré summaryStep dans le DOM
+        const prevButton = summaryStep.querySelector('.btn-prev');
+        if (prevButton) {
+            prevButton.addEventListener('click', () => {
+                const prevStep = parseInt(prevButton.dataset.prev);
+                saveStepData(currentStep);
+                saveToLocalStorage();
+                showStep(prevStep);
+            });
+        }
     }
     
     /**
@@ -822,6 +831,30 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
     }
+
+    // Fonction pour afficher le message de restauration seulement si nécessaire
+    function checkForStoredData() {
+        // Vérifier si des données existent dans le localStorage
+        const storedData = localStorage.getItem('formData');
+        
+        if (storedData) {
+            // Créer un objet à partir des données stockées
+            const formData = JSON.parse(storedData);
+            
+            // Vérifier si les données sont significatives (au moins un champ rempli)
+            const hasData = Object.values(formData).some(value => 
+                value && (typeof value === 'string' ? value.trim() !== '' : true)
+            );
+            
+            // N'afficher le message que si des données significatives existent
+            if (hasData) {
+                showNotification('Vos données ont été restaurées. Vous pouvez continuer où vous vous êtes arrêté.', 'info');
+            }
+        }
+    }
+
+    // Appeler la fonction au chargement de la page
+    checkForStoredData();
 
     // Démarrer l'application / Start the application
     init();

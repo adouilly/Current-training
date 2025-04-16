@@ -9,10 +9,18 @@
     <meta name="author" content="adouilly">
     <title>Demande de devis</title>
     
+    <!-- Favicon d'icône de message (encodé correctement) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%23D92938%22%3E%3Cpath%20d%3D%22M20%202H4c-1.1%200-2%20.9-2%202v18l4-4h14c1.1%200%202-.9%202-2V4c0-1.1-.9-2-2-2zm0%2014H5.2L4%2017.2V4h16v12z%22%2F%3E%3Cpath%20d%3D%22M7%209h10v2H7zm0-3h10v2H7zm0%206h7v2H7z%22%2F%3E%3C%2Fsvg%3E">
+    
     <!-- Chargement des polices Google Fonts / Loading Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Polices manuscrites et cursives -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Indie+Flower&display=swap" rel="stylesheet">
     
     <!-- Chargement des fichiers CSS / Loading CSS files -->
     <link rel="stylesheet" href="reset.css">
@@ -80,7 +88,7 @@
                 
                 <div class="form-field">
                     <label for="projectType" class="forms-title">Type de projet</label>
-                    <select id="projectType" name="projectType" multiple required aria-required="true" data-error-message="Champ obligatoire">
+                    <select id="projectType" name="projectType" required aria-required="true" data-error-message="Champ obligatoire">
                         <option value="">Sélectionner un type</option>
                         <option value="site-vitrine">Site vitrine</option>
                         <option value="e-commerce">Site e-commerce</option>
@@ -202,8 +210,6 @@
         </form>
         <!-- Ajouter aria-live pour les notifications -->
         <div class="form-notification" role="alert" aria-live="polite"></div>
-        <!-- Ajouter aria-label pour les boutons sans texte -->
-        <button type="button" class="btn-edit" data-edit="1" aria-label="Modifier les informations personnelles">Modifier</button>
         
         <!-- Ajouter à la fin du body mais avant les scripts -->
         <div id="confirmation-modal" class="modal">
