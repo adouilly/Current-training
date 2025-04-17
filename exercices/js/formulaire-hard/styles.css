@@ -33,6 +33,7 @@ body {
     position: relative;
     overflow-x: hidden;
     box-sizing: border-box;
+    padding: 30px 20px; /* Padding uniformes pour une mise en page cohérente / Uniform padding for consistent layout */
 }
 
 /* Nouvelles polices pour tout le site */
@@ -43,9 +44,10 @@ h1, h2, h3, .high-title, .second-title {
 
 body, p, input, button, select, textarea, .forms-title {
     font-family: 'Indie Flower', cursive;
+    
 }
 
-/* Modification de la couleur des h2 */
+/* Styles des titres secondaires / Secondary title styles */
 h2, .second-title {
     color: var(--accent-secondary);
     font-weight: 600;
@@ -89,6 +91,9 @@ header, main {
     margin: 0 auto; /* Centre horizontalement */
     position: relative;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Assurer que tout est centré */
 }
 
 main {
@@ -129,7 +134,11 @@ header {
     font-weight: 500;
     margin-bottom: var(--spacing-lg);
     text-align: center;
-    color: var(--primary-dark);
+    color: white; /* Texte blanc pour une meilleure lisibilité sur fond sombre / White text for better readability on dark backgrounds */
+}
+
+#modal-sub-title {
+    color: #D92938 !important;
 }
 
 .forms-title {
@@ -137,7 +146,8 @@ header {
     font-weight: 600;
     margin-bottom: var(--spacing-sm);
     display: block;
-    color: var(--primary-dark);
+    color: white; /* Texte blanc pour une meilleure lisibilité sur fond sombre / White text for better readability on dark backgrounds */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Ombre pour améliorer la lisibilité / Shadow for better readability */
 }
 
 /* Barre de progression / Progress bar */
@@ -215,6 +225,8 @@ form {
     min-height: 450px; /* Hauteur minimale pour éviter les sauts */
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .form-step {
@@ -261,6 +273,7 @@ form {
 
 .form-field {
     margin-bottom: var(--spacing-lg);
+    width: 100%;
 }
 
 .form-field.checkbox-group {
@@ -298,7 +311,7 @@ select {
     padding-right: 2.5rem;
 }
 
-/* Remplacer le select multiple par un select standard */
+/* Configuration du select multiple / Multiple select configuration */
 #projectType {
     height: auto;
 }
@@ -642,7 +655,7 @@ textarea:invalid:not(:focus):not(:placeholder-shown) {
     }
 }
 
-/* Styles pour la fenêtre modale */
+/* Styles pour la fenêtre modale / Modal window styles */
 .modal {
     position: fixed;
     top: 0;
@@ -664,7 +677,7 @@ textarea:invalid:not(:focus):not(:placeholder-shown) {
 }
 
 .modal-content {
-    background: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, #A4B0AF 0%, #143B51 50%, #4B2C2C 100%);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: var(--border-radius);
@@ -686,15 +699,29 @@ textarea:invalid:not(:focus):not(:placeholder-shown) {
     justify-content: center;
     align-items: center;
     text-align: center;
+    background: linear-gradient(135deg, #A4B0AF 0%, #143B51 50%, #4B2C2C 100%); /* Ajout de la couleur de fond */
 }
 
 .modal-header h2 {
-    color: var(--accent-secondary); /* Utilise la même couleur que les h2 */
+    color: #ffffff; /* Utilise la même couleur que les h2 */
     font-size: 2.2rem;
     margin: 0;
     text-shadow: 0 2px 8px rgba(255, 255, 255, 0.5); /* Ombre claire pour meilleure lisibilité */
     animation: blink 1.5s infinite alternate;
     font-weight: 700; /* Un peu plus gras pour plus de présence */
+}
+
+/* Spécifiquement pour le titre de confirmation dans la modale */
+.modal-header h2#modal-sub-title {
+    color: #D92938 !important; /* Rouge vif pour attirer l'attention */
+    text-shadow: 0 2px 8px rgba(217, 41, 56, 0.3); /* Ombre légère avec la même couleur */
+    animation: blinkRed 1.5s infinite alternate; /* Animation spécifique pour ce titre */
+}
+
+/* Animation pour le titre rouge */
+@keyframes blinkRed {
+    0% { opacity: 0.8; text-shadow: 0 0 5px rgba(217, 41, 56, 0.3); }
+    100% { opacity: 1; text-shadow: 0 0 15px rgba(217, 41, 56, 0.5); }
 }
 
 /* Animation de clignotement pour le titre - modifiée pour cette couleur */
@@ -703,10 +730,23 @@ textarea:invalid:not(:focus):not(:placeholder-shown) {
     100% { opacity: 1; text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 20px rgba(115, 29, 76, 0.6); }
 }
 
+/* Style spécifique pour le titre de confirmation sans conflit de classe */
+#confirmation-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+    color: #D92938 !important;
+    text-shadow: 0 2px 8px rgba(217, 41, 56, 0.3);
+    animation: blinkRed 1.5s infinite alternate;
+}
+
 .modal-body {
     padding: var(--spacing-lg);
     text-align: center;
     font-size: 1.2rem;
+    background: linear-gradient(135deg, #A4B0AF 0%, #143B51 50%, #4B2C2C 100%);
 }
 
 .modal-footer {
@@ -717,9 +757,9 @@ textarea:invalid:not(:focus):not(:placeholder-shown) {
 }
 
 .btn-close-modal {
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: var(--border-radius);
     padding: var(--spacing-md) var(--spacing-lg);
     font-weight: 500;
@@ -811,16 +851,16 @@ textarea:focus {
     }
 }
 
-/* Placeholders blancs très visibles */
+/* Placeholders visibles avec la couleur demandée */
 ::placeholder,
 ::-webkit-input-placeholder,
 ::-moz-placeholder,
 :-ms-input-placeholder,
 :-moz-placeholder {
-    color: white !important; /* Blanc pur pour meilleure visibilité */
-    opacity: 0.9 !important; /* Opacité augmentée */
+    color: #208C8C !important; /* Utiliser la couleur demandée */
+    opacity: 0.9 !important;
     font-weight: 400;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 /* Firefox */
@@ -828,9 +868,9 @@ textarea:focus {
     opacity: 0.9 !important;
 }
 
-/* Empêcher les sélecteurs de hériter de la couleur non-blanche */
+/* Empêcher les sélecteurs d'hériter d'autres couleurs */
 input::placeholder, 
 textarea::placeholder,
 select::placeholder {
-    color: white !important;
+    color: #208C8C !important;
 }

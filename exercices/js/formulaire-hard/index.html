@@ -52,28 +52,33 @@
                 
                 <div class="form-field">
                     <label for="firstName" class="forms-title">Prénom</label>
-                    <input type="text" id="firstName" name="firstName" placeholder="Votre prénom" 
-                           pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s-]+" required aria-required="true" data-error-message="Champ obligatoire">
+                    <input type="text" id="firstName" name="firstName" pattern="[A-Za-z\u00C0-\u00FF\s\-]+" required autocomplete="given-name">
                     <div class="error-message"></div>
                 </div>
                 
                 <div class="form-field">
                     <label for="lastName" class="forms-title">Nom</label>
-                    <input type="text" id="lastName" name="lastName" placeholder="Votre nom" 
-                           pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s-]+" required aria-required="true" data-error-message="Champ obligatoire">
+                    <input type="text" id="lastName" name="lastName" pattern="[A-Za-z\u00C0-\u00FF\s\-]+" required autocomplete="family-name">
                     <div class="error-message"></div>
                 </div>
                 
                 <div class="form-field">
                     <label for="email" class="forms-title">Email</label>
-                    <input type="email" id="email" name="email" placeholder="votre.email@exemple.com" required aria-required="true" data-error-message="Champ obligatoire">
+                    <input type="email" id="email" name="email" placeholder="votre.email@exemple.com" required aria-required="true" data-error-message="Champ obligatoire" autocomplete="email">
                     <div class="error-message"></div>
                 </div>
                 
                 <div class="form-field">
                     <label for="phone" class="forms-title">Téléphone</label>
                     <input type="tel" id="phone" name="phone" placeholder="0612345678" 
-                           pattern="[0-9]{10}" required aria-required="true" data-error-message="Champ obligatoire">
+                           pattern="[0-9]{10}" required aria-required="true" data-error-message="Champ obligatoire" autocomplete="tel">
+                    <div class="error-message"></div>
+                </div>
+
+                <!-- Remplacer les trois champs (adresse, ville, code postal) par le champ Siret -->
+                <div class="form-field">
+                    <label for="siret" class="forms-title">Numéro Siret</label>
+                    <input type="text" id="siret" name="siret" pattern="[0-9]{14}" required placeholder="14 chiffres sans espaces">
                     <div class="error-message"></div>
                 </div>
                 
@@ -201,7 +206,7 @@
             
             <!-- Étape 4: Confirmation / Step 4: Confirmation -->
             <section class="form-step" id="step-4" data-step="4">
-                <h2 class="second-title">Merci pour votre demande !</h2>
+                <h2 id="confirmation-title">Merci pour votre demande !</h2>
                 <div class="confirmation-message">
                     <p>Nous avons bien reçu votre demande de devis et nous vous contacterons très rapidement.</p>
                     <p>Un email de confirmation a été envoyé à l'adresse : <strong id="confirmation-email"></strong></p>

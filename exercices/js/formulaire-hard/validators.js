@@ -104,7 +104,10 @@ if (typeof module !== 'undefined' && module.exports) {
     module.exports = Validators;
 }
 
-// Fonction pour définir la date minimale dans le champ de date de livraison
+/**
+ * Définir la date minimale pour les champs de date
+ * Set minimum date for date fields
+ */
 function setMinDeliveryDate() {
     // Récupérer l'élément de date de livraison
     const deliveryDateInput = document.getElementById('deliveryDate');
@@ -127,16 +130,23 @@ function setMinDeliveryDate() {
 document.addEventListener('DOMContentLoaded', () => {
     // Ajouter à vos fonctions existantes
     setMinDeliveryDate();
+    
+    // Observer les changements d'étape pour mettre à jour la date minimale
+    document.querySelectorAll('.form-step').forEach(step => {
+        if (step.querySelector('#deliveryDate')) {
+            // Si l'étape contient un champ de date, vérifier quand elle devient visible
+            const observer = new MutationObserver(mutations => {
+                mutations.forEach(mutation => {
+                    if (mutation.target.classList.contains('active')) {
+                        setMinDeliveryDate();
+                    }
+                });
+            });
+            
+            observer.observe(step, { 
+                attributes: true, 
+                attributeFilter: ['class'] 
+            });
+        }
+    });
 });
-
-// Appeler cette fonction également lors de la navigation vers l'étape qui contient le champ de date
-function showStep(step) {
-    // Votre code existant...
-    
-    // Si cette étape contient le champ de date de livraison, mettre à jour sa date minimale
-    if (document.querySelector(`.form-step[data-step="${step}"] #deliveryDate`)) {
-        setMinDeliveryDate();
-    }
-    
-    // Reste de votre code existant...
-}
