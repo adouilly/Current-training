@@ -650,89 +650,60 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     /**
-     * Gérer la soumission du formulaire
-     * Handle form submission
+     * Gérer la soumission du formulaire avec mesures de sécurité renforcées
+     * Handle form submission with enhanced security measures
      * @param {Event} event - Événement de soumission / Submission event
      */
     function handleSubmit(event) {
         event.preventDefault();
         
-        // Valider l'étape actuelle / Validate current step
-        if (currentStep !== 3.5 && !validateStep(currentStep)) {
+        // 1. Validation côté client / Client-side validation
+        if (!validateAllFields()) {
             return;
         }
         
-        // Si nous ne sommes pas sur le récapitulatif, l'afficher d'abord
-        if (currentStep !== 3.5) {
-            saveStepData(currentStep);
-            saveToLocalStorage();
-            
-            // Créer l'étape de récapitulatif si elle n'existe pas
-            if (!document.getElementById('step-3.5')) {
-                createSummaryStep();
-            } else {
-                // Mettre à jour le contenu du récapitulatif
-                document.getElementById('summary-content').innerHTML = generateSummary();
-            }
-            
-            showStep(3.5);
+        // 2. Vérifier le honeypot / Check honeypot
+        if (document.getElementById('website').value !== '') {
+            console.log('Bot détecté / Bot detected');
+            showNotification('Une erreur est survenue', 'error');
             return;
         }
         
-        // Soumettre le formulaire / Submit the form
-        console.log('Données du formulaire / Form data:', formData);
-        
-        // Effacer les données sauvegardées / Clear saved data
-        clearSavedData();
-        
-        // Afficher la modale de confirmation au lieu de l'étape 4
-        const modal = document.getElementById('confirmation-modal');
-        const modalBody = modal.querySelector('.modal-body');
-        
-        // Préparer le contenu de la modale
-        modalBody.innerHTML = `
-            <div class="confirmation-message">
-                <h2 class="second-title">Merci pour votre demande !</h2>
-                <p>Nous avons bien reçu votre demande de devis et nous vous contacterons très rapidement.</p>
-                <p>Un email de confirmation a été envoyé à l'adresse : <strong>${escapeHtml(formData.email)}</strong></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-close-modal">Fermer</button>
-            </div>
-        `;
-        
-        // Afficher la modale
-        modal.classList.add('show');
-        
-        // Ajouter les écouteurs d'événements pour fermer la modale
-        const closeModalBtn = modal.querySelector('.btn-close-modal');
-        const closeModalX = modal.querySelector('.close-modal');
-        
-        closeModalBtn.addEventListener('click', closeModal);
-        closeModalX.addEventListener('click', closeModal);
-        
-        // Fermer la modale en cliquant en dehors
-        modal.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                closeModal();
-            }
+        // 3. Préparer les données avec échappement / Prepare data with escaping
+        const secureData = {};
+        Object.keys(formData).forEach(key => {
+            secureData[key] = typeof formData[key] === 'string' ? escapeHtml(formData[key]) : formData[key];
         });
         
-        // En production, vous enverriez les données au serveur ici
-        // In production, you would send the data to the server here
-        // fetch('/submit-form', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(formData)
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     // Afficher la modale
-        //     modal.classList.add('show');
-        // })
-        // .catch(error => {
-        //     console.error('Erreur lors de la soumission / Error during submission:', error);
-        // });
+        // 4. Ajouter le token CSRF / Add CSRF token
+        secureData.csrf_token = document.getElementById('csrf_token').value;
+        
+        // 5. Soumettre avec limitation de débit / Submit with rate limiting
+        if (isRateLimited()) {
+            showNotification('Veuillez patienter avant de soumettre à nouveau / Please wait before submitting again', 'error');
+            return;
+        }
+        
+        // 6. Soumettre au serveur / Submit to server
+        fetch('/submit-form', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(secureData)
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Erreur réseau / Network error');
+            return response.json();
+        })
+        .then(data => {
+            // Succès / Success
+            clearSavedData();
+            showConfirmationModal();
+        })
+        .catch(error => {
+            // Gérer l'erreur sans révéler de détails sensibles / Handle error without revealing sensitive details
+            showNotification('Une erreur est survenue lors de l\'envoi / An error occurred during submission', 'error');
+            console.error('Erreur / Error:', error);
+        });
     }
     
     /**
@@ -830,6 +801,105 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
+    }
+
+    /**
+     * Valider tous les champs du formulaire
+     * Validate all form fields
+     * @returns {boolean} - Indique si tous les champs sont valides / Indicates if all fields are valid
+     */
+    function validateAllFields() {
+        // Vérifier l'étape actuelle / Check current step
+        if (currentStep !== 3.5 && !validateStep(currentStep)) {
+            return false;
+        }
+        
+        // Si nous ne sommes pas sur le récapitulatif, l'afficher d'abord
+        // If we're not on the summary, show it first
+        if (currentStep !== 3.5) {
+            saveStepData(currentStep);
+            saveToLocalStorage();
+            
+            // Créer l'étape de récapitulatif si elle n'existe pas
+            // Create summary step if it doesn't exist
+            if (!document.getElementById('step-3.5')) {
+                createSummaryStep();
+            } else {
+                // Mettre à jour le contenu du récapitulatif / Update summary content
+                document.getElementById('summary-content').innerHTML = generateSummary();
+            }
+            
+            showStep(3.5);
+            return false;
+        }
+        
+        return true;
+    }
+
+    /**
+     * Vérifier si l'utilisateur a dépassé la limite de soumissions
+     * Check if user has exceeded submission limit
+     * @returns {boolean} - Indique si l'utilisateur est limité / Indicates if user is rate limited
+     */
+    function isRateLimited() {
+        const RATE_LIMIT_KEY = 'form_submissions';
+        const MAX_SUBMISSIONS = 5; // Maximum 5 soumissions / Maximum 5 submissions
+        const RATE_LIMIT_PERIOD = 60 * 60 * 1000; // 1 heure / 1 hour
+        
+        let submissions = JSON.parse(localStorage.getItem(RATE_LIMIT_KEY) || '[]');
+        const now = Date.now();
+        
+        // Nettoyer les anciennes entrées / Clean old entries
+        submissions = submissions.filter(time => now - time < RATE_LIMIT_PERIOD);
+        
+        // Vérifier le nombre de soumissions / Check number of submissions
+        if (submissions.length >= MAX_SUBMISSIONS) {
+            return true; // Limité / Limited
+        }
+        
+        // Ajouter l'horodatage actuel / Add current timestamp
+        submissions.push(now);
+        localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(submissions));
+        
+        return false; // Non limité / Not limited
+    }
+
+    /**
+     * Afficher la modale de confirmation
+     * Show confirmation modal
+     */
+    function showConfirmationModal() {
+        const modal = document.getElementById('confirmation-modal');
+        const modalBody = modal.querySelector('.modal-body');
+        
+        // Préparer le contenu de la modale / Prepare modal content
+        modalBody.innerHTML = `
+            <div class="confirmation-message">
+                <h2 class="second-title">Merci pour votre demande !</h2>
+                <p>Nous avons bien reçu votre demande de devis et nous vous contacterons très rapidement.</p>
+                <p>Un email de confirmation a été envoyé à l'adresse : <strong>${escapeHtml(formData.email)}</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-close-modal">Fermer</button>
+            </div>
+        `;
+        
+        // Afficher la modale / Show modal
+        modal.classList.add('show');
+        
+        // Ajouter les écouteurs d'événements pour fermer la modale / Add event listeners to close modal
+        const closeModalBtn = modal.querySelector('.btn-close-modal');
+        const closeModalX = modal.querySelector('.close-modal');
+        
+        closeModalBtn.addEventListener('click', closeModal);
+        closeModalX.addEventListener('click', closeModal);
+        
+        // Fermer la modale en cliquant en dehors / Close modal by clicking outside
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
     }
 
     // Fonction pour afficher le message de restauration seulement si nécessaire

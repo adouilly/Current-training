@@ -46,6 +46,13 @@
     
     <main>
         <form id="quote-form" novalidate>
+            <!-- Champs de sécurité cachés / Hidden security fields -->
+            <input type="hidden" id="csrf_token" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
+            <!-- Honeypot pour détecter les bots / Honeypot to detect bots -->
+            <div style="display:none">
+                <label for="website">Site web (ne pas remplir / do not fill)</label>
+                <input type="text" id="website" name="website" autocomplete="off">
+            </div>
             <!-- Étape 1: Informations personnelles / Step 1: Personal information -->
             <section class="form-step" id="step-1" data-step="1">
                 <h2 class="second-title">Informations personnelles</h2>
