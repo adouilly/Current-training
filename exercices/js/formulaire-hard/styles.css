@@ -460,6 +460,49 @@ select[multiple] {
     border: 1px solid var(--border-color);
 }
 
+/* Styles pour les types de fichiers acceptés */
+.accepted-file-types {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.file-type {
+    display: flex;
+    align-items: center;
+    background: rgba(32, 140, 140, 0.2);
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.file-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.file-icon.pdf {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M8.267 14.68c-.184 0-.308.018-.372.036v1.178c.076.018.171.023.302.023.479 0 .774-.242.774-.651 0-.366-.254-.586-.704-.586zm3.487.012c-.2 0-.33.018-.407.036v2.61c.077.018.201.018.313.018.817.006 1.349-.444 1.349-1.374.006-.84-.479-1.29-1.255-1.29z'/%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM9.498 16.19c-.309.29-.765.42-1.296.42-.108 0-.21-.008-.309-.018v1.426H7v-3.936a7.31 7.31 0 0 1 .938-.066c.439 0 .799.078 1.007.272.195.175.325.41.325.722.001.347-.134.65-.372.85zm3.807 1.355c-.42.349-1.059.515-1.84.515-.468 0-.799-.03-1.024-.06v-3.917A7.98 7.98 0 0 1 11.66 14c.757 0 1.249.136 1.633.426.415.308.675.799.675 1.504 0 .763-.279 1.29-.663 1.615zM17 14.77h-1.532v.911H16.9v.734h-1.432v1.604h-.906V14.03H17v.74zM14 9h-1V4l5 5h-4z'/%3E%3C/svg%3E");
+}
+
+.file-icon.doc {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-7 17v-2h9v2H7zm9-4H7v-2h9v2zm0-4H7V9h9v2zm-5-4V2l5 5h-5z'/%3E%3C/svg%3E");
+}
+
+.file-icon.jpg {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M19.999 4h-16c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm-13.5 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5.5 10h-7l4-5 1.5 2 3-4 5.5 7h-7z'/%3E%3C/svg%3E");
+}
+
+.file-icon.png {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M19.999 4h-16c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm-13.5 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5.5 10h-7l4-5 1.5 2 3-4 5.5 7h-7z'/%3E%3C/svg%3E");
+}
+
 /* Notification / Notification */
 .form-notification {
     padding: var(--spacing-md);

@@ -150,3 +150,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+if (!validTypes.includes(file.type)) {
+    showFileError('Type de fichier non supporté. Veuillez choisir un PDF, une image ou un document Word.');
+    fileInput.value = '';
+    return;
+}
+
+if (file.size > maxSize) {
+    showFileError(`Fichier trop volumineux (${(file.size / 1024 / 1024).toFixed(2)} MB). Maximum 5 MB`);
+    fileInput.value = '';
+    return;
+}
