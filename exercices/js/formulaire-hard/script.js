@@ -859,3 +859,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Démarrer l'application / Start the application
     init();
 });
+
