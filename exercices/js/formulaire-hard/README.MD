@@ -109,18 +109,22 @@ Le formulaire intègre plusieurs niveaux de protection pour garantir la sécurit
 Champ honeypot invisible - Piège les soumissions automatisées
 Double validation (client + serveur) pour s'assurer que les données sont légitimes
 Attributs ARIA correctement implémentés pour éviter les faux positifs avec les technologies d'assistance
+
 2. Protection contre les injections / Injection protection
 Échappement HTML systématique pour toutes les entrées utilisateur
 Validation de format stricte avec expressions régulières pour chaque type de champ
 Sanitization des données avant traitement côté serveur
+
 3. Protection CSRF / CSRF protection
 Tokens CSRF uniques générés pour chaque session utilisateur
 Validation obligatoire du token à chaque soumission du formulaire
 Expiration automatique des tokens après un délai défini
+
 4. Limitation de débit / Rate limiting
 Maximum 5 soumissions par heure pour une même adresse IP
 Système de comptage stocké en localStorage pour tracking local
 Protection contre les attaques par force brute et tentatives de spam
+
 5. Gestion sécurisée des erreurs / Secure error handling
 Messages d'erreur génériques ne révélant pas d'informations sensibles
 Journalisation détaillée côté serveur pour analyse des tentatives suspectes
