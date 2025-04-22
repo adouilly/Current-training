@@ -866,3 +866,51 @@ footer .logo {
     src: local('Montserrat'), local('Montserrat-Regular');
     font-display: swap;
 }
+
+/* ---------- CORRECTION DU MENU HAMBURGER POUR DESKTOP ---------- */
+/* Style de base pour les éléments du hamburger - toujours cachés par défaut */
+.hamburger-menu, 
+.hamburger-menu-label {
+    display: none !important; /* Complètement caché par défaut */
+    visibility: hidden;
+}
+
+/* Media query pour mobile - affiche explicitement le hamburger */
+@media screen and (max-width: 768px) {
+    .hamburger-menu-label {
+        display: block !important; /* Affiche le label uniquement sur mobile/tablette */
+        visibility: visible !important;
+        position: relative;
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 9999;
+        margin-right: var(--standard-padding);
+    }
+    
+    /* Autres styles du hamburger pour mobile qui peuvent rester les mêmes */
+    .hamburger-bar {
+        display: block;
+        width: 30px;
+        height: 3px;
+        margin: 6px auto;
+        background-color: var(--color-white);
+        transition: transform var(--animation-speed) var(--transition-timing),
+                    opacity var(--animation-speed) var (--transition-timing);
+        transform-origin: center;
+    }
+}
+
+/* Media query pour desktop - s'assure explicitement que tous les éléments hamburger sont cachés */
+@media screen and (min-width: 769px) {
+    .hamburger-menu,
+    .hamburger-menu-label {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+}
