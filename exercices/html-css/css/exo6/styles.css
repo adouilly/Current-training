@@ -216,25 +216,79 @@ p {
     letter-spacing: 1px;
     position: relative;
     overflow: hidden;
-    /* Suppression de l'effet néon */
-    box-shadow: none;
+    box-shadow: 0 0 3px #ffffff, 0 0 5px #ffffff, 0 0 8px #ffffff;
     opacity: 1 !important; /* Forcer l'affichage des éléments de texte */
     animation: fadeInElement 1s ease-out forwards;
     animation-delay: 1.2s;
 }
 
-/* Effet glitch sur le bouton sans effet néon */
+/* Effet glitch amélioré sur le bouton */
 .btn.glitch-btn {
-    animation: btn-glitch-no-neon 3s infinite alternate-reverse;
+    animation: btn-glitch 3s infinite alternate-reverse; /* Plus rapide pour plus de visibilité */
     position: relative;
     z-index: 25;
+}
+
+.btn.glitch-btn::before {
+    content: "En savoir plus";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border: inherit;
+    border-radius: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: -1;
+    opacity: 0.5;
+    color: #00ffff;
+    animation: btn-before-glitch 3s infinite;
+    transform-origin: center;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
 }
 
 .btn:hover {
     background-color: rgba(255, 255, 255, 0.4);
     transform: scale(1.05);
-    /* Suppression de l'effet néon au survol */
-    box-shadow: none;
+    box-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 15px #ffffff; /* Lighter neon effect */
+}
+
+/* Sound control button */
+.sound-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4); /* More transparent background */
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(2px); /* Optional: adds slight blur effect behind the button */
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.7), 0 0 5px rgba(255, 255, 255, 0.5); /* Lighter neon effect */
+    transition: all 0.3s ease;
+    opacity: 1; /* Visible tout de suite sans animation */
+    animation: fadeIn 0.5s ease-out forwards;
+    animation-delay: 1.5s; /* Last element to appear */
+}
+
+.sound-button:hover {
+    transform: scale(1.1);
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.6); /* Lighter neon effect */
+}
+
+.sound-button i {
+    text-shadow: 0 0 5px #ffffff;
 }
 
 /* Neon animations */
@@ -483,22 +537,6 @@ p {
     95%, 98% { 
         transform: translate(-2px, 1px);
         opacity: 0.5;
-    }
-}
-
-/* Animation pour le bouton sans effet néon */
-@keyframes btn-glitch-no-neon {
-    0%, 100%, 94%, 97%, 99% { 
-        transform: translate(0) scale(1);
-        /* Pas d'effet néon */
-    }
-    93%, 98% { 
-        transform: translate(2px, -1px) scale(1.03);
-        /* Pas d'effet néon cyan */
-    }
-    95%, 96% { 
-        transform: translate(-2px, 1px) scale(0.98);
-        /* Pas d'effet néon magenta */
     }
 }
 

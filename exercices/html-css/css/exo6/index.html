@@ -26,12 +26,21 @@
     <!-- Vidéo d'arrière-plan avec multiples sources -->
     <div id="mavideo">
         <!-- Utilise plusieurs sources en fallback automatique -->
-        <video autoplay loop muted playsinline id="bg-video" class="video-player">
+        <video autoplay loop muted playsinline id="bg-video" class="video-player" controls muted>
             <!-- Source principale -->
             <source src="https://cdn.pixabay.com/video/2020/03/30/34608-402679728_large.mp4" type="video/mp4">
             <!-- Source de fallback -->
             <source src="vidéo.mp4.mp4" type="video/mp4">
         </video>
+        
+        <!-- Contrôles vidéo discrets (optionnels) -->
+        <div class="video-controls">
+            <input type="checkbox" id="sound-toggle-box" class="sound-toggle-input">
+            <label for="sound-toggle-box" class="sound-button">
+                <i class="fas fa-volume-mute sound-off"></i>
+                <i class="fas fa-volume-up sound-on"></i>
+            </label>
+        </div>
     </div>
     
     <main>
@@ -43,5 +52,20 @@
             </div>
         </section>
     </main>
+    
+    <!-- Script minimal pour la fonction mute/unmute -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Récupérer les éléments nécessaires
+            const video = document.getElementById('bg-video');
+            const soundToggle = document.getElementById('sound-toggle-box');
+            
+            // Ajouter l'événement pour contrôler le son
+            soundToggle.addEventListener('change', function() {
+                // Inverser l'état du son
+                video.muted = !this.checked;
+            });
+        });
+    </script>
 </body>
 </html>
