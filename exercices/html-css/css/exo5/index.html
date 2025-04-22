@@ -1,0 +1,71 @@
+<!-- Document Type HTML5 -->
+<!doctype html>
+<html lang="fr">
+<head>
+    <!-- Métadonnées essentielles / Essential metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vidéo background">
+    <meta name="author" content="adouilly">
+    <title>Vidéo background</title>
+    
+    <!-- Favicon d'icône de message (encodé correctement) -->
+    <link rel="icon" href="https://images.icon-icons.com/2890/PNG/512/apps_media_logo_youtube_video_multimedia_stream_download_play_clip_icon_182703.png">
+    
+    <!-- Chargement des polices Google Fonts / Loading Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+       
+    <!-- Chargement des fichiers CSS / Loading CSS files -->
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Vidéo d'arrière-plan avec multiples sources -->
+    <div id="mavideo">
+        <!-- Utilise plusieurs sources en fallback automatique -->
+        <video autoplay loop muted playsinline id="bg-video" class="video-player" controls muted>
+            <!-- Source principale -->
+            <source src="https://cdn.pixabay.com/video/2020/03/30/34608-402679728_large.mp4" type="video/mp4">
+            <!-- Source de fallback -->
+            <source src="vidéo.mp4.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Contrôles vidéo discrets (optionnels) -->
+        <div class="video-controls">
+            <input type="checkbox" id="sound-toggle-box" class="sound-toggle-input">
+            <label for="sound-toggle-box" class="sound-button">
+                <i class="fas fa-volume-mute sound-off"></i>
+                <i class="fas fa-volume-up sound-on"></i>
+            </label>
+        </div>
+    </div>
+    
+    <main>
+        <section id="calltoaction">
+            <div class="neon-container glitch-container">
+                <h1 class="high-title">Découvrez nos services</h1>
+                <p>Solutions innovantes pour votre entreprise</p>
+                <button class="btn glitch-btn">En savoir plus</button>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Script minimal pour la fonction mute/unmute -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Récupérer les éléments nécessaires
+            const video = document.getElementById('bg-video');
+            const soundToggle = document.getElementById('sound-toggle-box');
+            
+            // Ajouter l'événement pour contrôler le son
+            soundToggle.addEventListener('change', function() {
+                // Inverser l'état du son
+                video.muted = !this.checked;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,598 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+}
+
+#mavideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+/* Style for both video types */
+#mavideo iframe, #mavideo video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+    object-fit: cover;
+}
+
+#mavideo video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+    object-fit: cover;
+}
+
+#content {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  #mavideo {
+    height: 300%;
+    top: -100%;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  #mavideo {
+    width: 300%;
+    left: -100%;
+  }
+}
+
+/* Section containing title, paragraph, and button - Fix visibility issues */
+#calltoaction {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Commenter temporairement les animations pour tester */
+    /* 
+    opacity: 0;
+    animation: fadeInSection 1s ease-out forwards;
+    animation-delay: 0.3s; 
+    */
+    opacity: 1; /* Forcer l'affichage */
+}
+
+/* Neon container styling - Simplified to ensure visibility */
+.neon-container {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50px; /* Significantly increased border radius for very rounded corners */
+    padding: 40px;
+    max-width: 600px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 0 1px #ffffff, 0 0 2px #ffffff; /* Even more subtle glow */
+    /* Commenter temporairement les animations complexes */
+    /*
+    animation: neonBorderFlow 4s infinite linear;
+    */
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center; /* Center all text content */
+    z-index: 20; /* Augmenter le z-index pour s'assurer qu'il est visible */
+}
+
+/* Animation pour l'effet de glitch sur le conteneur - Intensifié */
+.neon-container.glitch-container {
+    animation: container-glitch 5s infinite; /* Accéléré de 8s à 5s pour rendre l'effet plus visible */
+    position: relative;
+    z-index: 20;
+}
+
+.neon-container.glitch-container::before {
+    animation: neonBorderRotate 4s linear infinite, container-glitch-border 5s infinite;
+    z-index: 19;
+}
+
+/* Ajout d'un effet supplémentaire pour renforcer le glitch du conteneur */
+.neon-container.glitch-container::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50px;
+    background: transparent;
+    z-index: -1;
+    animation: container-glitch-outer 6s infinite;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.neon-container:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 0 2px #ffffff, 0 0 4px #ffffff; /* Subtler hover effect */
+}
+
+/* Neon border animation effect - matching the more rounded corners */
+.neon-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50px; /* Match the container's increased border-radius */
+    border: 1px solid transparent; /* Even thinner border for subtler effect */
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), rgba(255,255,255,0.8), transparent) border-box;
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: neonBorderRotate 4s linear infinite;
+    filter: blur(0.3px); /* Minimal blur for sharper edges */
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.2em;
+    color: #ffffff;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 30px;
+    text-shadow: 
+        0 0 1px #ffffff,  /* Very subtle glow */
+        0 0 2px #ffffff;  /* Reduced glow layers */
+    letter-spacing: 1px;
+    font-weight: 700;
+    opacity: 1 !important; /* Forcer l'affichage des éléments de texte */
+    animation: fadeInElement 1s ease-out forwards;
+    animation-delay: 0.6s;
+}
+
+/* Style spécifique pour le titre et paragraphe (sans effet glitch) */
+h1.high-title, 
+p {
+    position: relative; /* Annuler l'effet de position pour glitch */
+    animation: none; /* Désactiver l'animation glitch */
+}
+
+/* Supprimer les pseudoéléments pour le titre et paragraphe */
+h1.high-title::before,
+h1.high-title::after,
+p::before,
+p::after {
+    display: none; /* Empêcher l'affichage des éléments glitch */
+    content: none; /* Alternative pour certains navigateurs */
+}
+
+p {
+    color: #ffffff;
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 300;
+    line-height: 1.4;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.3); /* Lighter neon effect */
+    opacity: 1 !important; /* Forcer l'affichage des éléments de texte */
+    animation: fadeInElement 1s ease-out forwards;
+    animation-delay: 0.9s;
+}
+
+.btn {
+    padding: 12px 30px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid #ffffff;
+    border-radius: 25px; /* Much more rounded corners */
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 3px #ffffff, 0 0 5px #ffffff, 0 0 8px #ffffff;
+    opacity: 1 !important; /* Forcer l'affichage des éléments de texte */
+    animation: fadeInElement 1s ease-out forwards;
+    animation-delay: 1.2s;
+}
+
+/* Effet glitch amélioré sur le bouton */
+.btn.glitch-btn {
+    animation: btn-glitch 3s infinite alternate-reverse; /* Plus rapide pour plus de visibilité */
+    position: relative;
+    z-index: 25;
+}
+
+.btn.glitch-btn::before {
+    content: "En savoir plus";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border: inherit;
+    border-radius: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: -1;
+    opacity: 0.5;
+    color: #00ffff;
+    animation: btn-before-glitch 3s infinite;
+    transform-origin: center;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+    box-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 15px #ffffff; /* Lighter neon effect */
+}
+
+/* Sound control button */
+.sound-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4); /* More transparent background */
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(2px); /* Optional: adds slight blur effect behind the button */
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.7), 0 0 5px rgba(255, 255, 255, 0.5); /* Lighter neon effect */
+    transition: all 0.3s ease;
+    opacity: 1; /* Visible tout de suite sans animation */
+    animation: fadeIn 0.5s ease-out forwards;
+    animation-delay: 1.5s; /* Last element to appear */
+}
+
+.sound-button:hover {
+    transform: scale(1.1);
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.6); /* Lighter neon effect */
+}
+
+.sound-button i {
+    text-shadow: 0 0 5px #ffffff;
+}
+
+/* Neon animations */
+@keyframes neonBorderRotate {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 400% 0%;
+    }
+}
+
+/* Neon animations with more subtle effects */
+@keyframes neonBorderFlow {
+    0%, 100% {
+        box-shadow: 0 0 1px #ffffff, 0 0 2px #ffffff;
+    }
+    50% {
+        box-shadow: 0 0 2px #ffffff, 0 0 3px #ffffff;
+    }
+}
+
+/* Fade-in animations - Adjust to maintain center positioning */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) translate(-50%, -50%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) translate(-50%, -50%);
+    }
+}
+
+/* Separate animations to fix centering issues */
+@keyframes fadeInSection {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInElement {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Effet Glitch */
+.glitch {
+    position: relative;
+    animation: glitch-anim 2s infinite alternate-reverse;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 #ff00ff;
+    animation: glitch-anim-1 3s infinite alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: 1px 0 #00ffff;
+    animation: glitch-anim-2 2.5s infinite alternate-reverse;
+    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+}
+
+/* Animation pour l'effet de glitch sur le conteneur */
+.neon-container.glitch-container {
+    animation: container-glitch 8s infinite;
+}
+
+.glitch-container::before {
+    animation: neonBorderRotate 4s linear infinite, container-glitch-border 5s infinite;
+}
+
+/* Effet glitch sur le bouton */
+.btn.glitch-btn {
+    animation: btn-glitch 4s infinite alternate-reverse;
+}
+
+/* Keyframes pour les animations de glitch */
+@keyframes glitch-anim {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-1px, 1px); }
+    40% { transform: translate(-1px, -1px); }
+    60% { transform: translate(1px, 1px); }
+    80% { transform: translate(1px, -1px); }
+}
+
+@keyframes glitch-anim-1 {
+    0%, 100% { transform: translate(0); }
+    40% { transform: translate(-2px, 1px); }
+    60% { transform: translate(2px, 1px); }
+}
+
+@keyframes glitch-anim-2 {
+    0%, 100% { transform: translate(0); }
+    40% { transform: translate(2px, -1px); }
+    60% { transform: translate(-2px, 1px); }
+}
+
+@keyframes container-glitch {
+    0%, 100%, 93%, 95%, 98% { 
+        transform: translate(0) skew(0);
+        box-shadow: 0 0 1px #ffffff, 0 0 2px #ffffff;
+    }
+    94% { 
+        transform: translate(2px, 1px) skew(1deg, 0deg);
+        box-shadow: 0 0 3px #ff00ff, 0 0 5px #ff00ff; 
+    }
+    96% { 
+        transform: translate(-2px, -1px) skew(-1deg, 0deg);
+        box-shadow: 0 0 3px #00ffff, 0 0 5px #00ffff; 
+    }
+    97% { 
+        transform: translate(0, 0) skew(0);
+        box-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff; 
+    }
+    99% { 
+        transform: translate(-1px, 0) skew(-0.5deg, 0deg);
+        box-shadow: 0 0 2px #ff00ff, 0 0 4px #00ffff; 
+    }
+}
+
+@keyframes container-glitch-border {
+    0%, 100%, 93%, 95%, 98% { 
+        filter: brightness(100%) hue-rotate(0deg);
+    }
+    94%, 99% { 
+        filter: brightness(150%) hue-rotate(45deg);
+    }
+    96%, 97% { 
+        filter: brightness(120%) hue-rotate(-45deg);
+    }
+}
+
+@keyframes btn-glitch {
+    0%, 100%, 95%, 97%, 99% { 
+        transform: translate(0) scale(1);
+        box-shadow: 0 0 3px #ffffff, 0 0 5px #ffffff, 0 0 8px #ffffff;
+    }
+    94%, 98% { 
+        transform: translate(1px, 0) scale(1.01);
+        box-shadow: 0 0 3px #00ffff, 0 0 6px #00ffff;
+    }
+    96% { 
+        transform: translate(-1px, 0) scale(0.99);
+        box-shadow: 0 0 3px #ff00ff, 0 0 6px #ff00ff;
+    }
+}
+
+/* Modification des keyframes pour un effet plus visible */
+@keyframes container-glitch {
+    0%, 100%, 92%, 96%, 98% { 
+        transform: translate(0) skew(0);
+        box-shadow: 0 0 2px #ffffff, 0 0 3px #ffffff;
+    }
+    93% { 
+        transform: translate(3px, 1px) skew(1.5deg, 0deg);
+        box-shadow: 0 0 5px #ff00ff, 0 0 8px #ff00ff; 
+    }
+    95% { 
+        transform: translate(-3px, -2px) skew(-2deg, 0.5deg);
+        box-shadow: 0 0 5px #00ffff, 0 0 8px #00ffff; 
+    }
+    97% { 
+        transform: translate(0, 0) skew(0);
+        box-shadow: 0 0 8px #ffffff, 0 0 12px #ffffff; 
+    }
+    99% { 
+        transform: translate(-2px, 0) skew(-1deg, 0deg);
+        box-shadow: 0 0 3px #ff00ff, 0 0 6px #00ffff; 
+    }
+}
+
+@keyframes container-glitch-border {
+    0%, 100%, 92%, 96%, 98% { 
+        filter: brightness(100%) hue-rotate(0deg);
+    }
+    93%, 99% { 
+        filter: brightness(180%) hue-rotate(60deg);
+    }
+    95%, 97% { 
+        filter: brightness(150%) hue-rotate(-60deg);
+    }
+}
+
+@keyframes container-glitch-outer {
+    0%, 100%, 92%, 96%, 98% { 
+        box-shadow: 0 0 0 transparent;
+    }
+    93% {
+        box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    }
+    95% {
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    }
+    97%, 99% {
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+    }
+}
+
+@keyframes btn-glitch {
+    0%, 100%, 94%, 97%, 99% { 
+        transform: translate(0) scale(1);
+        box-shadow: 0 0 3px #ffffff, 0 0 5px #ffffff, 0 0 8px #ffffff;
+    }
+    93%, 98% { 
+        transform: translate(2px, -1px) scale(1.03);
+        box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+    }
+    95%, 96% { 
+        transform: translate(-2px, 1px) scale(0.98);
+        box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
+    }
+}
+
+@keyframes btn-before-glitch {
+    0%, 100%, 94%, 96% { 
+        transform: translate(0);
+        opacity: 0.3;
+    }
+    93%, 97% { 
+        transform: translate(2px, -1px);
+        opacity: 0.8;
+    }
+    95%, 98% { 
+        transform: translate(-2px, 1px);
+        opacity: 0.5;
+    }
+}
+
+/* Debugging styles */
+.debug-outline {
+    outline: 2px solid red !important;
+}
+
+.debug-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Solution sans JavaScript pour le bouton mute/unmute */
+.video-controls {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 100;
+}
+
+.sound-toggle-input {
+    display: none;
+}
+
+.sound-on {
+    display: none;
+}
+
+.sound-toggle-input:checked ~ #bg-video {
+    /* Hack CSS pour activer/désactiver le son */
+    muted: unset; /* Note: Ceci ne fonctionne pas dans tous les navigateurs */
+}
+
+.sound-toggle-input:checked ~ label .sound-off {
+    display: none;
+}
+
+.sound-toggle-input:checked ~ label .sound-on {
+    display: inline-block;
+}
+
+/* Retirer les animations basées sur l'opacité pour les éléments clés */
+#calltoaction,
+.neon-container,
+h1, p, .btn {
+    opacity: 1 !important;
+    animation: none !important;
+    animation-delay: 0s !important;
+}
+
+/* Version simplifiée pour les animations qui fonctionnent sans JS */
+.glitch-container {
+    animation: container-glitch 5s infinite;
+}
+
+.btn.glitch-btn {
+    animation: btn-glitch 3s infinite alternate-reverse;
+}
