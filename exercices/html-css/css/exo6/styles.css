@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+  }
+  
 /* ---------- VARIABLES ET CONFIG DE BASE ---------- */
 :root {
     /* Palette de couleurs */
