@@ -29,12 +29,14 @@
     <input type="checkbox" id="menu-toggle-checkbox" aria-hidden="true">
     
     <header>
-        <!-- Logo fusée avec dégradé - URL corrigée -->
-        <div class="logo-container">
-            <img src="https://cdn-icons-png.flaticon.com/512/6839/6839933.png" alt="Logo Fusée" class="logo">
-            <!-- Nom de la marque avec dégradé de couleur -->
-            <h3 class="brand-name">Y.M Family</h3>
-        </div>
+        <!-- Logo fusée avec dégradé - Rendu cliquable -->
+        <a href="#" class="logo-link">
+            <div class="logo-container">
+                <img src="https://cdn-icons-png.flaticon.com/512/6839/6839933.png" alt="Logo Fusée" class="logo">
+                <!-- Nom de la marque avec dégradé de couleur -->
+                <h3 class="brand-name">Y.M Family</h3>
+            </div>
+        </a>
 
         <!-- Label pour menu hamburger sans JavaScript -->
         <label for="menu-toggle-checkbox" class="hamburger-menu-label" aria-label="Menu principal">
@@ -42,13 +44,6 @@
             <span class="hamburger-bar"></span>
             <span class="hamburger-bar"></span>
         </label>
-
-        <!-- Bouton hamburger pour la navigation mobile (à supprimer progressivement) -->
-        <button class="hamburger-menu" id="menu-toggle" aria-label="Menu principal" aria-expanded="false" aria-controls="main-nav">
-            <span class="hamburger-bar"></span>
-            <span class="hamburger-bar"></span>
-            <span class="hamburger-bar"></span>
-        </button>
 
         <!-- Navigation responsive -->
         <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
@@ -75,6 +70,11 @@
             </ul>
         </nav>
     </header>
+
+    <!-- Bouton retour en haut de page - visible uniquement en desktop -->
+    <button id="back-to-top" class="back-to-top" aria-label="Retourner en haut de la page">
+        <i class="fas fa-arrow-up"></i>
+    </button>
     
     <main>
         <!-- Section héro avec vidéo YouTube + cta -->

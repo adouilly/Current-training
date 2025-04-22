@@ -1,32 +1,37 @@
 // Script pour le menu hamburger et la navigation responsive
 document.addEventListener('DOMContentLoaded', function() {
     // Obtenir les éléments du DOM
-    const menuToggle = document.getElementById('menu-toggle');
+    // Supprimer la référence à l'ancien bouton hamburger
+    // const menuToggle = document.getElementById('menu-toggle');
     const mainNav = document.getElementById('main-nav');
     const dropdowns = document.querySelectorAll('.dropdown');
     const overlay = document.getElementById('menu-overlay');
     const menuCheckbox = document.getElementById('menu-toggle-checkbox');
     const hamburgerLabel = document.querySelector('.hamburger-menu-label');
     
-    // Ajouter un événement de clic pour le label du hamburger
+    // Ajouter un événement de clic pour le label du hamburger - LOGIQUE CORRIGÉE
     if (hamburgerLabel) {
-        hamburgerLabel.addEventListener('click', function() {
-            // Le changement d'état de la checkbox est géré automatiquement par le label
-            // Nous devons simplement ajouter/supprimer les classes manuellement
-            if (menuCheckbox.checked) {
-                openMenu();
-            } else {
+        hamburgerLabel.addEventListener('click', function(e) {
+            // Prévenir le comportement par défaut pour contrôler manuellement
+            e.preventDefault();
+            
+            // Vérifier l'état actuel du menu plutôt que la checkbox
+            if (mainNav.classList.contains('open')) {
                 closeMenu();
+                menuCheckbox.checked = false; // Synchroniser l'état de la checkbox
+            } else {
+                openMenu();
+                menuCheckbox.checked = true; // Synchroniser l'état de la checkbox
             }
         });
     }
     
     // Fonctions d'accessibilité
     function updateAriaAttributes(isOpen) {
-        // Si on utilise encore le bouton hamburger (pendant la transition)
-        if (menuToggle) {
-            menuToggle.setAttribute('aria-expanded', isOpen);
-        }
+        // Supprimer la référence à l'ancien bouton hamburger
+        // if (menuToggle) {
+        //     menuToggle.setAttribute('aria-expanded', isOpen);
+        // }
         
         document.querySelectorAll('.dropdown a[aria-haspopup]').forEach(item => {
             item.setAttribute('aria-expanded', 'false');
@@ -35,9 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Fonction pour ouvrir le menu
     function openMenu() {
-        if (menuToggle) {
-            menuToggle.classList.add('open');
-        }
+        // Supprimer la référence à l'ancien bouton hamburger
+        // if (menuToggle) {
+        //     menuToggle.classList.add('open');
+        // }
         mainNav.classList.add('open');
         document.body.classList.add('menu-open');
         overlay.classList.add('active');
@@ -46,9 +52,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Fonction pour fermer le menu
     function closeMenu() {
-        if (menuToggle) {
-            menuToggle.classList.remove('open');
-        }
+        // Supprimer la référence à l'ancien bouton hamburger
+        // if (menuToggle) {
+        //     menuToggle.classList.remove('open');
+        // }
         mainNav.classList.remove('open');
         document.body.classList.remove('menu-open');
         overlay.classList.remove('active');
@@ -74,16 +81,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Si on utilise encore le bouton hamburger
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
-            if (mainNav.classList.contains('open')) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
-        });
-    }
+    // Supprimer le gestionnaire d'événement pour l'ancien bouton hamburger
+    // if (menuToggle) {
+    //     menuToggle.addEventListener('click', function() {
+    //         if (mainNav.classList.contains('open')) {
+    //             closeMenu();
+    //         } else {
+    //             openMenu();
+    //         }
+    //     });
+    // }
 
     // Vérifier l'état initial de la checkbox au chargement
     if (menuCheckbox && menuCheckbox.checked) {
@@ -122,5 +129,44 @@ document.addEventListener('DOMContentLoaded', function() {
                 closeMenu();
             }
         });
+    });
+
+    // Fonctionnalités de scroll top
+    const backToTopButton = document.getElementById('back-to-top');
+    const logoLink = document.querySelector('.logo-link');
+    
+    // Fonction pour scroller en haut de la page
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+    
+    // Ajouter un écouteur d'événements pour le bouton retour en haut
+    if (backToTopButton) {
+        backToTopButton.addEventListener('click', scrollToTop);
+    }
+    
+    // Ajouter un écouteur d'événements pour le logo (uniquement en desktop)
+    if (logoLink) {
+        logoLink.addEventListener('click', function(e) {
+            // Vérifier si on est en desktop (largeur > 768px)
+            if (window.innerWidth >= 769) {
+                e.preventDefault();
+                scrollToTop();
+            }
+        });
+    }
+    
+    // Afficher/masquer le bouton back-to-top selon le défilement
+    window.addEventListener('scroll', function() {
+        if (window.innerWidth >= 769) { // Uniquement en desktop
+            if (window.pageYOffset > 200) {
+                backToTopButton.style.display = 'flex';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        }
     });
 });

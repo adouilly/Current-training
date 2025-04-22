@@ -181,6 +181,7 @@ header {
     z-index: 1050;
     overflow: visible;
     box-sizing: border-box;
+    transition: right 0.3s ease-in-out, visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 .main-nav.open {
@@ -609,8 +610,7 @@ footer .logo {
     display: none;
 }
 
-/* Label et bouton hamburger */
-.hamburger-menu, 
+/* Label uniquement (suppression de la référence au bouton) */
 .hamburger-menu-label {
     display: none;
     position: relative;
@@ -622,109 +622,51 @@ footer .logo {
     padding: 0;
     z-index: 9999;
     margin-right: var(--standard-padding);
+    visibility: hidden;
 }
 
-.hamburger-bar {
-    display: block;
-    width: 30px;
-    height: 3px;
-    margin: 6px auto;
-    background-color: var(--color-white);
-    transition: transform var(--animation-speed) var(--transition-timing),
-                opacity var(--animation-speed) var(--transition-timing);
-    transform-origin: center;
-}
-
-/* Animation hamburger */
-.hamburger-menu.open .hamburger-bar:nth-child(1),
-#menu-toggle-checkbox:checked ~ header .hamburger-menu-label .hamburger-bar:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
-}
-
-.hamburger-menu.open .hamburger-bar:nth-child(2),
-#menu-toggle-checkbox:checked ~ header .hamburger-menu-label .hamburger-bar:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger-menu.open .hamburger-bar:nth-child(3),
-#menu-toggle-checkbox:checked ~ header .hamburger-menu-label .hamburger-bar:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
-}
-
-/* État coché */
-#menu-toggle-checkbox:checked ~ .main-nav {
-    right: 0 !important;
-}
-
-#menu-toggle-checkbox:checked ~ #menu-overlay {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* ---------- MENU HAMBURGER - Suppression du double hamburger en responsive ---------- */
-/* Version obsolète du hamburger - Complètement cachée */
+/* Supprimer toutes les références à la classe hamburger-menu */
+/* Suppression des styles obsolètes */
 .hamburger-menu {
-    display: none !important; /* Force la suppression complète */
-    visibility: hidden; /* Double sécurité */
-    opacity: 0;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
     position: absolute;
-    z-index: -1; /* Le placer derrière tout le reste */
-    pointer-events: none; /* Désactiver les interactions */
+    z-index: -999;
+    width: 0;
+    height: 0;
+    overflow: hidden;
 }
 
-/* Correction de la visibilité du label pour hamburger */
-@media screen and (max-width: 768px) {
-    .hamburger-menu-label {
-        display: block !important; /* S'assurer que seul le label s'affiche */
-        position: relative;
-    }
-}
-
-/* ---------- CORRECTION MENU HAMBURGER MOBILE ---------- */
-/* S'assurer que le label pour la checkbox est cliquable et visible */
-.hamburger-menu-label {
-    display: block;
-    cursor: pointer;
-    z-index: 9999; /* Assurer qu'il reste au-dessus des autres éléments */
-}
-
-/* Correction pour le fonctionnement du menu hamburger */
-#menu-toggle-checkbox:checked ~ header .main-nav,
-#menu-toggle-checkbox:checked + header .main-nav,
-#menu-toggle-checkbox:checked ~ .main-nav {
-    right: 0 !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    transform: translateX(0) !important;
-}
-
-/* S'assurer que le menu principal est bien positionné sur mobile */
-@media screen and (max-width: 768px) {
-    .main-nav {
-        position: fixed !important;
-        top: 0 !important;
-        right: -100% !important; /* Position initiale hors de l'écran */
-        width: 80% !important;
-        height: 100vh !important;
-        background-color: var(--color-navy) !important;
-        transition: right 0.3s ease-in-out !important;
-        z-index: 1050 !important;
-        padding: 80px 20px 20px !important;
-        overflow-y: auto !important;
-        visibility: visible; /* S'assurer qu'il est visible une fois positionné */
-        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
-    }
-}
-
-/* S'assurer que la transition est fluide */
-.main-nav {
-    transition: right 0.3s ease-in-out, visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
-}
-
-/* ---------- MEDIA QUERIES ---------- */
-/* Mobile first - styles par défaut */
+/* Correction des références dans les media queries */
 @media screen and (max-width: 768px) {
     /* Header et navigation */
+    header {
+        padding: 25px;
+    }
+    
+    /* Ne garder que la référence au label */
+    .hamburger-menu-label {
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    /* S'assurer que les barres du hamburger sont visibles */
+    .hamburger-bar {
+        display: block;
+        width: 30px;
+        height: 3px;
+        margin: 6px auto;
+        background-color: var(--color-white);
+        transition: transform var(--animation-speed) var(--transition-timing),
+                    opacity var(--animation-speed) var(--transition-timing);
+        transform-origin: center;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Autres règles mobile restent inchangées */
     header {
         padding: 25px;
     }
@@ -739,11 +681,13 @@ footer .logo {
         top: 0 !important;
         right: -100% !important;
         width: 80% !important;
-        height: 100vh !important;
+        /* Remplacer height: 100vh par auto pour s'adapter au contenu */
+        height: auto !important;
+        max-height: calc(100% - 20px) !important; /* Limiter la hauteur maximale */
         background-color: var(--color-navy) !important;
         transition: right 0.3s ease-in-out !important;
         z-index: 1050 !important;
-        padding: 80px 20px 20px !important;
+        padding: 80px 20px 45px !important; /* Augmenter le padding en bas */
         overflow-y: auto !important;
     }
     
@@ -759,6 +703,11 @@ footer .logo {
     .nav-list li {
         width: 100% !important;
         margin-bottom: 15px !important;
+    }
+
+    /* Assurer que le dernier élément (Contact) a un espace en dessous */
+    .nav-list li:last-child {
+        margin-bottom: 25px !important; /* Ajouter un espace après le dernier élément */
     }
     
     /* Dropdown en mode mobile */
@@ -795,10 +744,23 @@ footer .logo {
     .dropdown.active > a::after {
         transform: rotate(180deg);
     }
+
+    .logo-link {
+        pointer-events: none;
+    }
 }
 
-/* Desktop */
+/* Refactorisation claire pour desktop - MAINTENIR LE HAMBURGER CACHÉ */
 @media screen and (min-width: 769px) {
+    .hamburger-menu,
+    .hamburger-menu-label {
+        display: none !important; /* Forcer masquage sur desktop */
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+    
+    /* Autres règles desktop restent inchangées */
     .hamburger-menu {
         display: none !important;
     }
@@ -842,6 +804,14 @@ footer .logo {
     .dropdown:hover > a::after {
         transform: rotate(180deg);
     }
+
+    .back-to-top {
+        display: flex;
+    }
+    
+    .logo-link {
+        cursor: pointer;
+    }
 }
 
 /* Préférences d'accessibilité */
@@ -867,50 +837,39 @@ footer .logo {
     font-display: swap;
 }
 
-/* ---------- CORRECTION DU MENU HAMBURGER POUR DESKTOP ---------- */
-/* Style de base pour les éléments du hamburger - toujours cachés par défaut */
-.hamburger-menu, 
-.hamburger-menu-label {
-    display: none !important; /* Complètement caché par défaut */
-    visibility: hidden;
+/* ---------- BACK TO TOP BUTTON & LOGO LINK ---------- */
+/* Style pour le lien du logo - même design que le logo-container normal */
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+    display: contents; /* Pour ne pas affecter la mise en page existante */
 }
 
-/* Media query pour mobile - affiche explicitement le hamburger */
-@media screen and (max-width: 768px) {
-    .hamburger-menu-label {
-        display: block !important; /* Affiche le label uniquement sur mobile/tablette */
-        visibility: visible !important;
-        position: relative;
-        width: 40px;
-        height: 40px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-        z-index: 9999;
-        margin-right: var(--standard-padding);
-    }
-    
-    /* Autres styles du hamburger pour mobile qui peuvent rester les mêmes */
-    .hamburger-bar {
-        display: block;
-        width: 30px;
-        height: 3px;
-        margin: 6px auto;
-        background-color: var(--color-white);
-        transition: transform var(--animation-speed) var(--transition-timing),
-                    opacity var(--animation-speed) var (--transition-timing);
-        transform-origin: center;
-    }
+/* Bouton retour en haut - masqué par défaut */
+.back-to-top {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    border: 2px solid var(--color-white);
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 900;
+    display: none; /* Masqué par défaut */
+    opacity: 0.7;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Media query pour desktop - s'assure explicitement que tous les éléments hamburger sont cachés */
-@media screen and (min-width: 769px) {
-    .hamburger-menu,
-    .hamburger-menu-label {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-    }
+.back-to-top:hover {
+    opacity: 1;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
