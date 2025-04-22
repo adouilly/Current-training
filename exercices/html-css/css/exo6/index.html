@@ -11,17 +11,23 @@
     <!-- Favicon d'icône de site - URL corrigée -->
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2060/2060330.png">
     
-    <!-- Chargement des polices Google Fonts / Loading Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Préchargement des polices pour éviter les problèmes de cookies tiers -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous">
        
     <!-- Chargement des fichiers CSS / Loading CSS files -->
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Overlay pour le menu mobile -->
+    <div id="menu-overlay"></div>
+    
+    <!-- Checkbox cachée pour contrôler l'état du menu -->
+    <input type="checkbox" id="menu-toggle-checkbox" aria-hidden="true">
+    
     <header>
         <!-- Logo fusée avec dégradé - URL corrigée -->
         <div class="logo-container">
@@ -30,20 +36,27 @@
             <h3 class="brand-name">Y.M Family</h3>
         </div>
 
-        <!-- Bouton hamburger pour la navigation mobile -->
-        <button class="hamburger-menu" id="menu-toggle" aria-label="Menu principal">
+        <!-- Label pour menu hamburger sans JavaScript -->
+        <label for="menu-toggle-checkbox" class="hamburger-menu-label" aria-label="Menu principal">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+        </label>
+
+        <!-- Bouton hamburger pour la navigation mobile (à supprimer progressivement) -->
+        <button class="hamburger-menu" id="menu-toggle" aria-label="Menu principal" aria-expanded="false" aria-controls="main-nav">
             <span class="hamburger-bar"></span>
             <span class="hamburger-bar"></span>
             <span class="hamburger-bar"></span>
         </button>
 
         <!-- Navigation responsive -->
-        <nav class="main-nav" id="main-nav">
+        <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
             <ul class="nav-list">
                 <li><a href="#hero" class="active">Accueil</a></li>
                 <li class="dropdown">
-                    <a href="#services">Services</a>
-                    <ul class="dropdown-menu">
+                    <a href="#services" aria-haspopup="true" aria-expanded="false">Services</a>
+                    <ul class="dropdown-menu" aria-label="Sous-menu services">
                         <li><a href="#web">Web</a></li>
                         <li><a href="#mobile">Mobile</a></li>
                         <li><a href="#ai">IA</a></li>
@@ -52,8 +65,8 @@
                 </li>
                 <li><a href="#portfolio">Portfolio</a></li>
                 <li class="dropdown">
-                    <a href="#about">À propos</a>
-                    <ul class="dropdown-menu">
+                    <a href="#about" aria-haspopup="true" aria-expanded="false">À propos</a>
+                    <ul class="dropdown-menu" aria-label="Sous-menu à propos">
                         <li><a href="#team">Équipe</a></li>
                         <li><a href="#history">Histoire</a></li>
                     </ul>
@@ -70,15 +83,16 @@
             <div class="youtube-background">
                 <iframe 
                     id="youtube-player" 
-                    src="https://www.youtube.com/embed/XaoigWHOtBM?autoplay=1&mute=1&controls=0&loop=1&playlist=XaoigWHOtBM&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1" 
-                    frameborder="0"
+                    src="https://www.youtube-nocookie.com/embed/XaoigWHOtBM?autoplay=1&mute=1&controls=0&loop=1&playlist=XaoigWHOtBM&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1" 
+                    title="Vidéo d'arrière-plan"
+                    loading="lazy"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen>
                 </iframe>
             </div>
             
             <!-- Overlay pour assombrir la vidéo et garder le texte lisible -->
-            <div class="hero-overlay"></div>
+            <div class="hero-overlay" aria-hidden="true"></div>
             
             <div class="hero-content">
                 <h1>Solutions innovantes pour votre entreprise</h1>
@@ -92,79 +106,79 @@
             <section id="services" class="inline-bloc">
                 <h2>Nos Services</h2>
                 <p>Découvrez notre gamme complète de services pour répondre à tous vos besoins numériques.</p>
-                <div class="inline-content">
-                    <p>Nous proposons des solutions adaptées à chaque besoin, qu'il s'agisse de développement web, d'applications mobiles ou d'intelligence artificielle.</p>
+                <div class="bloc-content">
+                    <p class="para-bloc">Nous proposons des solutions adaptées à chaque besoin, qu'il s'agisse de développement web, d'applications mobiles ou d'intelligence artificielle.</p>
                 </div>
             </section>
 
             <section id="web" class="inline-bloc">
                 <h2>Développement Web</h2>
                 <p>Sites vitrines, e-commerce, applications web, nous créons des solutions sur mesure.</p>
-                <div class="inline-content">
-                    <p>Nos développeurs utilisent les dernières technologies pour créer des expériences web performantes et sécurisées.</p>
+                <div class="bloc-content">
+                    <p class="para-bloc">Nos développeurs utilisent les dernières technologies pour créer des expériences web performantes et sécurisées.</p>
                 </div>
             </section>
 
             <section id="mobile" class="inline-bloc">
                 <h2>Applications Mobiles</h2>
                 <p>Applications natives et hybrides pour iOS et Android, adaptées à vos besoins spécifiques.</p>
-                <div class="inline-content">
-                    <p>Nous développons des applications intuitives et performantes qui répondent aux attentes de vos utilisateurs.</p>
+                <div class="bloc-content">
+                    <p class="para-bloc">Nous développons des applications intuitives et performantes qui répondent aux attentes de vos utilisateurs.</p>
                 </div>
             </section>
 
             <section id="ai" class="inline-bloc">
                 <h2>Intelligence Artificielle</h2>
                 <p>Solutions d'IA personnalisées pour optimiser vos processus et améliorer votre prise de décision.</p>
-                <div class="inline-content">
-                    <p>Notre expertise en IA vous permet d'exploiter pleinement le potentiel de vos données et d'automatiser vos tâches.</p>
+                <div class="bloc-content">
+                    <p class="para-bloc">Notre expertise en IA vous permet d'exploiter pleinement le potentiel de vos données et d'automatiser vos tâches.</p>
                 </div>
             </section>
 
             <section id="design" class="inline-bloc">
                 <h2>Design Graphique</h2>
                 <p>Identité visuelle, interfaces utilisateur, supports marketing, notre équipe de designers crée des designs modernes et attrayants.</p>
-                <div class="inline-content">
-                    <p>Notre approche centrée sur l'utilisateur garantit des designs à la fois esthétiques et fonctionnels pour une expérience optimale.</p>
+                <div class="bloc-content">
+                    <p class="para-bloc">Notre approche centrée sur l'utilisateur garantit des designs à la fois esthétiques et fonctionnels pour une expérience optimale.</p>
                 </div>
             </section>
 
             <section id="portfolio" class="inline-bloc">
                 <h2>Notre Portfolio</h2>
                 <p>Découvrez nos dernières réalisations et projets clients qui témoignent de notre expertise.</p>
-                <div class="inline-content">
-                    <p>Chaque projet est unique et reflète notre engagement à fournir des solutions de qualité supérieure.</p>
+                <div class="bloc-content">
+                    <p class="para-bloc">Chaque projet est unique et reflète notre engagement à fournir des solutions de qualité supérieure.</p>
                 </div>
             </section>
 
             <section id="about" class="inline-bloc">
                 <h2>À propos</h2>
                 <p>Apprenez-en plus sur notre entreprise, notre mission et nos valeurs.</p>
-                <div class="inline-content">
-                    <p>Nous sommes passionnés par la technologie et déterminés à aider nos clients à réussir dans l'ère numérique.</p>
+                <div class="bloc-content">
+                    <p class="para-bloc">Nous sommes passionnés par la technologie et déterminés à aider nos clients à réussir dans l'ère numérique.</p>
                 </div>
             </section>
 
             <section id="team" class="inline-bloc">
                 <h2>Notre Équipe</h2>
                 <p>Rencontrez les experts passionnés qui font de votre vision une réalité.</p>
-                <div class="inline-content">
-                    <p>Notre équipe diversifiée apporte une richesse d'expérience et d'expertise à chaque projet.</p>
+                <div class="bloc-content">
+                    <p class="para-bloc">Notre équipe diversifiée apporte une richesse d'expérience et d'expertise à chaque projet.</p>
                 </div>
             </section>
 
             <section id="history" class="inline-bloc">
                 <h2>Notre Histoire</h2>
                 <p>Découvrez comment nous avons évolué pour devenir un leader dans notre domaine.</p>
-                <div class="inline-content">
-                    <p>Depuis notre création, nous n'avons cessé d'innover et de nous adapter aux évolutions technologiques.</p>
+                <div class="bloc-content">
+                    <p class="para-bloc">Depuis notre création, nous n'avons cessé d'innover et de nous adapter aux évolutions technologiques.</p>
                 </div>
             </section>
 
             <section id="contact" class="inline-bloc">
                 <h2>Contactez-Nous</h2>
                 <p>Prêt à démarrer votre projet? Contactez-nous dès aujourd'hui pour une consultation gratuite.</p>
-                <div class="inline-content">
+                <div class="bloc-content">
                     <form class="contact-form">
                         <input type="text" placeholder="Votre nom" required>
                         <input type="email" placeholder="Votre email" required>
@@ -186,74 +200,7 @@
         </div>
     </footer>
     
-    <script>
-        // Script amélioré pour le menu hamburger
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.getElementById('menu-toggle');
-            const mainNav = document.getElementById('main-nav');
-            const dropdowns = document.querySelectorAll('.dropdown');
-            
-            // Vérifier la visibilité du bouton hamburger
-            console.log("Hamburger button:", menuToggle);
-            console.log("Current window width:", window.innerWidth);
-            
-            // Force l'application des styles en JavaScript aussi
-            if (window.innerWidth <= 768) {
-                menuToggle.style.display = 'block';
-            } else {
-                menuToggle.style.display = 'none';
-            }
-            
-            // Surveiller les changements de taille d'écran
-            window.addEventListener('resize', function() {
-                if (window.innerWidth <= 768) {
-                    menuToggle.style.display = 'block';
-                } else {
-                    menuToggle.style.display = 'none';
-                    // Réinitialiser l'état du menu si on passe au desktop
-                    mainNav.classList.remove('open');
-                    document.body.classList.remove('menu-open');
-                }
-            });
-            
-            // Toggle menu hamburger
-            menuToggle.addEventListener('click', function() {
-                this.classList.toggle('open');
-                mainNav.classList.toggle('open');
-                document.body.classList.toggle('menu-open');
-            });
-            
-            // Gérer les dropdowns
-            dropdowns.forEach(dropdown => {
-                const link = dropdown.querySelector('a');
-                
-                link.addEventListener('click', function(e) {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        dropdown.classList.toggle('active');
-                        
-                        // Fermer les autres dropdowns
-                        dropdowns.forEach(otherDropdown => {
-                            if (otherDropdown !== dropdown) {
-                                otherDropdown.classList.remove('active');
-                            }
-                        });
-                    }
-                });
-            });
-            
-            // Fermer le menu quand on clique sur un lien non-dropdown
-            const navLinks = document.querySelectorAll('.nav-list a:not(.dropdown > a)');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        menuToggle.classList.remove('open');
-                        mainNav.classList.remove('open');
-                        document.body.classList.remove('menu-open');
-                    }
-                });
-            });
-        });
-    </script>
+    <!-- Chargement du fichier JavaScript externe -->
+    <script src="script.js"></script>
 </body>
 </html>

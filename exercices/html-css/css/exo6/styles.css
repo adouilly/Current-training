@@ -1,38 +1,41 @@
-/* Variables globales */
+/* ---------- VARIABLES ET CONFIG DE BASE ---------- */
 :root {
+    /* Palette de couleurs */
     --color-background: #f8f9fa;
-    --color-navy: #192a56;
-    --color-navy-light: #273c75;
-    --color-accent: #0097e6;
+    --color-navy: #3932BB;
+    --color-navy-light: #433F91;
+    --color-navy-medium: #3F3D66;
+    --color-navy-dark: #2E2E3C;
+    --color-accent: #3f2d70;
     --color-text: #2d3436;
     --color-text-light: #636e72;
     --color-white: #ffffff;
+    --color-light-gray: #f8f8f8;
     
+    /* Typographie */
     --font-primary: 'Poppins', sans-serif;
     --font-secondary: 'Montserrat', sans-serif;
     
+    /* Espacement */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 2rem;
     --spacing-lg: 4rem;
+    --standard-padding: 25px;
     
+    /* Design */
     --border-radius: 8px;
+    --animation-speed: 0.3s;
+    --transition-timing: ease;
     
-    /* Breakpoints basés sur la largeur de la fenêtre */
+    /* Breakpoints */
     --bp-sm: 576px;
     --bp-md: 768px;
     --bp-lg: 992px;
     --bp-xl: 1200px;
-    
-    /* On détermine dynamiquement si on est en mobile ou non */
-    --is-mobile: clamp(0, (var(--bp-md) - 100vw) * 999, 1);
-    --is-desktop: clamp(0, (100vw - var(--bp-md) + 1) * 999, 1);
-
-    /* Variable pour l'état du menu */
-    --menu-open: 0;
 }
 
-/* Styles de base */
+/* ---------- RESET ET BASE ---------- */
 body {
     font-family: var(--font-primary);
     background-color: var(--color-background);
@@ -43,7 +46,55 @@ body {
     padding: 0;
 }
 
-/* Layout principal */
+/* Classes d'accessibilité */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(100%);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ---------- CLASSES UTILITAIRES ---------- */
+/* Flexbox helpers */
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+/* Transitions & animations */
+.standard-transition {
+    transition: all var(--animation-speed) var(--transition-timing);
+}
+
+/* ---------- MENU OVERLAY ---------- */
+#menu-overlay {
+    position: fixed;
+    inset: 0; /* Remplace top, right, bottom, left */
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 990;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--animation-speed) var(--transition-timing),
+                visibility var(--animation-speed) var(--transition-timing);
+    backdrop-filter: blur(3px);
+}
+
+#menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ---------- HEADER ET NAVIGATION ---------- */
 header, footer {
     background-color: var(--color-navy);
     color: var(--color-white);
@@ -51,9 +102,8 @@ header, footer {
 }
 
 header {
-    padding: 50px; /* Marges de 50px autour du header entier */
+    padding: 50px;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
@@ -61,28 +111,30 @@ header {
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    /* Suppression des bords arrondis sur le bas du header */
-    /* border-bottom-left-radius: 25px; */
-    /* border-bottom-right-radius: 25px; */
+    overflow: visible !important;
+    max-height: 150px;
+    height: auto;
+    box-sizing: border-box;
 }
 
-/* Logo et nom de marque */
+/* Logo styling */
 .logo-container {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md); /* Augmenté l'espace entre le logo et le nom */
+    gap: var(--spacing-md);
     position: relative;
-    margin-left: 25px; /* Marge de 25px par rapport au bord gauche */
+    margin-left: var(--standard-padding);
 }
 
+/* Logo mask technique */
 .logo-container::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
-    width: 50px; /* Même taille que le logo */
+    width: 50px;
     height: 50px;
-    background: linear-gradient(90deg, #3498db, #9b59b6);
+    background: linear-gradient(90deg, #FF8C00, #FFA500, #FF4500);
     z-index: 1;
     mask-image: url('https://cdn-icons-png.flaticon.com/512/6839/6839933.png');
     mask-size: contain;
@@ -96,22 +148,24 @@ header {
 
 .logo {
     width: auto;
-    height: 50px; /* Taille maximale de 50px */
-    filter: brightness(0) saturate(100%) opacity(0.9); /* D'abord, on le rend blanc/transparent */
+    height: 50px;
+    filter: brightness(0) saturate(100%) opacity(0.9);
     mix-blend-mode: screen;
     position: relative;
-    opacity: 0; /* On cache le logo original */
+    opacity: 0;
     z-index: 2;
-    pointer-events: none; /* Permet de cliquer à travers */
+    pointer-events: none;
 }
 
 .brand-name {
     font-family: var(--font-secondary);
-    font-size: calc(1.2rem + var(--is-desktop) * 0.4rem);
+    font-size: 1.5rem;
     font-weight: 700;
     margin: 0;
-    background: linear-gradient(90deg, #3498db, #9b59b6);
+    background: linear-gradient(90deg, #FF8C00, #FFA500, #FF4500);
+    background-clip: text;
     -webkit-background-clip: text;
+    color: transparent;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
     position: relative;
@@ -120,44 +174,37 @@ header {
 
 /* Navigation */
 .main-nav {
-    /* La navigation occupe toute la largeur en mobile, mais reste à côté du logo en desktop */
-    width: calc(100% * var(--is-mobile) + auto * var(--is-desktop));
-    margin-top: calc(var(--spacing-sm) * var(--is-mobile));
-    margin-right: 25px; /* Marge de 25px par rapport au bord droit */
-    
-    /* Version mobile: position fixe qui glisse depuis le côté */
-    position: calc(fixed * var(--is-mobile) + relative * var(--is-desktop));
-    top: 0;
-    right: calc(-100% * var(--is-mobile));
-    height: 100vh;
-    background-color: calc(var(--color-navy) * var(--is-mobile) + transparent * var(--is-desktop));
-    transition: all 0.3s ease-in-out;
-    padding: calc(80px * var(--is-mobile) + 0px * var(--is-desktop)) 
-             calc(50px * var(--is-mobile) + 0px * var(--is-desktop));
-    box-shadow: calc(-5px * var(--is-mobile) + 0px * var(--is-desktop)) 0 15px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
+    width: auto;
+    margin-right: var(--standard-padding);
+    position: relative;
+    background-color: transparent;
     z-index: 1050;
+    overflow: visible;
+    box-sizing: border-box;
 }
 
-/* Menu ouvert */
 .main-nav.open {
     right: 0;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Empêcher le défilement du body quand le menu est ouvert */
 body.menu-open {
     overflow: hidden;
 }
 
+/* Nav list */
 .nav-list {
     display: flex;
-    flex-direction: calc(column * var(--is-mobile) + row * var(--is-desktop));
-    gap: 25px; /* Espacement de 25px entre les éléments de navigation */
+    flex-direction: row;
+    gap: var(--standard-padding);
     list-style: none;
     padding: 0;
     margin: 0;
     justify-content: flex-end;
     width: 100%;
+    max-height: 100%;
+    overflow: visible;
+    box-sizing: border-box;
 }
 
 .nav-list li {
@@ -174,59 +221,24 @@ body.menu-open {
     display: block;
 }
 
-.nav-list a:hover, .nav-list a.active {
+.nav-list a:hover, 
+.nav-list a.active {
     background-color: var(--color-navy-light);
 }
 
-/* Style pour le bouton CTA */
-.cta-button {
-    background-color: var(--color-accent);
-    color: var(--color-white) !important;
-    font-weight: 600;
-    overflow: visible !important; /* Forcer visible pour empêcher la barre de défilement */
-    white-space: nowrap;
-    display: inline-block;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    margin: 0;
-    border: none;
-    text-overflow: clip;
-    max-width: none;
-    box-sizing: border-box;
-    width: auto !important; /* Empêcher une largeur fixe qui pourrait causer un overflow */
-    min-width: 0;
-    height: auto;
-}
-
-/* Style pour le bouton CTA - Correction DÉFINITIVE de la barre de défilement */
-.nav-list li:last-child, 
-.nav-list li:last-child a.cta-button {
-    overflow: visible !important;
-    overflow-x: visible !important;
-    overflow-y: visible !important;
-    display: inline-block !important;
-    white-space: nowrap !important;
-    margin: 0 !important;
-    max-width: none !important;
-    max-height: none !important;
-    width: auto !important;
-    height: auto !important;
-    padding: var(--spacing-xs) var(--spacing-sm) !important;
-    border: none !important;
-    box-sizing: border-box !important;
-}
-
-.cta-button {
-    background-color: var(--color-accent) !important;
-    color: var(--color-white) !important;
-    font-weight: 600 !important;
-    border-radius: var(--border-radius) !important;
-    text-decoration: none !important;
-    transition: all 0.3s ease !important;
-}
-
-/* Dropdown menu */
+/* ---------- DROPDOWN MENU ---------- */
 .dropdown {
     position: relative;
+}
+
+/* Indicateur dropdown */
+.dropdown > a::after {
+    content: "▼";
+    font-size: 0.7em;
+    margin-left: 8px;
+    transition: transform 0.3s;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .dropdown-menu {
@@ -235,22 +247,33 @@ body.menu-open {
     left: 0;
     width: auto;
     min-width: 180px;
-    background-color: var(--color-navy-light);
+    background-color: var(--color-navy);
     border-radius: var(--border-radius);
     padding: var(--spacing-xs);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
     transition: all 0.3s ease;
-    z-index: 9999; /* Valeur très élevée pour s'assurer qu'il passe au-dessus de tout */
+    z-index: 10000;
     list-style: none;
     margin: 0;
     display: block;
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Bordure légère pour mieux voir le sous-menu */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    filter: none;
 }
 
-/* Style pour les éléments des sous-menus */
+/* Dropdown hover/focus effects */
+.dropdown:hover .dropdown-menu,
+.dropdown:focus .dropdown-menu,
+.dropdown:focus-within .dropdown-menu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    display: block !important;
+    pointer-events: all !important;
+}
+
 .dropdown-menu li {
     width: 100%;
     margin: 0;
@@ -258,7 +281,7 @@ body.menu-open {
 }
 
 .dropdown-menu a {
-    padding: 12px 15px; /* Plus de padding vertical */
+    padding: 12px 15px;
     display: block;
     width: 100%;
     text-align: left;
@@ -266,70 +289,65 @@ body.menu-open {
     color: var(--color-white);
     border-radius: var(--border-radius);
     transition: background-color 0.2s ease;
+    background-color: transparent;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
 .dropdown-menu a:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Fond légèrement plus clair au survol */
+    background-color: var(--color-navy-light);
+    transform: translateX(3px);
 }
 
-/* Important: s'assurer que le survol sur .dropdown active le sous-menu */
-.dropdown:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    display: block;
+/* ---------- BUTTONS ---------- */
+/* Styles communs pour tous les boutons */
+.btn, 
+button[type="submit"],
+.cta-button {
+    background-color: var(--color-navy-light);
+    color: var(--color-white);
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
 }
 
-/* Forcer l'affichage des sous-menus en hover sur desktop */
-@media (min-width: 769px) {
-    .nav-list .dropdown:hover .dropdown-menu {
-        display: block !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: translateY(0) !important;
-    }
+.btn {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-family: var(--font-primary);
+    font-size: 1rem;
 }
 
-/* Clarifier le CSS mobile pour éviter les conflits */
-@media (max-width: 768px) {
-    .dropdown-menu {
-        position: static;
-        width: 100%;
-        visibility: hidden;
-        opacity: 0;
-        height: 0;
-        transform: none;
-        transition: all 0.3s ease;
-        padding: 0;
-        overflow: hidden;
-    }
-    
-    .dropdown.active .dropdown-menu {
-        visibility: visible;
-        opacity: 1;
-        height: auto;
-        padding: 10px 0;
-    }
-    
-    /* Ajouter indicateur de dropdown */
-    .dropdown > a::after {
-        content: "▼";
-        font-size: 0.7em;
-        margin-left: 8px;
-        transition: transform 0.3s;
-        display: inline-block;
-    }
-    
-    .dropdown.active > a::after {
-        transform: rotate(180deg);
-    }
+.btn:hover, 
+button[type="submit"]:hover,
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: var(--color-navy-medium);
 }
 
-/* Section Hero avec vidéo YouTube */
+/* CTA spécifique */
+.cta-button {
+    background-color: var(--color-accent) !important;
+    color: var(--color-white) !important;
+    padding: var(--spacing-xs) var(--spacing-sm) !important;
+    margin: 0 !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    max-width: none !important;
+    width: auto !important;
+    box-sizing: border-box !important;
+}
+
+/* ---------- HERO SECTION ---------- */
 .hero-section {
     height: 500px;
     position: relative;
-    overflow: hidden; /* Empêche la vidéo de déborder */
+    overflow: hidden;
     color: var(--color-white);
     display: flex;
     align-items: center;
@@ -338,18 +356,16 @@ body.menu-open {
     padding: var(--spacing-md);
 }
 
-/* Conteneur pour la vidéo YouTube */
 .youtube-background {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Empêche les clics sur la vidéo */
+    pointer-events: none;
     z-index: -2;
 }
 
-/* Style pour l'iframe YouTube */
 .youtube-background iframe {
     width: 100vw;
     height: 56.25vw; /* ratio 16:9 */
@@ -361,67 +377,42 @@ body.menu-open {
     transform: translate(-50%, -50%);
 }
 
-/* Overlay pour assombrir la vidéo */
 .hero-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(25, 42, 86, 0.7), rgba(39, 60, 117, 0.7));
+    inset: 0;
+    background: linear-gradient(rgba(57, 50, 187, 0.7), rgba(67, 63, 145, 0.7));
     z-index: -1;
 }
 
 .hero-content {
-    /* Styles existants */
     max-width: 800px;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 30px;
     padding: var(--spacing-md) var(--spacing-lg);
     backdrop-filter: blur(3px);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-    position: relative; /* Ajout pour assurer que le contenu reste au-dessus de la vidéo */
-    z-index: 5; /* Valeur plus élevée pour s'assurer qu'il est au-dessus de l'overlay */
+    position: relative;
+    z-index: 5;
 }
 
 .hero-content h1 {
-    font-size: calc(1.8rem + var(--is-desktop) * 1rem); /* Légèrement réduit pour s'adapter à la hauteur */
-    margin-bottom: var(--spacing-sm);
+    font-size: 2.5rem; /* Taille plus simple */
+    margin-bottom: var(--standard-padding);
     font-weight: 700;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hero-content p {
-    font-size: calc(0.9rem + var(--is-desktop) * 0.3rem); /* Légèrement réduit */
-    margin-bottom: var(--spacing-md);
+    font-size: 1.1rem; /* Taille plus simple */
+    margin-bottom: var(--standard-padding);
     opacity: 0.9;
 }
 
-/* Bouton général */
-.btn {
-    display: inline-block;
-    background-color: var(--color-accent);
-    color: var(--color-white);
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--border-radius);
-    text-decoration: none;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: var(--font-primary);
-    font-size: 1rem;
-}
-
-.btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Grid layout pour les sections */
+/* ---------- CONTENT BLOCKS ---------- */
+/* Grid layout */
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(calc(300px + var(--is-desktop) * 100px), 1fr));
+    display: flex; /* Remplace grid par flex pour un meilleur contrôle */
+    flex-direction: column; /* Disposition verticale */
     gap: var(--spacing-md);
     padding: var(--spacing-md);
     max-width: 1400px;
@@ -430,35 +421,66 @@ body.menu-open {
 
 /* Sections */
 .inline-bloc {
+    width: 100%; /* Assure que chaque bloc prend toute la largeur */
+    box-sizing: border-box;
     background-color: var(--color-white);
     border-radius: var(--border-radius);
     padding: var(--spacing-md);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: var(--spacing-sm); /* Ajoute un peu d'espace entre les sections */
 }
 
-.inline-bloc:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+/* Maintenir l'alternance de couleurs */
+.grid-container .inline-bloc:nth-child(even) {
+    background-color: var(--color-light-gray);
 }
 
-.inline-bloc h2 {
-    color: var(--color-navy);
-    font-size: 1.5rem;
-    margin-bottom: var(--spacing-sm);
-    font-weight: 600;
+.grid-container .inline-bloc:nth-child(odd) {
+    background-color: var(--color-white);
 }
 
-.inline-bloc p {
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-sm);
+/* Content blocks */
+.bloc-content {
+    background-color: transparent;
+    border: 1px dashed rgba(150, 150, 150, 0.4);
+    padding: var(--standard-padding);
+    border-radius: var(--border-radius);
+    margin-top: var(--standard-padding);
+    transition: border-color 0.3s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
 }
 
-/* Formulaire de contact */
+.bloc-content:hover {
+    border-color: rgba(150, 150, 150, 0.7);
+}
+
+.bloc-content p, 
+.para-bloc {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Spécifique à para-bloc - converti de ID en classe */
+.para-bloc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0;
+}
+
+/* ---------- FORMULAIRE ---------- */
 .contact-form {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: var(--standard-padding);
     width: 100%;
 }
 
@@ -475,51 +497,94 @@ body.menu-open {
     align-self: flex-start;
 }
 
-/* Footer */
+/* ---------- FOOTER ---------- */
 footer {
-    padding: 25px 0; /* Espacement vertical uniforme de 25px en haut et en bas */
+    padding: 15px 0;
     text-align: center;
-    margin-top: 25px; /* Marge supplémentaire par rapport au contenu au-dessus */
+    margin-top: var(--standard-padding);
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    width: 100%;
 }
 
 .footer-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 25px; /* Espacement de 25px entre les éléments du footer */
+    gap: 10px;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 25px; /* Ajouter un padding horizontal pour éviter que le contenu touche les bords */
+    padding: 0 var(--standard-padding);
+    text-align: center;
 }
 
+/* Style unifié pour le container du logo dans le footer */
 footer .logo-container {
-    margin-bottom: 0; /* Suppression de la marge bottom car on utilise gap */
+    display: flex;
+    flex-direction: row; /* Assure que les éléments sont sur la même ligne */
+    align-items: center; /* Centre verticalement */
+    justify-content: center; /* Centre horizontalement */
+    margin: 0 auto; /* Centre le conteneur lui-même */
+    padding: 0;
+    width: auto; /* Permet au conteneur de s'adapter à son contenu */
+    gap: 15px; /* Espace entre le logo et le texte */
 }
 
+/* Style du logo */
 footer .logo-container::before {
-    width: 25px; /* Taille réduite de moitié (50px -> 25px) */
-    height: 25px; /* Taille réduite de moitié (50px -> 25px) */
+    content: "";
+    display: inline-block;
+    position: static; /* Éviter le positionnement absolu qui sortirait du flux */
+    width: 25px;
+    height: 25px;
+    margin: 0;
+    background: linear-gradient(90deg, #FF8C00, #FFA500, #FF4500);
+    mask-image: url('https://cdn-icons-png.flaticon.com/512/6839/6839933.png');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-image: url('https://cdn-icons-png.flaticon.com/512/6839/6839933.png');
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    flex-shrink: 0; /* Empêche le logo de rétrécir */
 }
 
-footer .logo {
-    height: 25px; /* Taille réduite de moitié (50px -> 25px) */
+/* Style du texte de la marque */
+footer .brand-name {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: inline-block;
+    background: linear-gradient(90deg, #FF8C00, #FFA500, #FF4500);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap; /* Empêche le texte de passer à la ligne */
 }
 
 .copyright {
     font-size: 0.9rem;
     opacity: 0.8;
-    padding-bottom: 25px; /* Ajoute 25px d'espace entre le copyright et le bas de la page */
+    padding: 0 0 5px 0;
+    margin: 0;
 }
 
-/* Gestion responsive du layout sans media queries */
-@supports (--a: 0) {
-    /* Ces styles ne s'appliquent que si les variables CSS sont supportées */
-    /* Utilisé pour le support navigateur */
+/* Masquer complètement l'ancienne image du logo */
+footer .logo {
+    display: none;
 }
 
-/* Hamburger Menu Button - Correction de l'affichage desktop */
-.hamburger-menu {
-    /* Suppression des déclarations en conflit */
+/* ---------- MENU HAMBURGER ---------- */
+/* Checkbox caché */
+#menu-toggle-checkbox {
+    display: none;
+}
+
+/* Label et bouton hamburger */
+.hamburger-menu, 
+.hamburger-menu-label {
     display: none;
     position: relative;
     width: 40px;
@@ -528,22 +593,8 @@ footer .logo {
     border: none;
     cursor: pointer;
     padding: 0;
-    z-index: 1100;
-    margin-right: 25px;
-}
-
-/* Hamburger Menu Button - Refonte complète pour garantir l'affichage */
-.hamburger-menu {
-    display: none; /* Caché par défaut */
-    position: relative;
-    width: 40px;
-    height: 40px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 9999; /* Valeur très élevée pour assurer la visibilité */
-    margin-right: 25px;
+    z-index: 9999;
+    margin-right: var(--standard-padding);
 }
 
 .hamburger-bar {
@@ -552,135 +603,113 @@ footer .logo {
     height: 3px;
     margin: 6px auto;
     background-color: var(--color-white);
-    transition: transform 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6), 
-                opacity 0.3s ease;
+    transition: transform var(--animation-speed) var(--transition-timing),
+                opacity var(--animation-speed) var(--transition-timing);
+    transform-origin: center;
 }
 
-/* Utilisation de supports pour les media queries basées sur des variables CSS */
-@supports (--test: value) {
-    @media (max-width: 768px) {
-        .hamburger-menu {
-            display: block; /* Affiche uniquement sur mobile et tablette */
-        }
-        
-        /* Menu en mode mobile */
-        .main-nav {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            height: 100vh;
-            width: 80%;
-            background-color: var(--color-navy);
-            transition: all 0.3s ease-in-out;
-            padding: 80px 50px;
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
-            z-index: 1050;
-        }
-        
-        .main-nav .nav-list {
-            flex-direction: column;
-            width: 100%;
-        }
-        
-        .nav-list li {
-            width: 100%;
-            margin-bottom: 15px;
-        }
-        
-        .nav-list a {
-            text-align: left;
-            padding: 15px 20px;
-            font-size: 1.2rem;
-        }
-        
-        /* Ajustements des dropdowns en mobile */
-        .dropdown-menu {
-            position: static;
-            background-color: transparent;
-            box-shadow: none;
-            padding: 0 0 0 20px;
-            margin-top: 10px;
-            opacity: 1;
-            visibility: visible;
-            transform: none;
-            width: 100%;
-        }
-        
-        /* Correction des sous-menus en mode mobile */
-        .dropdown-menu {
-            position: static;
-            opacity: 0;
-            height: 0;
-            visibility: hidden;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: var(--border-radius);
-            margin-left: 20px;
-            transform: none;
-        }
-        
-        .dropdown.active .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            height: auto;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            padding: 10px;
-        }
-        
-        /* Ajouter un élément pour indiquer l'état du dropdown */
-        .dropdown > a::after {
-            content: '\f107'; /* Icône flèche bas FontAwesome */
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            margin-left: 8px;
-            transition: transform 0.3s ease;
-        }
-        
-        .dropdown.active > a::after {
-            transform: rotate(180deg);
-        }
+/* Animation hamburger */
+.hamburger-menu.open .hamburger-bar:nth-child(1),
+#menu-toggle-checkbox:checked ~ header .hamburger-menu-label .hamburger-bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger-menu.open .hamburger-bar:nth-child(2),
+#menu-toggle-checkbox:checked ~ header .hamburger-menu-label .hamburger-bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.open .hamburger-bar:nth-child(3),
+#menu-toggle-checkbox:checked ~ header .hamburger-menu-label .hamburger-bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* État coché */
+#menu-toggle-checkbox:checked ~ .main-nav {
+    right: 0 !important;
+}
+
+#menu-toggle-checkbox:checked ~ #menu-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ---------- MENU HAMBURGER - Suppression du double hamburger en responsive ---------- */
+/* Version obsolète du hamburger - Complètement cachée */
+.hamburger-menu {
+    display: none !important; /* Force la suppression complète */
+    visibility: hidden; /* Double sécurité */
+    opacity: 0;
+    position: absolute;
+    z-index: -1; /* Le placer derrière tout le reste */
+    pointer-events: none; /* Désactiver les interactions */
+}
+
+/* Correction de la visibilité du label pour hamburger */
+@media screen and (max-width: 768px) {
+    .hamburger-menu-label {
+        display: block !important; /* S'assurer que seul le label s'affiche */
+        position: relative;
+    }
+}
+
+/* ---------- FOOTER - Correction de l'alignement central ---------- */
+footer .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+}
+
+/* Complètement repenser le positionnement de l'élément pseudo */
+footer .logo-container::before {
+    content: ""; /* Réaffirmer le contenu */
+    position: static; /* Changer pour un positionnement statique */
+    display: block; /* Afficher comme un bloc */
+    width: 25px;
+    height: 25px;
+    margin: 0 auto 10px auto; /* Centrage horizontal avec marge en bas */
+    background: linear-gradient(90deg, #FF8C00, #FFA500, #FF4500);
+    mask-image: url('https://cdn-icons-png.flaticon.com/512/6839/6839933.png');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-image: url('https://cdn-icons-png.flaticon.com/512/6839/6839933.png');
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+}
+
+/* Enlever logo img puisqu'on utilise le pseudo-élément */
+footer .logo {
+    display: none;
+}
+
+/* Assurer que le nom de la marque est bien centré */
+footer .brand-name {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+/* ---------- MEDIA QUERIES ---------- */
+/* Mobile first - styles par défaut */
+@media screen and (max-width: 768px) {
+    /* Header et navigation */
+    header {
+        padding: 25px;
     }
     
-    @media (min-width: 769px) {
-        /* À partir de 769px (desktop), force l'affichage du menu */
-        .main-nav {
-            position: relative !important;
-            right: auto !important;
-            width: auto !important;
-            height: auto !important;
-            padding: 0 !important;
-            background-color: transparent !important;
-            box-shadow: none !important;
-        }
-        
-        .nav-list {
-            flex-direction: row !important;
-        }
-        
-        /* Correction du positionnement des sous-menus en mode desktop */
-        .dropdown-menu {
-            margin-top: 5px; /* Petit espacement entre le lien parent et le sous-menu */
-        }
-        
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-    }
-}
-
-/* Correction des media queries problématiques */
-@media screen and (max-width: 768px) {
-    /* Force l'affichage du menu hamburger */
-    .hamburger-menu {
+    .hamburger-menu, 
+    .hamburger-menu-label {
         display: block !important;
     }
     
-    /* Cacher la navigation par défaut */
     .main-nav {
         position: fixed !important;
         top: 0 !important;
@@ -694,12 +723,10 @@ footer .logo {
         overflow-y: auto !important;
     }
     
-    /* Afficher la navigation quand elle est ouverte */
     .main-nav.open {
         right: 0 !important;
     }
     
-    /* Navigation en colonnes pour mobile */
     .nav-list {
         flex-direction: column !important;
         width: 100% !important;
@@ -710,7 +737,7 @@ footer .logo {
         margin-bottom: 15px !important;
     }
     
-    /* Meilleure gestion des sous-menus en mobile */
+    /* Dropdown en mode mobile */
     .dropdown-menu {
         position: static !important;
         width: 100% !important;
@@ -732,67 +759,60 @@ footer .logo {
         padding: 10px 0 10px 20px !important;
         margin-top: 10px !important;
     }
-}
-
-/* Supprimer complètement les anciennes règles pouvant causer des conflits */
-@supports (--test: value) {
-    /* Garder seulement les règles pour desktop qui fonctionnent */
-    @media (min-width: 769px) {
-        .hamburger-menu {
-            display: none !important; /* Toujours caché en desktop */
-        }
-        
-        /* Autres règles desktop... */
+    
+    .dropdown > a::after {
+        content: '\f107'; /* Icône flèche bas FontAwesome */
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        margin-left: 8px;
+        transition: transform 0.3s ease;
+    }
+    
+    .dropdown.active > a::after {
+        transform: rotate(180deg);
     }
 }
 
-/* Forcer l'affichage des sous-menus sur desktop avec !important */
-@media (min-width: 769px) {
-    /* Réinitialisation complète pour desktop */
-    .dropdown {
-        position: relative !important;
+/* Desktop */
+@media screen and (min-width: 769px) {
+    .hamburger-menu {
+        display: none !important;
     }
-
+    
     .dropdown-menu {
         position: absolute !important;
-        top: 100% !important;
-        left: 0 !important;
-        width: auto !important;
-        min-width: 180px !important;
-        background-color: var(--color-navy-light) !important;
-        padding: var(--spacing-xs) !important;
-        margin-top: 5px !important;
-        display: block !important;
-        height: auto !important;
-        transform: translateY(10px) !important;
-        opacity: 0;
-        visibility: hidden;
+        top: calc(100% + 5px) !important;
+        left: 50% !important;
+        transform: translateX(-50%) translateY(10px) !important;
+        min-width: 200px !important;
+        background-color: var(--color-navy) !important;
+        padding: 10px !important;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2) !important;
     }
-
+    
     .dropdown:hover .dropdown-menu {
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: translateY(0) !important;
-        pointer-events: auto !important;
+        transform: translateX(-50%) translateY(0) !important;
     }
-}
-
-/* Amélioration de l'accessibilité en mode focus (pour naviguer au clavier) */
-.dropdown:focus-within .dropdown-menu {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
-    pointer-events: auto !important;
-}
-
-/* Fixer le problème des styles mobiles qui peuvent affecter desktop */
-@media (min-width: 769px) {
-    .dropdown > a::after {
-        display: inline-block;
-        content: "▼";
-        font-size: 0.7em;
-        margin-left: 8px;
-        transition: transform 0.3s;
+    
+    /* Flèche indicatrice pour dropdown */
+    .dropdown-menu::before {
+        content: '';
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid var(--color-navy);
+        z-index: 10001;
+    }
+    
+    .brand-name {
+        font-size: 1.6rem;
+    }
+    
+    .dropdown-menu {
+        will-change: opacity, transform;
     }
     
     .dropdown:hover > a::after {
@@ -800,30 +820,25 @@ footer .logo {
     }
 }
 
-/* Fix définitif pour la barre de défilement sur le bouton Contact */
-.nav-list li:last-child {
-    overflow: visible !important;
-    max-width: none;
-    width: auto !important;
+/* Préférences d'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
-.nav-list li:last-child a.cta-button {
-    overflow: visible !important; 
-    overflow-x: hidden !important;
-    overflow-y: hidden !important;
-    white-space: nowrap !important;
-    text-overflow: clip !important;
-    max-width: none !important;
-    display: inline-block !important;
-    width: auto !important;
+/* ---------- OPTIMISATION DES POLICES ---------- */
+@font-face {
+    font-family: 'LocalPoppins';
+    src: local('Poppins'), local('Poppins-Regular');
+    font-display: swap;
 }
 
-/* Indicateur de dropdown plus visible */
-.dropdown > a::after {
-    content: "▼";
-    font-size: 0.7em;
-    margin-left: 8px;
-    transition: transform 0.3s;
-    display: inline-block;
-    vertical-align: middle;
+@font-face {
+    font-family: 'LocalMontserrat';
+    src: local('Montserrat'), local('Montserrat-Regular');
+    font-display: swap;
 }
