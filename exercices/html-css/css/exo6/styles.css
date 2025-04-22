@@ -1,598 +1,829 @@
-body, html {
+/* Variables globales */
+:root {
+    --color-background: #f8f9fa;
+    --color-navy: #192a56;
+    --color-navy-light: #273c75;
+    --color-accent: #0097e6;
+    --color-text: #2d3436;
+    --color-text-light: #636e72;
+    --color-white: #ffffff;
+    
+    --font-primary: 'Poppins', sans-serif;
+    --font-secondary: 'Montserrat', sans-serif;
+    
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    
+    --border-radius: 8px;
+    
+    /* Breakpoints basés sur la largeur de la fenêtre */
+    --bp-sm: 576px;
+    --bp-md: 768px;
+    --bp-lg: 992px;
+    --bp-xl: 1200px;
+    
+    /* On détermine dynamiquement si on est en mobile ou non */
+    --is-mobile: clamp(0, (var(--bp-md) - 100vw) * 999, 1);
+    --is-desktop: clamp(0, (100vw - var(--bp-md) + 1) * 999, 1);
+
+    /* Variable pour l'état du menu */
+    --menu-open: 0;
+}
+
+/* Styles de base */
+body {
+    font-family: var(--font-primary);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+    overflow-x: hidden;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    height: 100%;
-    font-family: 'Roboto', sans-serif;
 }
 
-#mavideo {
-    position: fixed;
+/* Layout principal */
+header, footer {
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    width: 100%;
+}
+
+header {
+    padding: 50px; /* Marges de 50px autour du header entier */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* Suppression des bords arrondis sur le bas du header */
+    /* border-bottom-left-radius: 25px; */
+    /* border-bottom-right-radius: 25px; */
+}
+
+/* Logo et nom de marque */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md); /* Augmenté l'espace entre le logo et le nom */
+    position: relative;
+    margin-left: 25px; /* Marge de 25px par rapport au bord gauche */
+}
+
+.logo-container::before {
+    content: "";
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1;
-}
-
-/* Style for both video types */
-#mavideo iframe, #mavideo video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -1;
-    object-fit: cover;
-}
-
-#mavideo video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -1;
-    object-fit: cover;
-}
-
-#content {
-    position: relative;
+    width: 50px; /* Même taille que le logo */
+    height: 50px;
+    background: linear-gradient(90deg, #3498db, #9b59b6);
     z-index: 1;
-    padding: 20px;
-    color: white;
+    mask-image: url('https://cdn-icons-png.flaticon.com/512/6839/6839933.png');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-image: url('https://cdn-icons-png.flaticon.com/512/6839/6839933.png');
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+}
+
+.logo {
+    width: auto;
+    height: 50px; /* Taille maximale de 50px */
+    filter: brightness(0) saturate(100%) opacity(0.9); /* D'abord, on le rend blanc/transparent */
+    mix-blend-mode: screen;
+    position: relative;
+    opacity: 0; /* On cache le logo original */
+    z-index: 2;
+    pointer-events: none; /* Permet de cliquer à travers */
+}
+
+.brand-name {
+    font-family: var(--font-secondary);
+    font-size: calc(1.2rem + var(--is-desktop) * 0.4rem);
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(90deg, #3498db, #9b59b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 3;
+}
+
+/* Navigation */
+.main-nav {
+    /* La navigation occupe toute la largeur en mobile, mais reste à côté du logo en desktop */
+    width: calc(100% * var(--is-mobile) + auto * var(--is-desktop));
+    margin-top: calc(var(--spacing-sm) * var(--is-mobile));
+    margin-right: 25px; /* Marge de 25px par rapport au bord droit */
+    
+    /* Version mobile: position fixe qui glisse depuis le côté */
+    position: calc(fixed * var(--is-mobile) + relative * var(--is-desktop));
+    top: 0;
+    right: calc(-100% * var(--is-mobile));
+    height: 100vh;
+    background-color: calc(var(--color-navy) * var(--is-mobile) + transparent * var(--is-desktop));
+    transition: all 0.3s ease-in-out;
+    padding: calc(80px * var(--is-mobile) + 0px * var(--is-desktop)) 
+             calc(50px * var(--is-mobile) + 0px * var(--is-desktop));
+    box-shadow: calc(-5px * var(--is-mobile) + 0px * var(--is-desktop)) 0 15px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    z-index: 1050;
+}
+
+/* Menu ouvert */
+.main-nav.open {
+    right: 0;
+}
+
+/* Empêcher le défilement du body quand le menu est ouvert */
+body.menu-open {
+    overflow: hidden;
+}
+
+.nav-list {
+    display: flex;
+    flex-direction: calc(column * var(--is-mobile) + row * var(--is-desktop));
+    gap: 25px; /* Espacement de 25px entre les éléments de navigation */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.nav-list li {
+    position: relative;
+}
+
+.nav-list a {
+    text-decoration: none;
+    color: var(--color-white);
+    font-weight: 500;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.nav-list a:hover, .nav-list a.active {
+    background-color: var(--color-navy-light);
+}
+
+/* Style pour le bouton CTA */
+.cta-button {
+    background-color: var(--color-accent);
+    color: var(--color-white) !important;
+    font-weight: 600;
+    overflow: visible !important; /* Forcer visible pour empêcher la barre de défilement */
+    white-space: nowrap;
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    margin: 0;
+    border: none;
+    text-overflow: clip;
+    max-width: none;
+    box-sizing: border-box;
+    width: auto !important; /* Empêcher une largeur fixe qui pourrait causer un overflow */
+    min-width: 0;
+    height: auto;
+}
+
+/* Style pour le bouton CTA - Correction DÉFINITIVE de la barre de défilement */
+.nav-list li:last-child, 
+.nav-list li:last-child a.cta-button {
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
+    max-width: none !important;
+    max-height: none !important;
+    width: auto !important;
+    height: auto !important;
+    padding: var(--spacing-xs) var(--spacing-sm) !important;
+    border: none !important;
+    box-sizing: border-box !important;
+}
+
+.cta-button {
+    background-color: var(--color-accent) !important;
+    color: var(--color-white) !important;
+    font-weight: 600 !important;
+    border-radius: var(--border-radius) !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Dropdown menu */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: auto;
+    min-width: 180px;
+    background-color: var(--color-navy-light);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xs);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 9999; /* Valeur très élevée pour s'assurer qu'il passe au-dessus de tout */
+    list-style: none;
+    margin: 0;
+    display: block;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Bordure légère pour mieux voir le sous-menu */
+}
+
+/* Style pour les éléments des sous-menus */
+.dropdown-menu li {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu a {
+    padding: 12px 15px; /* Plus de padding vertical */
+    display: block;
+    width: 100%;
+    text-align: left;
+    white-space: nowrap;
+    color: var(--color-white);
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Fond légèrement plus clair au survol */
+}
+
+/* Important: s'assurer que le survol sur .dropdown active le sous-menu */
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    display: block;
+}
+
+/* Forcer l'affichage des sous-menus en hover sur desktop */
+@media (min-width: 769px) {
+    .nav-list .dropdown:hover .dropdown-menu {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+    }
+}
+
+/* Clarifier le CSS mobile pour éviter les conflits */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        position: static;
+        width: 100%;
+        visibility: hidden;
+        opacity: 0;
+        height: 0;
+        transform: none;
+        transition: all 0.3s ease;
+        padding: 0;
+        overflow: hidden;
+    }
+    
+    .dropdown.active .dropdown-menu {
+        visibility: visible;
+        opacity: 1;
+        height: auto;
+        padding: 10px 0;
+    }
+    
+    /* Ajouter indicateur de dropdown */
+    .dropdown > a::after {
+        content: "▼";
+        font-size: 0.7em;
+        margin-left: 8px;
+        transition: transform 0.3s;
+        display: inline-block;
+    }
+    
+    .dropdown.active > a::after {
+        transform: rotate(180deg);
+    }
+}
+
+/* Section Hero avec vidéo YouTube */
+.hero-section {
+    height: 500px;
+    position: relative;
+    overflow: hidden; /* Empêche la vidéo de déborder */
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    padding: var(--spacing-md);
 }
 
-@media (min-aspect-ratio: 16/9) {
-  #mavideo {
-    height: 300%;
-    top: -100%;
-  }
+/* Conteneur pour la vidéo YouTube */
+.youtube-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Empêche les clics sur la vidéo */
+    z-index: -2;
 }
 
-@media (max-aspect-ratio: 16/9) {
-  #mavideo {
-    width: 300%;
-    left: -100%;
-  }
-}
-
-/* Section containing title, paragraph, and button - Fix visibility issues */
-#calltoaction {
+/* Style pour l'iframe YouTube */
+.youtube-background iframe {
+    width: 100vw;
+    height: 56.25vw; /* ratio 16:9 */
+    min-height: 100vh;
+    min-width: 177.77vh; /* ratio 16:9 */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* Commenter temporairement les animations pour tester */
-    /* 
-    opacity: 0;
-    animation: fadeInSection 1s ease-out forwards;
-    animation-delay: 0.3s; 
-    */
-    opacity: 1; /* Forcer l'affichage */
 }
 
-/* Neon container styling - Simplified to ensure visibility */
-.neon-container {
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 50px; /* Significantly increased border radius for very rounded corners */
-    padding: 40px;
-    max-width: 600px;
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    box-shadow: 0 0 1px #ffffff, 0 0 2px #ffffff; /* Even more subtle glow */
-    /* Commenter temporairement les animations complexes */
-    /*
-    animation: neonBorderFlow 4s infinite linear;
-    */
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center; /* Center all text content */
-    z-index: 20; /* Augmenter le z-index pour s'assurer qu'il est visible */
-}
-
-/* Animation pour l'effet de glitch sur le conteneur - Intensifié */
-.neon-container.glitch-container {
-    animation: container-glitch 5s infinite; /* Accéléré de 8s à 5s pour rendre l'effet plus visible */
-    position: relative;
-    z-index: 20;
-}
-
-.neon-container.glitch-container::before {
-    animation: neonBorderRotate 4s linear infinite, container-glitch-border 5s infinite;
-    z-index: 19;
-}
-
-/* Ajout d'un effet supplémentaire pour renforcer le glitch du conteneur */
-.neon-container.glitch-container::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 50px;
-    background: transparent;
-    z-index: -1;
-    animation: container-glitch-outer 6s infinite;
-    opacity: 0.7;
-    pointer-events: none;
-}
-
-.neon-container:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 0 2px #ffffff, 0 0 4px #ffffff; /* Subtler hover effect */
-}
-
-/* Neon border animation effect - matching the more rounded corners */
-.neon-container::before {
-    content: '';
+/* Overlay pour assombrir la vidéo */
+.hero-overlay {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 50px; /* Match the container's increased border-radius */
-    border: 1px solid transparent; /* Even thinner border for subtler effect */
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), rgba(255,255,255,0.8), transparent) border-box;
-    -webkit-mask: 
-        linear-gradient(#fff 0 0) content-box, 
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: neonBorderRotate 4s linear infinite;
-    filter: blur(0.3px); /* Minimal blur for sharper edges */
-}
-
-h1 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 3.2em;
-    color: #ffffff;
-    text-align: center;
     width: 100%;
-    margin-bottom: 30px;
-    text-shadow: 
-        0 0 1px #ffffff,  /* Very subtle glow */
-        0 0 2px #ffffff;  /* Reduced glow layers */
-    letter-spacing: 1px;
+    height: 100%;
+    background: linear-gradient(rgba(25, 42, 86, 0.7), rgba(39, 60, 117, 0.7));
+    z-index: -1;
+}
+
+.hero-content {
+    /* Styles existants */
+    max-width: 800px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 30px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    backdrop-filter: blur(3px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    position: relative; /* Ajout pour assurer que le contenu reste au-dessus de la vidéo */
+    z-index: 5; /* Valeur plus élevée pour s'assurer qu'il est au-dessus de l'overlay */
+}
+
+.hero-content h1 {
+    font-size: calc(1.8rem + var(--is-desktop) * 1rem); /* Légèrement réduit pour s'adapter à la hauteur */
+    margin-bottom: var(--spacing-sm);
     font-weight: 700;
-    opacity: 1 !important; /* Forcer l'affichage des éléments de texte */
-    animation: fadeInElement 1s ease-out forwards;
-    animation-delay: 0.6s;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Style spécifique pour le titre et paragraphe (sans effet glitch) */
-h1.high-title, 
-p {
-    position: relative; /* Annuler l'effet de position pour glitch */
-    animation: none; /* Désactiver l'animation glitch */
+.hero-content p {
+    font-size: calc(0.9rem + var(--is-desktop) * 0.3rem); /* Légèrement réduit */
+    margin-bottom: var(--spacing-md);
+    opacity: 0.9;
 }
 
-/* Supprimer les pseudoéléments pour le titre et paragraphe */
-h1.high-title::before,
-h1.high-title::after,
-p::before,
-p::after {
-    display: none; /* Empêcher l'affichage des éléments glitch */
-    content: none; /* Alternative pour certains navigateurs */
-}
-
-p {
-    color: #ffffff;
-    font-size: 1.5em;
-    text-align: center;
-    margin-bottom: 30px;
-    font-weight: 300;
-    line-height: 1.4;
-    text-shadow: 0 0 3px rgba(255, 255, 255, 0.3); /* Lighter neon effect */
-    opacity: 1 !important; /* Forcer l'affichage des éléments de texte */
-    animation: fadeInElement 1s ease-out forwards;
-    animation-delay: 0.9s;
-}
-
+/* Bouton général */
 .btn {
-    padding: 12px 30px;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 2px solid #ffffff;
-    border-radius: 25px; /* Much more rounded corners */
-    font-size: 1.1em;
+    display: inline-block;
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 600;
+    border: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-family: 'Roboto', sans-serif;
-    letter-spacing: 1px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 0 3px #ffffff, 0 0 5px #ffffff, 0 0 8px #ffffff;
-    opacity: 1 !important; /* Forcer l'affichage des éléments de texte */
-    animation: fadeInElement 1s ease-out forwards;
-    animation-delay: 1.2s;
-}
-
-/* Effet glitch amélioré sur le bouton */
-.btn.glitch-btn {
-    animation: btn-glitch 3s infinite alternate-reverse; /* Plus rapide pour plus de visibilité */
-    position: relative;
-    z-index: 25;
-}
-
-.btn.glitch-btn::before {
-    content: "En savoir plus";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: inherit;
-    border: inherit;
-    border-radius: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: -1;
-    opacity: 0.5;
-    color: #00ffff;
-    animation: btn-before-glitch 3s infinite;
-    transform-origin: center;
-    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    font-family: var(--font-primary);
+    font-size: 1rem;
 }
 
 .btn:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-    transform: scale(1.05);
-    box-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 15px #ffffff; /* Lighter neon effect */
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Sound control button */
-.sound-button {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.4); /* More transparent background */
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    color: white;
-    font-size: 1.2em;
-    cursor: pointer;
-    z-index: 100;
+/* Grid layout pour les sections */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(300px + var(--is-desktop) * 100px), 1fr));
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Sections */
+.inline-bloc {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inline-bloc:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.inline-bloc h2 {
+    color: var(--color-navy);
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
+}
+
+.inline-bloc p {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Formulaire de contact */
+.contact-form {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(2px); /* Optional: adds slight blur effect behind the button */
-    box-shadow: 0 0 3px rgba(255, 255, 255, 0.7), 0 0 5px rgba(255, 255, 255, 0.5); /* Lighter neon effect */
-    transition: all 0.3s ease;
-    opacity: 1; /* Visible tout de suite sans animation */
-    animation: fadeIn 0.5s ease-out forwards;
-    animation-delay: 1.5s; /* Last element to appear */
-}
-
-.sound-button:hover {
-    transform: scale(1.1);
-    background: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.6); /* Lighter neon effect */
-}
-
-.sound-button i {
-    text-shadow: 0 0 5px #ffffff;
-}
-
-/* Neon animations */
-@keyframes neonBorderRotate {
-    0% {
-        background-position: 0% 0%;
-    }
-    100% {
-        background-position: 400% 0%;
-    }
-}
-
-/* Neon animations with more subtle effects */
-@keyframes neonBorderFlow {
-    0%, 100% {
-        box-shadow: 0 0 1px #ffffff, 0 0 2px #ffffff;
-    }
-    50% {
-        box-shadow: 0 0 2px #ffffff, 0 0 3px #ffffff;
-    }
-}
-
-/* Fade-in animations - Adjust to maintain center positioning */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px) translate(-50%, -50%);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) translate(-50%, -50%);
-    }
-}
-
-/* Separate animations to fix centering issues */
-@keyframes fadeInSection {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeInElement {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Effet Glitch */
-.glitch {
-    position: relative;
-    animation: glitch-anim 2s infinite alternate-reverse;
-}
-
-.glitch::before,
-.glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
+    flex-direction: column;
+    gap: var(--spacing-sm);
     width: 100%;
-    height: 100%;
 }
 
-.glitch::before {
-    left: 2px;
-    text-shadow: -1px 0 #ff00ff;
-    animation: glitch-anim-1 3s infinite alternate-reverse;
-    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+.contact-form input,
+.contact-form textarea {
+    padding: var(--spacing-sm);
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    font-family: var(--font-primary);
+    font-size: 1rem;
 }
 
-.glitch::after {
-    left: -2px;
-    text-shadow: 1px 0 #00ffff;
-    animation: glitch-anim-2 2.5s infinite alternate-reverse;
-    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+.contact-form button {
+    align-self: flex-start;
 }
 
-/* Animation pour l'effet de glitch sur le conteneur */
-.neon-container.glitch-container {
-    animation: container-glitch 8s infinite;
+/* Footer */
+footer {
+    padding: 25px 0; /* Espacement vertical uniforme de 25px en haut et en bas */
+    text-align: center;
+    margin-top: 25px; /* Marge supplémentaire par rapport au contenu au-dessus */
 }
 
-.glitch-container::before {
-    animation: neonBorderRotate 4s linear infinite, container-glitch-border 5s infinite;
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px; /* Espacement de 25px entre les éléments du footer */
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 25px; /* Ajouter un padding horizontal pour éviter que le contenu touche les bords */
 }
 
-/* Effet glitch sur le bouton */
-.btn.glitch-btn {
-    animation: btn-glitch 4s infinite alternate-reverse;
+footer .logo-container {
+    margin-bottom: 0; /* Suppression de la marge bottom car on utilise gap */
 }
 
-/* Keyframes pour les animations de glitch */
-@keyframes glitch-anim {
-    0%, 100% { transform: translate(0); }
-    20% { transform: translate(-1px, 1px); }
-    40% { transform: translate(-1px, -1px); }
-    60% { transform: translate(1px, 1px); }
-    80% { transform: translate(1px, -1px); }
+footer .logo-container::before {
+    width: 25px; /* Taille réduite de moitié (50px -> 25px) */
+    height: 25px; /* Taille réduite de moitié (50px -> 25px) */
 }
 
-@keyframes glitch-anim-1 {
-    0%, 100% { transform: translate(0); }
-    40% { transform: translate(-2px, 1px); }
-    60% { transform: translate(2px, 1px); }
+footer .logo {
+    height: 25px; /* Taille réduite de moitié (50px -> 25px) */
 }
 
-@keyframes glitch-anim-2 {
-    0%, 100% { transform: translate(0); }
-    40% { transform: translate(2px, -1px); }
-    60% { transform: translate(-2px, 1px); }
+.copyright {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    padding-bottom: 25px; /* Ajoute 25px d'espace entre le copyright et le bas de la page */
 }
 
-@keyframes container-glitch {
-    0%, 100%, 93%, 95%, 98% { 
-        transform: translate(0) skew(0);
-        box-shadow: 0 0 1px #ffffff, 0 0 2px #ffffff;
+/* Gestion responsive du layout sans media queries */
+@supports (--a: 0) {
+    /* Ces styles ne s'appliquent que si les variables CSS sont supportées */
+    /* Utilisé pour le support navigateur */
+}
+
+/* Hamburger Menu Button - Correction de l'affichage desktop */
+.hamburger-menu {
+    /* Suppression des déclarations en conflit */
+    display: none;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1100;
+    margin-right: 25px;
+}
+
+/* Hamburger Menu Button - Refonte complète pour garantir l'affichage */
+.hamburger-menu {
+    display: none; /* Caché par défaut */
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 9999; /* Valeur très élevée pour assurer la visibilité */
+    margin-right: 25px;
+}
+
+.hamburger-bar {
+    display: block;
+    width: 30px;
+    height: 3px;
+    margin: 6px auto;
+    background-color: var(--color-white);
+    transition: transform 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6), 
+                opacity 0.3s ease;
+}
+
+/* Utilisation de supports pour les media queries basées sur des variables CSS */
+@supports (--test: value) {
+    @media (max-width: 768px) {
+        .hamburger-menu {
+            display: block; /* Affiche uniquement sur mobile et tablette */
+        }
+        
+        /* Menu en mode mobile */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            height: 100vh;
+            width: 80%;
+            background-color: var(--color-navy);
+            transition: all 0.3s ease-in-out;
+            padding: 80px 50px;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            z-index: 1050;
+        }
+        
+        .main-nav .nav-list {
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .nav-list li {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .nav-list a {
+            text-align: left;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+        }
+        
+        /* Ajustements des dropdowns en mobile */
+        .dropdown-menu {
+            position: static;
+            background-color: transparent;
+            box-shadow: none;
+            padding: 0 0 0 20px;
+            margin-top: 10px;
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            width: 100%;
+        }
+        
+        /* Correction des sous-menus en mode mobile */
+        .dropdown-menu {
+            position: static;
+            opacity: 0;
+            height: 0;
+            visibility: hidden;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            margin-left: 20px;
+            transform: none;
+        }
+        
+        .dropdown.active .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            height: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+        
+        /* Ajouter un élément pour indiquer l'état du dropdown */
+        .dropdown > a::after {
+            content: '\f107'; /* Icône flèche bas FontAwesome */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .dropdown.active > a::after {
+            transform: rotate(180deg);
+        }
     }
-    94% { 
-        transform: translate(2px, 1px) skew(1deg, 0deg);
-        box-shadow: 0 0 3px #ff00ff, 0 0 5px #ff00ff; 
-    }
-    96% { 
-        transform: translate(-2px, -1px) skew(-1deg, 0deg);
-        box-shadow: 0 0 3px #00ffff, 0 0 5px #00ffff; 
-    }
-    97% { 
-        transform: translate(0, 0) skew(0);
-        box-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff; 
-    }
-    99% { 
-        transform: translate(-1px, 0) skew(-0.5deg, 0deg);
-        box-shadow: 0 0 2px #ff00ff, 0 0 4px #00ffff; 
+    
+    @media (min-width: 769px) {
+        /* À partir de 769px (desktop), force l'affichage du menu */
+        .main-nav {
+            position: relative !important;
+            right: auto !important;
+            width: auto !important;
+            height: auto !important;
+            padding: 0 !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+        }
+        
+        .nav-list {
+            flex-direction: row !important;
+        }
+        
+        /* Correction du positionnement des sous-menus en mode desktop */
+        .dropdown-menu {
+            margin-top: 5px; /* Petit espacement entre le lien parent et le sous-menu */
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
     }
 }
 
-@keyframes container-glitch-border {
-    0%, 100%, 93%, 95%, 98% { 
-        filter: brightness(100%) hue-rotate(0deg);
+/* Correction des media queries problématiques */
+@media screen and (max-width: 768px) {
+    /* Force l'affichage du menu hamburger */
+    .hamburger-menu {
+        display: block !important;
     }
-    94%, 99% { 
-        filter: brightness(150%) hue-rotate(45deg);
+    
+    /* Cacher la navigation par défaut */
+    .main-nav {
+        position: fixed !important;
+        top: 0 !important;
+        right: -100% !important;
+        width: 80% !important;
+        height: 100vh !important;
+        background-color: var(--color-navy) !important;
+        transition: right 0.3s ease-in-out !important;
+        z-index: 1050 !important;
+        padding: 80px 20px 20px !important;
+        overflow-y: auto !important;
     }
-    96%, 97% { 
-        filter: brightness(120%) hue-rotate(-45deg);
+    
+    /* Afficher la navigation quand elle est ouverte */
+    .main-nav.open {
+        right: 0 !important;
     }
-}
-
-@keyframes btn-glitch {
-    0%, 100%, 95%, 97%, 99% { 
-        transform: translate(0) scale(1);
-        box-shadow: 0 0 3px #ffffff, 0 0 5px #ffffff, 0 0 8px #ffffff;
+    
+    /* Navigation en colonnes pour mobile */
+    .nav-list {
+        flex-direction: column !important;
+        width: 100% !important;
     }
-    94%, 98% { 
-        transform: translate(1px, 0) scale(1.01);
-        box-shadow: 0 0 3px #00ffff, 0 0 6px #00ffff;
+    
+    .nav-list li {
+        width: 100% !important;
+        margin-bottom: 15px !important;
     }
-    96% { 
-        transform: translate(-1px, 0) scale(0.99);
-        box-shadow: 0 0 3px #ff00ff, 0 0 6px #ff00ff;
+    
+    /* Meilleure gestion des sous-menus en mobile */
+    .dropdown-menu {
+        position: static !important;
+        width: 100% !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        height: 0 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        transition: all 0.3s ease !important;
     }
-}
-
-/* Modification des keyframes pour un effet plus visible */
-@keyframes container-glitch {
-    0%, 100%, 92%, 96%, 98% { 
-        transform: translate(0) skew(0);
-        box-shadow: 0 0 2px #ffffff, 0 0 3px #ffffff;
-    }
-    93% { 
-        transform: translate(3px, 1px) skew(1.5deg, 0deg);
-        box-shadow: 0 0 5px #ff00ff, 0 0 8px #ff00ff; 
-    }
-    95% { 
-        transform: translate(-3px, -2px) skew(-2deg, 0.5deg);
-        box-shadow: 0 0 5px #00ffff, 0 0 8px #00ffff; 
-    }
-    97% { 
-        transform: translate(0, 0) skew(0);
-        box-shadow: 0 0 8px #ffffff, 0 0 12px #ffffff; 
-    }
-    99% { 
-        transform: translate(-2px, 0) skew(-1deg, 0deg);
-        box-shadow: 0 0 3px #ff00ff, 0 0 6px #00ffff; 
-    }
-}
-
-@keyframes container-glitch-border {
-    0%, 100%, 92%, 96%, 98% { 
-        filter: brightness(100%) hue-rotate(0deg);
-    }
-    93%, 99% { 
-        filter: brightness(180%) hue-rotate(60deg);
-    }
-    95%, 97% { 
-        filter: brightness(150%) hue-rotate(-60deg);
+    
+    .dropdown.active .dropdown-menu {
+        height: auto !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        padding: 10px 0 10px 20px !important;
+        margin-top: 10px !important;
     }
 }
 
-@keyframes container-glitch-outer {
-    0%, 100%, 92%, 96%, 98% { 
-        box-shadow: 0 0 0 transparent;
-    }
-    93% {
-        box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
-    }
-    95% {
-        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-    }
-    97%, 99% {
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+/* Supprimer complètement les anciennes règles pouvant causer des conflits */
+@supports (--test: value) {
+    /* Garder seulement les règles pour desktop qui fonctionnent */
+    @media (min-width: 769px) {
+        .hamburger-menu {
+            display: none !important; /* Toujours caché en desktop */
+        }
+        
+        /* Autres règles desktop... */
     }
 }
 
-@keyframes btn-glitch {
-    0%, 100%, 94%, 97%, 99% { 
-        transform: translate(0) scale(1);
-        box-shadow: 0 0 3px #ffffff, 0 0 5px #ffffff, 0 0 8px #ffffff;
+/* Forcer l'affichage des sous-menus sur desktop avec !important */
+@media (min-width: 769px) {
+    /* Réinitialisation complète pour desktop */
+    .dropdown {
+        position: relative !important;
     }
-    93%, 98% { 
-        transform: translate(2px, -1px) scale(1.03);
-        box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+
+    .dropdown-menu {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        width: auto !important;
+        min-width: 180px !important;
+        background-color: var(--color-navy-light) !important;
+        padding: var(--spacing-xs) !important;
+        margin-top: 5px !important;
+        display: block !important;
+        height: auto !important;
+        transform: translateY(10px) !important;
+        opacity: 0;
+        visibility: hidden;
     }
-    95%, 96% { 
-        transform: translate(-2px, 1px) scale(0.98);
-        box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
+
+    .dropdown:hover .dropdown-menu {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+        pointer-events: auto !important;
     }
 }
 
-@keyframes btn-before-glitch {
-    0%, 100%, 94%, 96% { 
-        transform: translate(0);
-        opacity: 0.3;
-    }
-    93%, 97% { 
-        transform: translate(2px, -1px);
-        opacity: 0.8;
-    }
-    95%, 98% { 
-        transform: translate(-2px, 1px);
-        opacity: 0.5;
-    }
-}
-
-/* Debugging styles */
-.debug-outline {
-    outline: 2px solid red !important;
-}
-
-.debug-visible {
+/* Amélioration de l'accessibilité en mode focus (pour naviguer au clavier) */
+.dropdown:focus-within .dropdown-menu {
     opacity: 1 !important;
     visibility: visible !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
 }
 
-/* Solution sans JavaScript pour le bouton mute/unmute */
-.video-controls {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 100;
+/* Fixer le problème des styles mobiles qui peuvent affecter desktop */
+@media (min-width: 769px) {
+    .dropdown > a::after {
+        display: inline-block;
+        content: "▼";
+        font-size: 0.7em;
+        margin-left: 8px;
+        transition: transform 0.3s;
+    }
+    
+    .dropdown:hover > a::after {
+        transform: rotate(180deg);
+    }
 }
 
-.sound-toggle-input {
-    display: none;
+/* Fix définitif pour la barre de défilement sur le bouton Contact */
+.nav-list li:last-child {
+    overflow: visible !important;
+    max-width: none;
+    width: auto !important;
 }
 
-.sound-on {
-    display: none;
+.nav-list li:last-child a.cta-button {
+    overflow: visible !important; 
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+    white-space: nowrap !important;
+    text-overflow: clip !important;
+    max-width: none !important;
+    display: inline-block !important;
+    width: auto !important;
 }
 
-.sound-toggle-input:checked ~ #bg-video {
-    /* Hack CSS pour activer/désactiver le son */
-    muted: unset; /* Note: Ceci ne fonctionne pas dans tous les navigateurs */
-}
-
-.sound-toggle-input:checked ~ label .sound-off {
-    display: none;
-}
-
-.sound-toggle-input:checked ~ label .sound-on {
+/* Indicateur de dropdown plus visible */
+.dropdown > a::after {
+    content: "▼";
+    font-size: 0.7em;
+    margin-left: 8px;
+    transition: transform 0.3s;
     display: inline-block;
-}
-
-/* Retirer les animations basées sur l'opacité pour les éléments clés */
-#calltoaction,
-.neon-container,
-h1, p, .btn {
-    opacity: 1 !important;
-    animation: none !important;
-    animation-delay: 0s !important;
-}
-
-/* Version simplifiée pour les animations qui fonctionnent sans JS */
-.glitch-container {
-    animation: container-glitch 5s infinite;
-}
-
-.btn.glitch-btn {
-    animation: btn-glitch 3s infinite alternate-reverse;
+    vertical-align: middle;
 }
