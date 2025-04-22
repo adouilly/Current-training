@@ -1,10 +1,25 @@
 // Script pour le menu hamburger et la navigation responsive
 document.addEventListener('DOMContentLoaded', function() {
+    // Obtenir les éléments du DOM
     const menuToggle = document.getElementById('menu-toggle');
     const mainNav = document.getElementById('main-nav');
     const dropdowns = document.querySelectorAll('.dropdown');
     const overlay = document.getElementById('menu-overlay');
     const menuCheckbox = document.getElementById('menu-toggle-checkbox');
+    const hamburgerLabel = document.querySelector('.hamburger-menu-label');
+    
+    // Ajouter un événement de clic pour le label du hamburger
+    if (hamburgerLabel) {
+        hamburgerLabel.addEventListener('click', function() {
+            // Le changement d'état de la checkbox est géré automatiquement par le label
+            // Nous devons simplement ajouter/supprimer les classes manuellement
+            if (menuCheckbox.checked) {
+                openMenu();
+            } else {
+                closeMenu();
+            }
+        });
+    }
     
     // Fonctions d'accessibilité
     function updateAriaAttributes(isOpen) {
@@ -68,6 +83,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 openMenu();
             }
         });
+    }
+
+    // Vérifier l'état initial de la checkbox au chargement
+    if (menuCheckbox && menuCheckbox.checked) {
+        openMenu();
     }
     
     // Fermer le menu quand on clique sur l'overlay

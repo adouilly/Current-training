@@ -299,6 +299,32 @@ body.menu-open {
     transform: translateX(3px);
 }
 
+/* Flèche indicatrice pour dropdown avec meilleure intégration */
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -9px; /* Ajusté pour s'aligner avec la bordure */
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-bottom: 9px solid var(--color-navy);
+    z-index: 10000; /* Placer sous la bordure */
+}
+
+/* Ajout d'un second triangle pour créer une bordure continue */
+.dropdown-menu::after {
+    content: '';
+    position: absolute;
+    top: -10px; /* 1px au-dessus du pseudo-élément before */
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid rgba(255, 255, 255, 0.2); /* Même couleur que la bordure */
+    z-index: 9999; /* Placer derrière le triangle intérieur */
+}
+
 /* ---------- BUTTONS ---------- */
 /* Styles communs pour tous les boutons */
 .btn, 
@@ -518,26 +544,26 @@ footer {
     text-align: center;
 }
 
-/* Style unifié pour le container du logo dans le footer */
+/* Logo container du footer - version simplifiée */
 footer .logo-container {
     display: flex;
-    flex-direction: row; /* Assure que les éléments sont sur la même ligne */
-    align-items: center; /* Centre verticalement */
-    justify-content: center; /* Centre horizontalement */
-    margin: 0 auto; /* Centre le conteneur lui-même */
+    flex-direction: row; /* Alignement horizontal au lieu de column */
+    align-items: center;
+    justify-content: center;
+    width: auto; /* Éviter que le conteneur prenne toute la largeur */
+    margin: 0 auto;
     padding: 0;
-    width: auto; /* Permet au conteneur de s'adapter à son contenu */
-    gap: 15px; /* Espace entre le logo et le texte */
+    gap: 15px; /* Espacement entre le logo et le texte */
 }
 
 /* Style du logo */
 footer .logo-container::before {
     content: "";
-    display: inline-block;
-    position: static; /* Éviter le positionnement absolu qui sortirait du flux */
+    position: static;
+    display: inline-block; /* Affichage en ligne au lieu de block */
     width: 25px;
     height: 25px;
-    margin: 0;
+    margin: 0; /* Supprimer la marge en bas qui créait l'espacement vertical */
     background: linear-gradient(90deg, #FF8C00, #FFA500, #FF4500);
     mask-image: url('https://cdn-icons-png.flaticon.com/512/6839/6839933.png');
     mask-size: contain;
@@ -547,7 +573,7 @@ footer .logo-container::before {
     -webkit-mask-size: contain;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
-    flex-shrink: 0; /* Empêche le logo de rétrécir */
+    flex-shrink: 0;
 }
 
 /* Style du texte de la marque */
@@ -561,7 +587,8 @@ footer .brand-name {
     -webkit-background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-    white-space: nowrap; /* Empêche le texte de passer à la ligne */
+    white-space: nowrap;
+    width: auto; /* Éviter que le texte prenne toute la largeur */
 }
 
 .copyright {
@@ -653,48 +680,45 @@ footer .logo {
     }
 }
 
-/* ---------- FOOTER - Correction de l'alignement central ---------- */
-footer .logo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0;
-    position: relative;
-}
-
-/* Complètement repenser le positionnement de l'élément pseudo */
-footer .logo-container::before {
-    content: ""; /* Réaffirmer le contenu */
-    position: static; /* Changer pour un positionnement statique */
-    display: block; /* Afficher comme un bloc */
-    width: 25px;
-    height: 25px;
-    margin: 0 auto 10px auto; /* Centrage horizontal avec marge en bas */
-    background: linear-gradient(90deg, #FF8C00, #FFA500, #FF4500);
-    mask-image: url('https://cdn-icons-png.flaticon.com/512/6839/6839933.png');
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    mask-position: center;
-    -webkit-mask-image: url('https://cdn-icons-png.flaticon.com/512/6839/6839933.png');
-    -webkit-mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-}
-
-/* Enlever logo img puisqu'on utilise le pseudo-élément */
-footer .logo {
-    display: none;
-}
-
-/* Assurer que le nom de la marque est bien centré */
-footer .brand-name {
+/* ---------- CORRECTION MENU HAMBURGER MOBILE ---------- */
+/* S'assurer que le label pour la checkbox est cliquable et visible */
+.hamburger-menu-label {
     display: block;
-    width: 100%;
-    text-align: center;
-    margin: 0 auto;
+    cursor: pointer;
+    z-index: 9999; /* Assurer qu'il reste au-dessus des autres éléments */
+}
+
+/* Correction pour le fonctionnement du menu hamburger */
+#menu-toggle-checkbox:checked ~ header .main-nav,
+#menu-toggle-checkbox:checked + header .main-nav,
+#menu-toggle-checkbox:checked ~ .main-nav {
+    right: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+}
+
+/* S'assurer que le menu principal est bien positionné sur mobile */
+@media screen and (max-width: 768px) {
+    .main-nav {
+        position: fixed !important;
+        top: 0 !important;
+        right: -100% !important; /* Position initiale hors de l'écran */
+        width: 80% !important;
+        height: 100vh !important;
+        background-color: var(--color-navy) !important;
+        transition: right 0.3s ease-in-out !important;
+        z-index: 1050 !important;
+        padding: 80px 20px 20px !important;
+        overflow-y: auto !important;
+        visibility: visible; /* S'assurer qu'il est visible une fois positionné */
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* S'assurer que la transition est fluide */
+.main-nav {
+    transition: right 0.3s ease-in-out, visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 /* ---------- MEDIA QUERIES ---------- */
