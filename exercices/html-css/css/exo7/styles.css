@@ -1,0 +1,2253 @@
+:root {
+    /* Color scheme */
+    --primary: #3932BB;
+    --primary-light: #433F91;
+    --secondary: #3F3D66;
+    --dark: #2E2E3C;
+    --light: #f5f7ff;
+    --gray: #e1e5ee;
+    --gray-dark: #8c91a3;
+    --success: #4caf50;
+    --warning: #ff9800;
+    --danger: #f44336;
+    --info: #2196f3;
+
+    /* Spacing */
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+
+    /* Shadow */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    --shadow-md: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    --shadow-lg: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+
+    /* Transition */
+    --transition: all 0.3s ease;
+}
+
+body {
+    color: var(--dark);
+    background-color: var(--gray);
+    font-family: 'Inter', sans-serif;
+}
+
+/* Layout */
+.dashboard {
+    display: grid;
+    grid-template-areas:
+        "sidebar header"
+        "sidebar main"
+        "sidebar footer";
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    transition: var(--transition);
+}
+
+/* Suppression des styles liés au collapse du sidebar */
+.dashboard.collapsed-sidebar {
+    /* Suppression de ces styles */
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-areas:
+            "sidebar header"
+            "sidebar main"
+            "sidebar footer";
+        grid-template-columns: 60px 1fr; /* Sidebar plus étroit sur mobile */
+        grid-template-rows: auto 1fr auto;
+    }
+    
+    /* Sur mobile, on cache les textes du menu */
+    .sidebar .menu-text {
+        display: none;
+    }
+    
+    /* Ajuster le logo pour mobile */
+    .sidebar .logo span {
+        display: none;
+    }
+    
+    /* Centrer les icônes */
+    .sidebar .menu-item i {
+        margin: 0 auto;
+    }
+    
+    /* Autres ajustements pour le mobile */
+    .overlay {
+        display: none; /* Ne plus utiliser l'overlay */
+    }
+}
+
+/* Header styles */
+header {
+    grid-area: header;
+    background-color: white;
+    padding: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+}
+
+.header-title h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: var(--gray);
+    border-radius: 20px;
+    padding: 0 var(--spacing-md);
+}
+
+.search-bar input {
+    padding: var(--spacing-sm);
+    min-width: 200px;
+    background-color: transparent;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+
+/* User menu dropdown */
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    position: relative;
+    cursor: pointer;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+    width: 200px;
+    z-index: 100;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: var(--transition);
+}
+
+.user-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    padding: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.dropdown-item:hover {
+    background-color: var(--light);
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: var(--gray);
+    margin: 0 var(--spacing-md);
+}
+
+#logout-btn {
+    color: var(--danger);
+}
+
+/* Sidebar styles */
+.sidebar {
+    grid-area: sidebar;
+    background-color: var(--primary);
+    color: white;
+    overflow-y: auto;
+    z-index: 20;
+    transition: var(--transition);
+}
+
+.logo-container {
+    padding: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.collapse-btn {
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.sidebar-menu {
+    padding: var(--spacing-md) 0;
+}
+
+.menu-section {
+    margin-bottom: var(--spacing-md);
+}
+
+.menu-header {
+    padding: 0 var(--spacing-md);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: var(--spacing-sm);
+}
+
+.menu-item {
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.menu-item:hover, .menu-item.active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item i {
+    width: 24px;
+    text-align: center;
+}
+
+.menu-text {
+    transition: var(--transition);
+}
+
+.collapsed-sidebar .menu-text {
+    display: none;
+}
+
+/* Special menu items */
+.menu-item.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.menu-item.widget-link {
+    cursor: pointer;
+}
+
+.menu-item.widget-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Main content area */
+main {
+    grid-area: main;
+    padding: var(--spacing-lg);
+    overflow-y: auto;
+}
+
+/* Widgets container with grid layout */
+.widgets-container {
+    display: grid;
+    gap: var(--spacing-md);
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(200px, auto);
+    grid-auto-flow: dense; /* Aide à remplir les "trous" dans la grille */
+    min-height: 500px;
+    transition: var(--transition);
+    position: relative;
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    /* Add a subtle grid background to help visualize the grid */
+    background-image: 
+        linear-gradient(to right, rgba(67, 63, 145, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(67, 63, 145, 0.02) 1px, transparent 1px);
+    background-size: 
+        calc(100% / 12) 100%,
+        100% 100px;
+}
+
+/* Layout types */
+.layout-compact .widgets-container {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.layout-wide .widgets-container {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
+
+.layout-dashboard .widgets-container {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas:
+        "stats stats chart chart"
+        "table table form form";
+}
+
+@media (max-width: 1200px) {
+    .layout-dashboard .widgets-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas:
+            "stats chart"
+            "table form";
+    }
+}
+
+@media (max-width: 768px) {
+    .layout-dashboard .widgets-container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "stats"
+            "chart"
+            "table"
+            "form";
+    }
+}
+
+/* Widget styles */
+.widget {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: var(--transition);
+    cursor: move;
+    position: relative;
+    /* Ces propriétés sont essentielles pour que le widget respecte sa place dans la grille */
+    grid-column: var(--grid-column, span 12);
+    grid-row: var(--grid-row, auto);
+    min-height: 100px;
+    break-inside: avoid;
+    z-index: 1;
+    /* Pour le mode édition */
+    touch-action: none;
+    user-select: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; 
+    /* Retirer la transition pour width/height pour éviter les animations pendant le redimensionnement */
+}
+
+.widget:hover {
+    box-shadow: var(--shadow-md);
+    z-index: 2;
+}
+
+/* Widget size classes - utilisation de variables CSS pour le positionnement dans la grille */
+.widget-size-1 { 
+    --grid-column: span 3; 
+    grid-column: var(--grid-column);
+}  /* 1/4 width */
+
+.widget-size-2 { 
+    --grid-column: span 6; 
+    grid-column: var(--grid-column);
+}  /* 1/2 width */
+
+.widget-size-3 { 
+    --grid-column: span 9; 
+    grid-column: var(--grid-column);
+}  /* 3/4 width */
+
+.widget-size-4 { 
+    --grid-column: span 12; 
+    grid-column: var(--grid-column);
+} /* Full width */
+
+/* Widget height classes - utilisation de variables CSS pour la hauteur dans la grille */
+.widget-height-1 { 
+    --grid-row: span 1; 
+    grid-row: var(--grid-row);
+    min-height: 250px;
+}
+
+.widget-height-2 { 
+    --grid-row: span 2; 
+    grid-row: var(--grid-row);
+    min-height: 400px;
+}
+
+.widget-height-3 { 
+    --grid-row: span 3; 
+    grid-row: var(--grid-row);
+    min-height: 600px;
+}
+
+.widget-height-4 { 
+    --grid-row: span 4; 
+    grid-row: var(--grid-row);
+    min-height: 800px;
+}
+
+/* Ensure chart containers have proper height */
+.chart-container {
+    height: calc(100% - 60px); /* Subtract header height */
+    min-height: 200px;
+    position: relative;
+}
+
+/* Animation pour mettre en évidence un widget sélectionné */
+@keyframes widget-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(57, 50, 187, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(57, 50, 187, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(57, 50, 187, 0); }
+}
+
+.widget-highlighted {
+    animation: widget-pulse 2s ease-out;
+    border: 2px solid var(--primary);
+    z-index: 5;
+}
+
+/* Correction d'animation pour le widget existant */
+@keyframes widget-exists-pulse {
+    0% { 
+        box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7);
+        transform: scale(1); 
+    }
+    50% { 
+        box-shadow: 0 0 0 10px rgba(244, 67, 54, 0);
+        transform: scale(1.02); 
+    }
+    100% { 
+        box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
+        transform: scale(1); 
+    }
+}
+
+.widget-exists {
+    animation: widget-exists-pulse 1s ease-out 3;
+    border: 2px solid var(--danger);
+    z-index: 5;
+}
+
+/* Styles pour le mode édition */
+body.edit-mode .widget {
+    box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.7);
+    transform: scale(1.02); 
+}
+
+body.edit-mode .widget:hover,
+body.edit-mode .widget:active,
+body.edit-mode .widget.dragging {
+    box-shadow: 0 0 0 10px rgba(244, 67, 54, 0);
+    transform: scale(1); 
+}
+
+.widget-controls,
+.widget-config-panel,
+.add-widget-btn,
+.modal-overlay,
+.grid-guide,
+.drop-indicator {
+    display: none;
+}
+
+/* Supprimer le bouton d'ajout de widget */
+.add-widget-btn {
+    display: none;
+}
+
+/* Supprimer les styles de la modal */
+.modal-overlay {
+    display: none;
+}
+
+/* Visual feedback for grid cells in edit mode */
+body.edit-mode .widgets-container {
+    background-image: 
+        linear-gradient(to right, rgba(67, 63, 145, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(67, 63, 145, 0.05) 1px, transparent 1px);
+    background-size: 
+        calc(100% / 12) 100%,
+        100% 100px;
+}
+
+/* Styles for visual grid guides */
+.grid-guide {
+    position: absolute;
+    background-color: rgba(67, 63, 145, 0.1);
+    pointer-events: none;
+    z-index: 0;
+    transition: all 0.2s ease;
+    display: none;
+}
+
+body.edit-mode .grid-guide {
+    display: block;
+}
+
+/* Style for widget being dragged in edit mode */
+body.edit-mode .widget.dragging {
+    opacity: 0.7;
+    box-shadow: var(--shadow-lg);
+    z-index: 10;
+    border-color: var(--primary);
+}
+
+/* Placeholder for visualizing space during drag */
+.widget-placeholder {
+    background-color: rgba(67, 63, 145, 0.05);
+    border: 2px dashed var(--primary-light);
+    border-radius: 8px;
+    z-index: 0;
+    box-shadow: none;
+    min-height: 100px;
+    visibility: visible;
+    opacity: 0.6;
+    transition: var(--transition);
+}
+
+/* Plus visible pour l'indicateur de drop */
+.drop-indicator {
+    box-shadow: 0 0 0 3px var(--primary) !important;
+    position: relative;
+    z-index: 5;
+    border: 2px dashed var(--primary) !important;
+    background-color: rgba(57, 50, 187, 0.05);
+    transform: scale(1.01);
+}
+
+.drop-indicator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(57, 50, 187, 0.05);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Amélioration des styles pour le placeholder et le drag & drop */
+.widget-placeholder {
+    background-color: rgba(57, 50, 187, 0.05);
+    border: 2px dashed var(--primary);
+    border-radius: 8px;
+    margin: 0;
+    box-sizing: border-box;
+    min-height: 100px;
+    visibility: visible;
+    opacity: 0.6;
+    transition: none; /* Supprimer les transitions pendant le drag */
+}
+
+.drop-indicator {
+    box-shadow: 0 0 0 3px var(--primary) !important;
+    transform: scale(1.02);
+    z-index: 5;
+    border: 2px dashed var(--primary) !important;
+    background-color: rgba(57, 50, 187, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.widget.dragging {
+    opacity: 0.8 !important;
+    transform: scale(1.02);
+    pointer-events: none !important;
+    cursor: grabbing !important;
+}
+
+.widget.resizing {
+    opacity: 0.9;
+    z-index: 1000;
+    transition: none; /* Supprimer les transitions pendant le resize */
+    will-change: width, height; /* Optimisation des performances */
+}
+
+/* Amélioration du style de la poignée de redimensionnement */
+.resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    cursor: nwse-resize;
+    background: transparent;
+    touch-action: none;
+    pointer-events: auto; /* IMPORTANT: Permettre les événements de pointeur */
+}
+
+.resize-handle::after {
+    content: '';
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid var(--gray-dark);
+    border-bottom: 2px solid var(--gray-dark);
+    opacity: 0.7;
+}
+
+.widget:hover .resize-handle::after {
+    opacity: 1;
+    border-color: var(--primary);
+}
+
+.widget .widget-header {
+    cursor: grab;
+    user-select: none; /* Éviter la sélection de texte pendant le drag */
+}
+
+/* Widget header */
+.widget-header {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    cursor: grab;
+}
+
+.widget-title {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var (--spacing-sm);
+}
+
+.widget-title i {
+    color: var(--primary);
+}
+
+.widget-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.widget-body {
+    padding: var(--spacing-md);
+    flex: 1;
+    overflow: auto;
+}
+
+/* Widget controls */
+.widget-controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 0 8px 0 8px;
+    padding: var(--spacing-sm);
+    display: none;
+    z-index: 10;
+    box-shadow: var(--shadow-sm);
+}
+
+.widget:hover .widget-controls {
+    display: flex;
+    gap: var (--spacing-sm);
+}
+
+.widget-control-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid var(--gray);
+    transition: var(--transition);
+}
+
+.widget-control-btn:hover {
+    background-color: var(--gray);
+}
+
+/* Widget configuration panel */
+.widget-config-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 300px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-md);
+    z-index: 100;
+    display: none;
+}
+
+.widget-config-panel.active {
+    display: block;
+}
+
+.config-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.config-group label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+}
+
+.config-options {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.config-option {
+    padding: var(--spacing-sm);
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.config-option:hover, .config-option.active {
+    background-color: var(--primary-light);
+    color: white;
+    border-color: var(--primary-light);
+}
+
+/* Stats widget */
+.stats-widget {
+    grid-area: stats;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.stat-card {
+    padding: var(--spacing-md);
+    text-align: center;
+    border-radius: 8px;
+    background-color: var(--light);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.stat-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-bottom: var (--spacing-sm);
+    flex-shrink: 0;
+    margin-bottom: 0;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: var(--spacing-sm);
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--gray-dark);
+}
+
+.stat-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    width: 100%;
+    margin-bottom: var(--spacing-md);
+}
+
+.stat-title {
+    font-weight: 500;
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+}
+
+.stat-evolution {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--gray-dark);
+}
+
+.stat-evolution.positive {
+    color: var (--success);
+}
+
+.stat-evolution.negative {
+    color: var (--danger);
+}
+
+/* Chart widget */
+.chart-widget {
+    grid-area: chart;
+}
+
+.chart-container {
+    height: calc(100% - 60px); /* Subtract header and controls */
+    min-height: 200px;
+    position: relative;
+}
+
+.chart-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var (--spacing-md);
+}
+
+.chart-period-selector {
+    display: flex;
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.chart-period-option {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: white;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    border-right: 1px solid var(--gray);
+}
+
+.chart-period-option:last-child {
+    border-right: none;
+}
+
+.chart-period-option.active {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* Table widget */
+.table-widget {
+    grid-area: table;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: var(--spacing-sm);
+    text-align: left;
+    border-bottom: 1px solid var (--gray);
+}
+
+.data-table th {
+    background-color: var(--light);
+    font-weight: 600;
+}
+
+.data-table tbody tr:hover {
+    background-color: var(--light);
+}
+
+.data-table th:last-child,
+.data-table td:last-child {
+    text-align: right;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-active {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var (--success);
+}
+
+.status-pending {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: var (--warning);
+}
+
+.status-inactive {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: var (--danger);
+}
+
+.action-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+}
+
+.action-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.action-btn.view {
+    background-color: var(--info);
+}
+
+.action-btn.edit {
+    background-color: var (--warning);
+}
+
+.action-btn.delete {
+    background-color: var (--danger);
+}
+
+/* Form widget */
+.form-widget {
+    grid-area: form;
+}
+
+.contact-form .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+}
+
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    background-color: white;
+}
+
+.contact-form button {
+    background-color: var(--primary);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.contact-form button:hover {
+    background-color: var(--primary-light);
+}
+
+/* Footer */
+footer {
+    grid-area: footer;
+    padding: var(--spacing-md);
+    background-color: white;
+    border-top: 1px solid var(--gray);
+    text-align: center;
+    color: var(--gray-dark);
+}
+
+/* Drag and drop */
+.widget.dragging {
+    opacity: 0.8 !important;
+    transform: scale(1.01);
+    pointer-events: none;
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.widget.dragging .widget-header {
+    cursor: grabbing !important;
+}
+
+/* Plus explicite pour le surbrillance lors du drag-and-drop */
+.drop-indicator {
+    box-shadow: 0 0 0 3px var(--primary) !important;
+    position: relative;
+    z-index: 5;
+    border: 2px dashed var(--primary) !important;
+    background-color: rgba(57, 50, 187, 0.05);
+    transform: scale(1.01);
+}
+
+.drop-indicator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(57, 50, 187, 0.05);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Overlay for mobile sidebar */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 15;
+}
+
+.overlay.show {
+    display: block;
+}
+
+/* Dashboard container principal avec grid-template-areas */
+.dashboard-container {
+    display: grid;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto auto;
+    grid-template-areas: 
+        "stats stats stats stats chart chart chart chart chart chart chart chart"
+        "table table table table table table table table form form form form"
+        "kpi kpi kpi kpi kpi kpi notif notif notif notif notif notif";
+    min-height: 600px;
+    max-width: 100%; /* Pour éviter le défilement horizontal */
+    overflow-x: hidden; /* Empêcher le défilement horizontal */
+    position: relative;
+}
+
+/* Styles pour les layout alternatifs */
+.layout-compact .dashboard-container,
+.layout-wide .dashboard-container,
+.layout-dashboard .dashboard-container {
+    /* Réinitialiser à la disposition par défaut */
+    grid-template-areas: 
+        "stats stats stats stats chart chart chart chart chart chart chart chart"
+        "table table table table table table table table form form form form"
+        "kpi kpi kpi kpi kpi kpi notif notif notif notif notif notif";
+    padding: var(--spacing-md);
+    grid-template-columns: repeat(12, 1fr);
+}
+
+/* Assignation des zones de grille aux widgets */
+#stats-widget {
+    grid-area: stats;
+}
+
+#chart-widget {
+    grid-area: chart;
+}
+
+#table-widget {
+    grid-area: table;
+}
+
+#form-widget {
+    grid-area: form;
+}
+
+#kpi-widget {
+    grid-area: kpi;
+}
+
+#notifications-widget {
+    grid-area: notif; /* Correction: utiliser "notif" au lieu de "notifications" */
+}
+
+/* Styles des widgets */
+.widget {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+    width: 100%; /* Par défaut, prend toute la largeur disponible */
+    max-width: 100%; /* Ne dépasse jamais la largeur du conteneur */
+}
+
+.widget:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.widget-header {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+}
+
+.widget-header h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.widget-header h2 i {
+    color: var(--primary);
+}
+
+.refresh-btn {
+    background: none;
+    border: none;
+    color: var(--gray-dark);
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.refresh-btn:hover {
+    background-color: var(--gray);
+    color: var(--primary);
+}
+
+.widget-body {
+    padding: var(--spacing-md);
+    flex: 1;
+    overflow: auto;
+}
+
+/* Styles spécifiques pour les différents types de widgets */
+/* Stats widget */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.stat-card {
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    background-color: var(--light);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.stat-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light);
+}
+
+.stat-title {
+    font-size: 0.9rem;
+    color: var(--gray-dark);
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-evolution {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.stat-evolution.positive { color: var(--success); }
+.stat-evolution.negative { color: var(--danger); } /* Correction de la règle précédente */
+
+/* Chart widget */
+.chart-controls {
+    margin-bottom: var (--spacing-md);
+    display: flex;
+    justify-content: space-between;
+}
+
+.chart-period-selector {
+    display: flex;
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.chart-period-option {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: white;
+    cursor: pointer;
+    border: none;
+    border-right: 1px solid var(--gray);
+}
+
+.chart-period-option:last-child {
+    border-right: none;
+}
+
+.chart-period-option.active {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* Table widget */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: var(--spacing-sm);
+    text-align: left;
+    border-bottom: 1px solid var(--gray);
+}
+
+.data-table th {
+    background-color: var(--light);
+    font-weight: 600;
+}
+
+.data-table tbody tr:hover {
+    background-color: var(--light);
+}
+
+/* Form widget */
+.contact-form .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+}
+
+.contact-form button {
+    background-color: var(--primary);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.contact-form button:hover {
+    background-color: var(--primary-light);
+}
+
+/* KPI widget */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-md);
+    text-align: center;
+}
+
+.kpi-card {
+    padding: var(--spacing-md);
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+}
+
+.kpi-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.kpi-title {
+    font-size: 0.9rem;
+    color: var(--gray-dark);
+}
+
+/* Notifications widget */
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin: 0;
+    padding: 0;
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--gray);
+}
+
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-text {
+    font-weight: 500;
+}
+
+.notification-time {
+    font-size: 0.8rem;
+    color: var(--gray-dark);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .dashboard-container {
+        grid-template-areas: 
+            "stats stats stats stats stats stats chart chart chart chart chart chart"
+            "table table table table table table table table table table table table"
+            "kpi kpi kpi kpi kpi kpi form form form notif notif notif";
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "stats"
+            "chart"
+            "kpi"
+            "table"
+            "form"
+            "notif";
+    }
+
+    .layout-compact .dashboard-container,
+    .layout-wide .dashboard-container,
+    .layout-dashboard .dashboard-container {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "stats"
+            "chart"
+            "kpi"
+            "table"
+            "form"
+            "notif";
+    }
+}
+
+/* Boutons de layout */
+.layout-toggle {
+    display: none;  /* Masquer complètement */
+}
+
+/* Sidebar, header et footer styles existants restent inchangés */
+
+/* Widget header modifications pour accommoder les nouveaux contrôles */
+.widget-header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.toggle-compact-btn, 
+.refresh-btn {
+    background: none;
+    border: none;
+    color: var (--gray-dark);
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.toggle-compact-btn:hover,
+.refresh-btn:hover {
+    background-color: var(--gray);
+    color: var(--primary);
+}
+
+/* Resize handle styling */
+.resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    cursor: nwse-resize; /* Curseur diagonal */
+    background: transparent;
+    z-index: 10;
+    touch-action: none; /* Améliorer le support tactile */
+    pointer-events: auto; /* IMPORTANT: Permettre les événements de pointeur */
+}
+
+.resize-handle::after {
+    content: '';
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--gray-dark);
+    border-bottom: 2px solid var(--gray-dark);
+    opacity: 0.5;
+    transition: var(--transition);
+}
+
+.widget:hover .resize-handle::after {
+    opacity: 1;
+    border-color: var(--primary);
+}
+
+/* Styles for compact mode */
+.widget.compact .widget-body {
+    max-height: 120px;
+    overflow: auto;
+}
+
+.widget.compact {
+    min-height: auto;
+}
+
+/* Widget specific compact styles */
+.widget.compact .stats-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+}
+
+.widget.compact .stat-card {
+    padding: var(--spacing-sm);
+}
+
+.widget.compact .stat-card-header {
+    margin-bottom: var(--spacing-sm);
+    gap: var(--spacing-sm);
+}
+
+.widget.compact .stat-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+}
+
+.widget.compact .stat-title {
+    font-size: 0.7rem;
+}
+
+.widget.compact .stat-value {
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.widget.compact .stat-evolution {
+    font-size: 0.7rem;
+    margin-bottom: 2px;
+}
+
+.widget.compact .chart-controls {
+    margin-bottom: 5px;
+}
+
+.widget.compact .chart-container {
+    height: 100px;
+}
+
+.widget.compact .data-table th,
+.widget.compact .data-table td {
+    padding: 4px;
+    font-size: 0.8rem;
+}
+
+/* Widget in resize mode */
+.widget.resizing {
+    user-select: none;
+    cursor: nwse-resize !important;
+    opacity: 0.8;
+}
+
+/* Styles pour le bouton d'ajout de widget / Styles for add widget button */
+.add-widget-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    z-index: 100;
+    transition: var(--transition);
+}
+
+.add-widget-btn:hover {
+    background-color: var(--primary-light);
+    transform: scale(1.05);
+}
+
+/* Modal styles / Styles pour la fenêtre modale */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 1001;
+    display: none;
+    opacity: 0;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+}
+
+.modal.show {
+    display: block;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--gray);
+}
+
+.modal-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--gray-dark);
+    transition: var(--transition);
+}
+
+.close-modal-btn:hover {
+    color: var(--danger);
+}
+
+.modal-body {
+    padding: var(--spacing-md);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+/* Widget type selector / Sélecteur de type de widget */
+.widget-type-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.widget-type-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    background-color: var(--light);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.widget-type-card i {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.widget-type-card:hover {
+    background-color: var(--primary-light);
+    color: white;
+}
+
+.widget-type-card:hover i {
+    color: white;
+}
+
+/* Bouton de suppression de widget / Widget delete button */
+.delete-widget-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: none;
+    border: none;
+    color: var(--gray-dark);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.delete-widget-btn:hover {
+    background-color: var(--danger);
+    color: white;
+}
+
+/* Amélioration pour la manipulation visuelle des widgets */
+.widget {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; 
+    /* Retirer la transition pour width/height pour éviter les animations pendant le redimensionnement */
+}
+
+.widget.dragging, .widget.resizing {
+    opacity: 0.9;
+    z-index: 1000;
+    transition: none !important; /* Désactiver toutes les transitions pendant le drag et resize */
+    will-change: width, height, transform; /* Optimisation des performances */
+}
+
+/* Classe pour widget pendant l'alignement */
+.widget-aligning {
+    transition: height 0.2s ease-out;
+}
+
+.widget-row {
+    display: contents; /* Pour préserver la structure de la grille tout en ajoutant un concept de "row" */
+}
+
+/* Amélioration du style de la poignée de redimensionnement */
+.resize-handle {
+    touch-action: none; /* Améliorer le support tactile */
+}
+
+/* Modification du conteneur principal pour éviter le défilement horizontal */
+.dashboard-container {
+    display: grid;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: min-content; /* Les lignes s'adaptent au contenu */
+    grid-auto-flow: row; /* Force les widgets à s'organiser par lignes */
+    min-height: 600px;
+    max-width: 100%; /* Pour éviter le défilement horizontal */
+    overflow-x: hidden; /* Empêcher le défilement horizontal */
+    position: relative;
+}
+
+/* Amélioration du style de widget en cours de déplacement */
+.widget.dragging {
+    opacity: 0.9 !important;
+    transform: scale(1.02);
+    pointer-events: none !important;
+    cursor: grabbing !important;
+    z-index: 1000;
+    transition: none !important;
+}
+
+/* Amélioration du placeholder pour un rendu plus visible */
+.widget-placeholder {
+    background-color: rgba(57, 50, 187, 0.1);
+    border: 2px dashed var(--primary);
+    border-radius: 8px;
+    margin: 0;
+    box-sizing: border-box;
+    min-height: 100px;
+    visibility: visible;
+    opacity: 0.7;
+    transition: none;
+    z-index: 0;
+}
+
+/* Indicateur de drop plus visible */
+.drop-indicator {
+    box-shadow: 0 0 0 3px var(--primary) !important;
+    transform: scale(1.03);
+    z-index: 10;
+    border: 2px dashed var(--primary) !important;
+    background-color: rgba(57, 50, 187, 0.08);
+    position: relative;
+}
+
+.drop-indicator::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(57, 50, 187, 0.08);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Widget avec transition contrôlée */
+.widget {
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    width: 100%; /* Par défaut, prend toute la largeur disponible */
+    max-width: 100%; /* Ne dépasse jamais la largeur du conteneur */
+}
+
+/* Widget en cours de redimensionnement */
+.widget.resizing {
+    opacity: 0.95;
+    z-index: 100;
+    transition: none !important;
+    will-change: width, height;
+    cursor: nwse-resize !important;
+    box-shadow: var(--shadow-md);
+}
+
+/* Améliorations pour les poignées de redimensionnement */
+.resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    cursor: nwse-resize;
+    z-index: 20;
+    background: transparent;
+    touch-action: none;
+}
+
+.resize-handle::after {
+    content: '';
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    width: 14px;
+    height: 14px;
+    border-right: 3px solid var(--primary);
+    border-bottom: 3px solid var(--primary);
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.widget:hover .resize-handle::after {
+    opacity: 0.8;
+    border-color: var(--primary);
+}
+
+/* Classe pour animation de transition entre positions */
+.widget-moving {
+    transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+/* Refonte du mode compact pour n'afficher que le titre et un résumé avec plus d'espace */
+.widget.compact {
+    min-height: auto;
+    max-height: 100px; /* Augmenté de 80px à 100px pour plus d'espace */
+    overflow: hidden;
+}
+
+.widget.compact .widget-body {
+    display: none;
+}
+
+.widget.compact .widget-summary {
+    display: flex;
+    padding: 8px var(--spacing-md); /* Ajout de padding vertical de 8px */
+    margin-top: 0; /* Suppression de la marge négative */
+}
+
+.widget:not(.compact) .widget-summary {
+    display: none;
+}
+
+/* Style pour le résumé du widget */
+.widget-summary {
+    font-size: 0.85rem;
+    color: var(--gray-dark);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    gap: var(--spacing-md);
+    min-height: 42px; /* Hauteur minimale pour assurer l'espacement */
+}
+
+/* Style spécifique pour chaque type de widget en mode compact */
+.widget.compact.stats-widget .widget-summary-item {
+    border-right: 1px solid var(--gray);
+    padding-right: 10px;
+    margin-right: 3px;
+}
+
+.widget.compact.stats-widget .widget-summary-item:last-child {
+    border-right: none;
+}
+
+.widget.compact.chart-widget .widget-summary-value {
+    font-size: 1rem;
+}
+
+.widget.compact.table-widget .widget-summary {
+    white-space: normal;
+    line-height: 1.2;
+}
+
+.widget.compact.form-widget .widget-summary {
+    font-style: italic;
+}
+
+.widget.compact.kpi-widget .widget-summary {
+    justify-content: space-around;
+}
+
+.widget.compact.kpi-widget .widget-summary-item {
+    text-align: center;
+}
+
+.widget.compact.notifications-widget .widget-summary {
+    white-space: normal;
+    line-height: 1.2;
+}
+
+/* Ajustements spécifiques pour les résumés des différents widgets */
+.widget.compact.stats-widget .widget-summary {
+    padding: 10px var(--spacing-md);
+    flex-wrap: wrap; /* Permettre le passage à la ligne si nécessaire */
+}
+
+.widget.compact.chart-widget .widget-summary {
+    padding: 12px var(--spacing-md);
+}
+
+.widget.compact.table-widget .widget-summary {
+    white-space: normal;
+    line-height: 1.4;
+    padding: 8px var(--spacing-md);
+}
+
+.widget.compact.form-widget .widget-summary {
+    font-style: italic;
+    padding: 12px var(--spacing-md);
+}
+
+.widget.compact.kpi-widget .widget-summary {
+    justify-content: space-around;
+    padding: 12px var(--spacing-md);
+}
+
+.widget.compact.notifications-widget .widget-summary {
+    white-space: normal;
+    line-height: 1.4;
+    padding: 8px var(--spacing-md);
+}
+
+/* Refonte du mode compact pour n'afficher que le titre et un résumé */
+.widget.compact {
+    min-height: auto;
+    max-height: 80px;
+    overflow: hidden;
+}
+
+.widget.compact .widget-body {
+    display: none;
+}
+
+.widget.compact .widget-summary {
+    display: flex;
+    padding: 0 var(--spacing-md);
+    margin-top: -5px;
+}
+
+.widget:not(.compact) .widget-summary {
+    display: none;
+}
+
+/* Style pour le résumé du widget */
+.widget-summary {
+    font-size: 0.85rem;
+    color: var (--gray-dark);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    gap: var(--spacing-md);
+}
+
+.widget-summary-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.widget-summary-value {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* Style spécifique pour chaque type de widget en mode compact */
+.widget.compact.stats-widget .widget-summary-item {
+    border-right: 1px solid var(--gray);
+    padding-right: 10px;
+    margin-right: 3px;
+}
+
+.widget.compact.stats-widget .widget-summary-item:last-child {
+    border-right: none;
+}
+
+.widget.compact.chart-widget .widget-summary-value {
+    font-size: 1rem;
+}
+
+.widget.compact.table-widget .widget-summary {
+    white-space: normal;
+    line-height: 1.2;
+}
+
+.widget.compact.form-widget .widget-summary {
+    font-style: italic;
+}
+
+.widget.compact.kpi-widget .widget-summary {
+    justify-content: space-around;
+}
+
+.widget.compact.kpi-widget .widget-summary-item {
+    text-align: center;
+}
+
+.widget.compact.notifications-widget .widget-summary {
+    white-space: normal;
+    line-height: 1.2;
+}
+
+/* Améliorations pour le drag and drop */
+.widget-placeholder {
+    background-color: rgba(57, 50, 187, 0.1);
+    border: 2px dashed var(--primary);
+    border-radius: 8px;
+    box-sizing: border-box;
+    min-height: 100px;
+    visibility: visible;
+    opacity: 0.6;
+    transition: none;
+    z-index: 0;
+    pointer-events: none; /* Pour permettre la détection des éléments en dessous */
+}
+
+.widget.dragging {
+    opacity: 0.85 !important;
+    transform: scale(1.02);
+    pointer-events: none !important;
+    cursor: grabbing !important;
+    z-index: 1000;
+    box-shadow: var(--shadow-lg) !important;
+    transition: none !important;
+}
+
+.drop-indicator {
+    box-shadow: 0 0 0 3px var(--primary) !important;
+    outline: 2px dashed var(--primary);
+    background-color: rgba(57, 50, 187, 0.05);
+    position: relative;
+    z-index: 5;
+    transform: scale(1.02);
+    transition: none;
+}
+
+.widget .widget-header {
+    cursor: grab;
+    user-select: none;
+}
+
+.widget.dragging .widget-header {
+    cursor: grabbing;
+}
+
+.widget.hidden-source {
+    opacity: 0.1;
+    position: relative;
+}
+
+.widget-placeholder {
+    border: 2px dashed var(--primary);
+    background-color: rgba(57, 50, 187, 0.05);
+    pointer-events: none;
+}
+
+.dashboard-container.drag-active {
+    background-color: rgba(57, 50, 187, 0.02);
+    outline: 2px dashed rgba(57, 50, 187, 0.2);
+}
+
+.widget.drop-target {
+    position: relative;
+}
+
+.widget.drop-before::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background-color: var(--primary);
+    z-index: 100;
+}
+
+.widget.drop-after::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background-color: var(--primary);
+    z-index: 100;
+}
+
+/* Pour les widgets en mode compact */
+.widget.compact .widget-header {
+    border-bottom: none;
+}
+
+/* Empêcher les interactions pendant le drag */
+.dragging .widget-header-actions button {
+    pointer-events: none;
+}
+
+/* Correction des boutons dans les widgets */
+.widget-header-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.widget-header-actions button {
+    background: none;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.widget-header-actions button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.delete-widget-btn:hover {
+    background-color: rgba(244, 67, 54, 0.1) !important;
+    color: var(--danger);
+}
+
+.toggle-compact-btn:hover {
+    background-color: rgba(33, 150, 243, 0.1) !important;
+    color: var(--info);
+}
+
+.refresh-btn:hover {
+    background-color: rgba(76, 175, 80, 0.1) !important;
+    color: var(--success);
+}
+
+/* Notification pour widget existant */
+.widget-exists-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(244, 67, 54, 0.9);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--shadow-md);
+    z-index: 1100;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.widget-exists-notification.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.widget-exists-notification i {
+    font-size: 1.2rem;
+}
+
+/* Corrections de styles pour le système de Drag and Drop */
+/* Ces styles doivent être ajoutés à la fin du fichier */
+
+/* S'assurer que les widgets sont vraiment draggable */
+.widget[draggable="true"] {
+    cursor: grab;
+    user-select: none;
+}
+
+/* Style pendant le drag */
+.widget.dragging {
+    opacity: 0.6;
+    z-index: 1000;
+    cursor: grabbing;
+    box-shadow: var(--shadow-lg) !important;
+    transform: scale(1.02);
+    pointer-events: none !important;
+}
+
+/* S'assurer que les événements de pointeur fonctionnent correctement */
+.widget-header {
+    cursor: grab;
+    user-select: none;
+}
+
+/* Styles pour les indicateurs de drop */
+.widget.drop-target {
+    outline: 2px solid var(--primary);
+}
+
+.widget.drop-before::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background-color: var(--primary);
+    z-index: 100;
+}
+
+.widget.drop-after::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background-color: var(--primary);
+    z-index: 100;
+}
+
+/* Corriger le style pour le conteneur pendant le drag */
+.dashboard-container.drag-active {
+    background-color: rgba(57, 50, 187, 0.05);
+    outline: 2px dashed var(--primary);
+}
+
+/* Corriger le problème avec les poignées de redimensionnement */
+.resize-handle {
+    pointer-events: auto !important;
+    z-index: 20;
+}
+
+/* S'assurer que les boutons dans les widgets sont cliquables */
+.widget button {
+    pointer-events: auto !important;
+}

@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <!-- Métadonnées essentielles / Essential metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tableau de bord">
+    <meta name="author" content="adouilly">
+    <title>Tableau de bord</title>
+    
+    <!-- Favicon d'icône de site -->
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2621/2621040.png">
+    
+    <!-- Préchargement des polices pour éviter les problèmes de cookies tiers -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Chargement des fichiers CSS / Loading CSS files -->
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+        // Vérifier si l'utilisateur est connecté / Check if user is logged in
+        window.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                // Rediriger vers la page de connexion / Redirect to login page
+                window.location.href = 'login.html';
+            } else {
+                // Mettre à jour l'interface utilisateur avec les informations de l'utilisateur
+                // Update UI with user information
+                const userName = localStorage.getItem('userName') || 'Admin';
+                const userAvatar = document.querySelector('.user-avatar');
+                const userNameElement = document.querySelector('.user-name');
+                
+                if (userNameElement) {
+                    userNameElement.textContent = userName;
+                }
+                
+                if (userAvatar) {
+                    const userPicture = localStorage.getItem('userPicture');
+                    if (userPicture) {
+                        // Si l'utilisateur s'est connecté avec Google, afficher sa photo
+                        // If user logged in with Google, display profile picture
+                        userAvatar.innerHTML = `<img src="${userPicture}" alt="${userName}" />`;
+                    } else {
+                        // Sinon, afficher les initiales / Otherwise, display initials
+                        const initials = userName.split(' ').map(n => n[0]).join('').toUpperCase();
+                        userAvatar.textContent = initials;
+                    }
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>AdminPanel</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-header">Principal</div>
+                    <div class="menu-item active">
+                        <i class="fas fa-home"></i>
+                        <span class="menu-text">Tableau de bord</span>
+                    </div>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-header">Widgets</div>
+                    <div class="menu-item widget-link" data-widget-id="stats-widget">
+                        <i class="fas fa-chart-bar"></i>
+                        <span class="menu-text">Statistiques</span>
+                    </div>
+                    <div class="menu-item widget-link" data-widget-id="chart-widget">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="menu-text">Ventes</span>
+                    </div>
+                    <div class="menu-item widget-link" data-widget-id="table-widget">
+                        <i class="fas fa-table"></i>
+                        <span class="menu-text">Commandes</span>
+                    </div>
+                    <div class="menu-item widget-link" data-widget-id="form-widget">
+                        <i class="fas fa-envelope"></i>
+                        <span class="menu-text">Contact</span>
+                    </div>
+                    <div class="menu-item widget-link" data-widget-id="kpi-widget">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span class="menu-text">KPI</span>
+                    </div>
+                    <div class="menu-item widget-link" data-widget-id="notifications-widget">
+                        <i class="fas fa-bell"></i>
+                        <span class="menu-text">Notifications</span>
+                    </div>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-header">Options</div>
+                    <div class="menu-item" id="logout-menu-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="menu-text">Déconnexion</span>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+        
+        <header>
+            <div class="header-title">
+                <h1>Tableau de bord</h1>
+            </div>
+            
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Rechercher...">
+            </div>
+            
+            <div class="header-actions">
+                <div class="user-menu">
+                    <div class="user-avatar">AD</div>
+                    <span class="user-name">Admin</span>
+                    <div class="user-dropdown">
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item" id="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Déconnexion</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="dashboard-container">
+                <!-- Structure simplifiée des widgets avec des grid-areas nommées -->
+                <div class="widget stats-widget" id="stats-widget">
+                    <div class="widget-header">
+                        <h2><i class="fas fa-chart-bar"></i> Statistiques</h2>
+                        <div class="widget-header-actions">
+                            <button class="delete-widget-btn" title="Supprimer ce widget"><i class="fas fa-trash-alt"></i></button>
+                            <button class="toggle-compact-btn" title="Mode compact"><i class="fas fa-compress-alt"></i></button>
+                            <button class="refresh-btn" title="Rafraîchir"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="widget-summary">
+                        <div class="widget-summary-item">
+                            <i class="fas fa-users"></i>
+                            <span class="widget-summary-value">1,254</span>
+                        </div>
+                        <div class="widget-summary-item">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span class="widget-summary-value">854</span>
+                        </div>
+                        <div class="widget-summary-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span class="widget-summary-value">7,842</span>
+                        </div>
+                        <div class="widget-summary-item">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span class="widget-summary-value">9,854 €</span>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-card-header">
+                                    <div class="stat-icon" style="background-color: rgba(33, 150, 243, 0.1); color: var(--info);">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="stat-title">Utilisateurs</div>
+                                </div>
+                                <div class="stat-value">1,254</div>
+                                <div class="stat-evolution positive">
+                                    <i class="fas fa-arrow-up"></i> +12.5%
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-card-header">
+                                    <div class="stat-icon" style="background-color: rgba(76, 175, 80, 0.1); color: var(--success);">
+                                        <i class="fas fa-shopping-bag"></i>
+                                    </div>
+                                    <div class="stat-title">Ventes</div>
+                                </div>
+                                <div class="stat-value">854</div>
+                                <div class="stat-evolution positive">
+                                    <i class="fas fa-arrow-up"></i> +8.2%
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-card-header">
+                                    <div class="stat-icon" style="background-color: rgba(255, 152, 0, 0.1); color: var(--warning);">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="stat-title">Visites</div>
+                                </div>
+                                <div class="stat-value">7,842</div>
+                                <div class="stat-evolution positive">
+                                    <i class="fas fa-arrow-up"></i> +24.6%
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-card-header">
+                                    <div class="stat-icon" style="background-color: rgba(244, 67, 54, 0.1); color: var(--danger);">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                    </div>
+                                    <div class="stat-title">Revenus</div>
+                                </div>
+                                <div class="stat-value">9,854 €</div>
+                                <div class="stat-evolution negative">
+                                    <i class="fas fa-arrow-down"></i> -2.4%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resize-handle"></div>
+                </div>
+                
+                <div class="widget chart-widget" id="chart-widget">
+                    <div class="widget-header">
+                        <h2><i class="fas fa-chart-line"></i> Ventes mensuelles</h2>
+                        <div class="widget-header-actions">
+                            <button class="toggle-compact-btn" title="Mode compact"><i class="fas fa-compress-alt"></i></button>
+                            <button class="refresh-btn" title="Rafraîchir"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="widget-summary">
+                        <div class="widget-summary-item">
+                            <span>Tendance:</span>
+                            <span class="widget-summary-value"><i class="fas fa-arrow-up"></i> +15.3%</span>
+                        </div>
+                        <div class="widget-summary-item">
+                            <span>Moyenne:</span>
+                            <span class="widget-summary-value">62.4</span>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="chart-controls">
+                            <div class="chart-period-selector">
+                                <button class="chart-period-option active" data-period="month">Mois</button>
+                                <button class="chart-period-option" data-period="quarter">Trimestre</button>
+                                <button class="chart-period-option" data-period="year">Année</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="resize-handle"></div>
+                </div>
+                <div class="widget table-widget" id="table-widget">
+                    <div class="widget-header">
+                        <h2><i class="fas fa-table"></i> Dernières commandes</h2>
+                        <div class="widget-header-actions">
+                            <button class="toggle-compact-btn" title="Mode compact"><i class="fas fa-compress-alt"></i></button>
+                            <button class="refresh-btn" title="Rafraîchir"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="widget-summary">
+                        <span>5 commandes récentes, dernière: Sophie Martin (125.99 €) - Statut: Actif</span>
+                    </div>
+                    <div class="widget-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Client</th>
+                                    <th>Date</th>
+                                    <th>Montant</th>
+                                    <th>Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Les données seront remplies par JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="resize-handle"></div>
+                </div>
+                <div class="widget form-widget" id="form-widget">
+                    <div class="widget-header">
+                        <h2><i class="fas fa-envelope"></i> Contact rapide</h2>
+                        <div class="widget-header-actions">
+                            <button class="toggle-compact-btn" title="Mode compact"><i class="fas fa-compress-alt"></i></button>
+                            <button class="refresh-btn" title="Rafraîchir"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="widget-summary">
+                        <span>Formulaire de contact rapide - 3 messages reçus aujourd'hui</span>
+                    </div>
+                    <div class="widget-body">
+                        <form class="contact-form">
+                            <div class="form-group">
+                                <label for="name">Nom</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" rows="3" required></textarea>
+                            </div>
+                            <button type="submit">Envoyer</button>
+                        </form>
+                    </div>
+                    <div class="resize-handle"></div>
+                </div>
+                <div class="widget kpi-widget" id="kpi-widget">
+                    <div class="widget-header">
+                        <h2><i class="fas fa-tachometer-alt"></i> KPI</h2>
+                        <div class="widget-header-actions">
+                            <button class="toggle-compact-btn" title="Mode compact"><i class="fas fa-compress-alt"></i></button>
+                            <button class="refresh-btn" title="Rafraîchir"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="widget-summary">
+                        <div class="widget-summary-item">
+                            <span>Satisfaction:</span>
+                            <span class="widget-summary-value">98%</span>
+                        </div>
+                        <div class="widget-summary-item">
+                            <span>Temps moyen:</span>
+                            <span class="widget-summary-value">24min</span>
+                        </div>
+                        <div class="widget-summary-item">
+                            <span>Utilisateurs:</span>
+                            <span class="widget-summary-value">14.2K</span>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="kpi-grid">
+                            <div class="kpi-card">
+                                <div class="kpi-value">98%</div>
+                                <div class="kpi-title">Satisfaction</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-value">24min</div>
+                                <div class="kpi-title">Temps moyen</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-value">14.2K</div>
+                                <div class="kpi-title">Utilisateurs actifs</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resize-handle"></div>
+                </div>
+                <div class="widget notifications-widget" id="notifications-widget">
+                    <div class="widget-header">
+                        <h2><i class="fas fa-bell"></i> Notifications</h2>
+                        <div class="widget-header-actions">
+                            <button class="delete-widget-btn" title="Supprimer ce widget"><i class="fas fa-trash-alt"></i></button>
+                            <button class="toggle-compact-btn" title="Mode compact"><i class="fas fa-compress-alt"></i></button>
+                            <button class="refresh-btn" title="Rafraîchir"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="widget-summary">
+                        <span>2 nouvelles notifications non lues (5min, 20min)</span>
+                    </div>
+                    <div class="widget-body">
+                        <ul class="notification-list">
+                            <li class="notification-item">
+                                <span class="notification-icon"><i class="fas fa-user"></i></span>
+                                <div class="notification-content">
+                                    <div class="notification-text">Nouvel utilisateur inscrit</div>
+                                    <div class="notification-time">Il y a 5 minutes</div>
+                                </div>
+                            </li>
+                            <li class="notification-item">
+                                <span class="notification-icon"><i class="fas fa-shopping-cart"></i></span>
+                                <div class="notification-content">
+                                    <div class="notification-text">Nouvelle commande reçue</div>
+                                    <div class="notification-time">Il y a 20 minutes</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="resize-handle"></div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <div class="copyright">© 2025 Adouilly - Tous droits réservés</div>
+        </footer>
+        
+        <div class="overlay" id="sidebar-overlay"></div>
+        <div class="add-widget-btn" id="add-widget-btn" title="Ajouter un widget">
+            <i class="fas fa-plus"></i>
+        </div>
+    </div>
+    <!-- Modal d'ajout de widget -->
+    <div class="modal" id="add-widget-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ajouter un widget</h3>
+                <button class="close-modal-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="widget-type-grid">
+                    <div class="widget-type-card" data-widget-type="stats">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Statistiques</span>
+                    </div>
+                    <div class="widget-type-card" data-widget-type="chart">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Graphique</span>
+                    </div>
+                    <div class="widget-type-card" data-widget-type="table">
+                        <i class="fas fa-table"></i>
+                        <span>Tableau</span>
+                    </div>
+                    <div class="widget-type-card" data-widget-type="form">
+                        <i class="fas fa-envelope"></i>
+                        <span>Formulaire</span>
+                    </div>
+                    <div class="widget-type-card" data-widget-type="kpi">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>KPI</span>
+                    </div>
+                    <div class="widget-type-card" data-widget-type="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span>Notifications</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <!-- Chargement des scripts dans le bon ordre -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <!-- Données et utilitaires -->
+    <script src="components/data.js"></script>
+    <!-- Modules pour les widgets -->
+    <script src="components/widget-refresh.js"></script>
+    <script src="components/widget-resize.js"></script>
+    <script src="components/widget-dragdrop-simple.js"></script>
+    <script src="components/widget-manager.js"></script>
+    <!-- Module pour les graphiques après le chargement des dépendances -->
+    <script src="components/chart.js"></script>
+    <!-- Outils de débogage -->
+    <script src="components/debug-tools.js"></script>
+    <!-- Script principal en dernier -->
+    <script src="script.js"></script>
+    <script src="dragdrop-debug.js"></script>
+
+    <!-- Ajout d'attributs draggable aux widgets -->
+    <script>
+      // Assurer que tous les widgets sont draggable
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.widget').forEach(widget => {
+          widget.setAttribute('draggable', 'true');
+          
+          // Empêcher le drag à partir des boutons
+          widget.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', function(e) {
+              e.stopPropagation();
+            });
+          });
+        });
+        
+        console.log('Attributs draggable initialisés');
+      });
+    </script>
+
+    <!-- Correction du bouton d'ajout de widget pour qu'il soit visible -->
+    <style>
+    .add-widget-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex !important; /* Force l'affichage */
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        box-shadow: var(--shadow-md);
+        cursor: pointer;
+        z-index: 100;
+        transition: var(--transition);
+    }
+
+    .add-widget-btn:hover {
+        background-color: var(--primary-light);
+        transform: scale(1.05);
+    }
+
+    /* Assurez-vous que les modales sont visibles quand nécessaire */
+    .modal.show, .modal-overlay.show {
+        display: block !important;
+        opacity: 1 !important;
+    }
+    </style>
+
+    <!-- Assurer l'initialisation correcte des widgets -->
+    <script>
+      // Script d'initialisation des widgets pour le drag and drop et resize
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('Initialisation manuelle des widgets...');
+        
+        // Rendre tous les widgets draggable
+        document.querySelectorAll('.widget').forEach(widget => {
+          widget.setAttribute('draggable', 'true');
+          
+          // Empêcher le drag depuis les boutons
+          widget.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', function(e) {
+              e.stopPropagation();
+            });
+          });
+          
+          // S'assurer que la poignée de redimensionnement est visible et fonctionnelle
+          const resizeHandle = widget.querySelector('.resize-handle');
+          if (resizeHandle) {
+            resizeHandle.style.pointerEvents = 'auto';
+          }
+        });
+        
+        // Réinitialiser manuellement les modules si nécessaire
+        if (typeof WidgetDragDrop !== 'undefined') {
+          console.log('Réinitialisation du module de glisser-déposer...');
+          WidgetDragDrop.init();
+        }
+        
+        if (typeof WidgetResize !== 'undefined') {
+          console.log('Réinitialisation du module de redimensionnement...');
+          WidgetResize.init();
+        }
+        
+        console.log('Initialisation manuelle terminée');
+      });
+    </script>
+
+    <!-- Script de diagnostic du système de drag and drop à ajouter juste avant la fermeture </body> -->
+    <script>
+      // Script de diagnostic et correction pour le Drag and Drop
+      document.addEventListener('DOMContentLoaded', function() {
+        // Diagnostiquer les problèmes courants
+        console.group("Diagnostic du système de Drag and Drop");
+        
+        // 1. Vérifier que les widgets ont l'attribut draggable
+        const widgets = document.querySelectorAll('.widget');
+        let draggableIssues = 0;
+        
+        widgets.forEach(widget => {
+          if (widget.getAttribute('draggable') !== "true") {
+            console.warn(`Widget ${widget.id || 'sans ID'} n'a pas l'attribut draggable="true"`);
+            widget.setAttribute('draggable', 'true');
+            draggableIssues++;
+          }
+        });
+        
+        if (draggableIssues > 0) {
+          console.log(`Correction: ${draggableIssues} widgets ont été rendus draggable`);
+        } else {
+          console.log("✅ Tous les widgets sont correctement marqués comme draggable");
+        }
+        
+        // 2. Vérifier les problèmes de pointer-events
+        const handlePointerEvents = document.querySelectorAll('.resize-handle, .widget button, .widget-header-actions button');
+        let pointerEventIssues = 0;
+        
+        handlePointerEvents.forEach(element => {
+          const style = window.getComputedStyle(element);
+          if (style.pointerEvents === 'none') {
+            console.warn(`Élément ${element.className} a pointer-events: none, ce qui peut bloquer les interactions`);
+            element.style.pointerEvents = 'auto';
+            pointerEventIssues++;
+          }
+        });
+        
+        if (pointerEventIssues > 0) {
+          console.log(`Correction: ${pointerEventIssues} éléments ont eu leurs pointer-events corrigés`);
+        } else {
+          console.log("✅ Les pointer-events sont correctement configurés");
+        }
+        
+        // 3. Test des événements fondamentaux
+        const container = document.querySelector('.dashboard-container');
+        if (container) {
+          // Tester dragover
+          const dragoverWorks = container.ondragover === null || typeof container.ondragover === 'function';
+          console.log(`Test dragover: ${dragoverWorks ? '✅' : '❌'}`);
+          
+          // Tester drop
+          const dropWorks = container.ondrop === null || typeof container.ondrop === 'function';
+          console.log(`Test drop: ${dropWorks ? '✅' : '❌'}`);
+        }
+        
+        console.log("Pour tester le drag and drop, essayez de déplacer un widget en le saisissant par son en-tête.");
+        console.log("Si vous rencontrez toujours des problèmes, cliquez ce bouton pour réinitialiser le système: reinitializeDragAndDrop()");
+        
+        console.groupEnd();
+      });
+      
+      // Afficher un bouton de réinitialisation
+      const resetButton = document.createElement('button');
+      resetButton.textContent = "↻ Réinitialiser Drag & Drop";
+      resetButton.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        z-index: 9999;
+        font-weight: bold;
+        box-shadow: var(--shadow-md);
+      `;
+      resetButton.onclick = function() {
+        if (typeof reinitializeDragAndDrop === 'function') {
+          reinitializeDragAndDrop();
+          alert('Système de drag and drop réinitialisé!');
+        }
+      };
+      document.body.appendChild(resetButton);
+    </script>
+</body>
+</html>
