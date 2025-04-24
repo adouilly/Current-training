@@ -23,55 +23,41 @@
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="styles.css">
 
-    <script>
-        // Vérifier si l'utilisateur est connecté / Check if user is logged in
-        window.addEventListener('DOMContentLoaded', function() {
-            if (localStorage.getItem('isLoggedIn') !== 'true') {
-                // Rediriger vers la page de connexion / Redirect to login page
-                window.location.href = 'login.html';
-            } else {
-                // Mettre à jour l'interface utilisateur avec les informations de l'utilisateur
-                // Update UI with user information
-                const userName = localStorage.getItem('userName') || 'Admin';
-                const userAvatar = document.querySelector('.user-avatar');
-                const userNameElement = document.querySelector('.user-name');
-                
-                if (userNameElement) {
-                    userNameElement.textContent = userName;
-                }
-                
-                if (userAvatar) {
-                    const userPicture = localStorage.getItem('userPicture');
-                    if (userPicture) {
-                        // Si l'utilisateur s'est connecté avec Google, afficher sa photo
-                        // If user logged in with Google, display profile picture
-                        userAvatar.innerHTML = `<img src="${userPicture}" alt="${userName}" />`;
-                    } else {
-                        // Sinon, afficher les initiales / Otherwise, display initials
-                        const initials = userName.split(' ').map(n => n[0]).join('').toUpperCase();
-                        userAvatar.textContent = initials;
-                    }
-                }
-            }
-        });
-    </script>
-    <script>
-        // Fonction pour charger le thème préféré au chargement initial
-        (function() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                document.documentElement.classList.add('theme-loading');
-                window.addEventListener('DOMContentLoaded', function() {
-                    document.body.classList.add('dark-theme');
-                    setTimeout(() => document.documentElement.classList.remove('theme-loading'), 100);
-                });
-            }
-        })();
-    </script>
     <style>
         /* Style pour éviter le flash de thème lors du chargement */
         .theme-loading {
             visibility: hidden;
+        }
+        
+        /* Correction du bouton d'ajout de widget pour qu'il soit visible */
+        .add-widget-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex !important; /* Force l'affichage */
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .add-widget-btn:hover {
+            background-color: var(--primary-light);
+            transform: scale(1.05);
+        }
+
+        /* Assurez-vous que les modales sont visibles quand nécessaire */
+        .modal.show, .modal-overlay.show {
+            display: block !important;
+            opacity: 1 !important;
         }
     </style>
 </head>
@@ -124,6 +110,10 @@
                 
                 <div class="menu-section">
                     <div class="menu-header">Options</div>
+                    <div class="menu-item" id="theme-toggle-btn">
+                        <i class="fas fa-moon"></i>
+                        <span class="menu-text">Thème sombre</span>
+                    </div>
                     <div class="menu-item" id="logout-menu-btn">
                         <i class="fas fa-sign-out-alt"></i>
                         <span class="menu-text">Déconnexion</span>

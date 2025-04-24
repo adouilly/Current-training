@@ -2780,3 +2780,23 @@ body.dark-theme .widget:hover {
     left: calc(50% - 20px);
     animation: pulse 1s infinite;
 }
+
+/* Supprimer le bouton flottant de thème */
+.theme-toggle {
+    /* Supprimer complètement ce style */
+    display: none !important; /* Assure que le bouton existant ne s'affiche pas en attendant la suppression complète */
+}
+
+/* Amélioration du style pour le bouton de thème dans le sidebar */
+#theme-toggle-btn i {
+    transition: transform 0.3s ease;
+}
+
+#theme-toggle-btn:hover i {
+    transform: rotate(15deg);
+}
+
+body.dark-theme #theme-toggle-btn i {
+    color: yellow;
+    text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+}

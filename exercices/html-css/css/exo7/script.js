@@ -453,27 +453,43 @@ function initAllWidgetButtons() {
 
 // Initialisation du thème jour/nuit
 function initTheme() {
-    // Créer le bouton de thème
-    const themeToggle = document.createElement('button');
-    themeToggle.classList.add('theme-toggle');
-    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-    themeToggle.title = "Changer de thème";
-    document.body.appendChild(themeToggle);
+    // Récupérer le bouton de thème dans le menu latéral
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    if (!themeToggleBtn) {
+        console.error("Bouton de thème non trouvé dans le menu latéral");
+        return;
+    }
     
     // Vérifier le thème sauvegardé
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
+    const isDarkTheme = savedTheme === 'dark';
+    
+    // Appliquer le thème sauvegardé au chargement
+    if (isDarkTheme) {
         document.body.classList.add('dark-theme');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        themeToggleBtn.querySelector('i').classList.remove('fa-moon');
+        themeToggleBtn.querySelector('i').classList.add('fa-sun');
+        themeToggleBtn.querySelector('.menu-text').textContent = 'Thème clair';
     }
     
     // Gérer le changement de thème
-    themeToggle.addEventListener('click', function() {
+    themeToggleBtn.addEventListener('click', function() {
         document.body.classList.toggle('dark-theme');
         const isDark = document.body.classList.contains('dark-theme');
         
-        // Mettre à jour l'icône
-        this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        // Mettre à jour l'icône et le texte
+        const icon = this.querySelector('i');
+        const text = this.querySelector('.menu-text');
+        
+        if (isDark) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            text.textContent = 'Thème clair';
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+            text.textContent = 'Thème sombre';
+        }
         
         // Sauvegarder la préférence
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
