@@ -55,6 +55,25 @@
             }
         });
     </script>
+    <script>
+        // Fonction pour charger le thème préféré au chargement initial
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('theme-loading');
+                window.addEventListener('DOMContentLoaded', function() {
+                    document.body.classList.add('dark-theme');
+                    setTimeout(() => document.documentElement.classList.remove('theme-loading'), 100);
+                });
+            }
+        })();
+    </script>
+    <style>
+        /* Style pour éviter le flash de thème lors du chargement */
+        .theme-loading {
+            visibility: hidden;
+        }
+    </style>
 </head>
 <body>
     <div class="dashboard">
@@ -140,8 +159,8 @@
 
         <main>
             <div class="dashboard-container">
-                <!-- Structure simplifiée des widgets avec des grid-areas nommées -->
-                <div class="widget stats-widget" id="stats-widget">
+                <!-- Ajouter les classes de largeur aux widgets -->
+                <div class="widget stats-widget widget-col-4" id="stats-widget">
                     <div class="widget-header">
                         <h2><i class="fas fa-chart-bar"></i> Statistiques</h2>
                         <div class="widget-header-actions">
@@ -223,7 +242,7 @@
                     <div class="resize-handle"></div>
                 </div>
                 
-                <div class="widget chart-widget" id="chart-widget">
+                <div class="widget chart-widget widget-col-8" id="chart-widget">
                     <div class="widget-header">
                         <h2><i class="fas fa-chart-line"></i> Ventes mensuelles</h2>
                         <div class="widget-header-actions">
@@ -255,7 +274,7 @@
                     </div>
                     <div class="resize-handle"></div>
                 </div>
-                <div class="widget table-widget" id="table-widget">
+                <div class="widget table-widget widget-col-8" id="table-widget">
                     <div class="widget-header">
                         <h2><i class="fas fa-table"></i> Dernières commandes</h2>
                         <div class="widget-header-actions">
@@ -284,7 +303,7 @@
                     </div>
                     <div class="resize-handle"></div>
                 </div>
-                <div class="widget form-widget" id="form-widget">
+                <div class="widget form-widget widget-col-4" id="form-widget">
                     <div class="widget-header">
                         <h2><i class="fas fa-envelope"></i> Contact rapide</h2>
                         <div class="widget-header-actions">
@@ -314,7 +333,7 @@
                     </div>
                     <div class="resize-handle"></div>
                 </div>
-                <div class="widget kpi-widget" id="kpi-widget">
+                <div class="widget kpi-widget widget-col-6" id="kpi-widget">
                     <div class="widget-header">
                         <h2><i class="fas fa-tachometer-alt"></i> KPI</h2>
                         <div class="widget-header-actions">
@@ -354,7 +373,7 @@
                     </div>
                     <div class="resize-handle"></div>
                 </div>
-                <div class="widget notifications-widget" id="notifications-widget">
+                <div class="widget notifications-widget widget-col-6" id="notifications-widget">
                     <div class="widget-header">
                         <h2><i class="fas fa-bell"></i> Notifications</h2>
                         <div class="widget-header-actions">
@@ -389,7 +408,7 @@
             </div>
         </main>
         <footer>
-            <div class="copyright">© 2025 Adouilly - Tous droits réservés</div>
+            <div class="copyright">© 5 Adouilly - Tous droits réservés</div>
         </footer>
         
         <div class="overlay" id="sidebar-overlay"></div>
@@ -442,7 +461,8 @@
     <!-- Modules pour les widgets -->
     <script src="components/widget-refresh.js"></script>
     <script src="components/widget-resize.js"></script>
-    <script src="components/widget-dragdrop-simple.js"></script>
+    <!-- Remplacer la référence par le nouveau fichier -->
+    <script src="components/widget-dragdrop.js"></script>
     <script src="components/widget-manager.js"></script>
     <!-- Module pour les graphiques après le chargement des dépendances -->
     <script src="components/chart.js"></script>
@@ -451,6 +471,9 @@
     <!-- Script principal en dernier -->
     <script src="script.js"></script>
     <script src="dragdrop-debug.js"></script>
+
+    <!-- Ajouter cette ligne avant la fermeture de </body> -->
+    <script src="components/dragdrop-test.js"></script>
 
     <!-- Ajout d'attributs draggable aux widgets -->
     <script>
@@ -600,15 +623,13 @@
         }
         
         console.log("Pour tester le drag and drop, essayez de déplacer un widget en le saisissant par son en-tête.");
-        console.log("Si vous rencontrez toujours des problèmes, cliquez ce bouton pour réinitialiser le système: reinitializeDragAndDrop()");
-        
         console.groupEnd();
       });
       
-      // Afficher un bouton de réinitialisation
-      const resetButton = document.createElement('button');
-      resetButton.textContent = "↻ Réinitialiser Drag & Drop";
-      resetButton.style.cssText = `
+      // Ajouter un bouton pour réorganiser les widgets
+      const organizeButton = document.createElement('button');
+      organizeButton.textContent = "🧩 Organiser les widgets";
+      organizeButton.style.cssText = `
         position: fixed;
         bottom: 30px;
         left: 30px;
@@ -621,13 +642,13 @@
         font-weight: bold;
         box-shadow: var(--shadow-md);
       `;
-      resetButton.onclick = function() {
-        if (typeof reinitializeDragAndDrop === 'function') {
-          reinitializeDragAndDrop();
-          alert('Système de drag and drop réinitialisé!');
+      organizeButton.onclick = function() {
+        if (typeof organizeWidgets === 'function') {
+            const result = organizeWidgets();
+            alert(result);
         }
       };
-      document.body.appendChild(resetButton);
+      document.body.appendChild(organizeButton);
     </script>
 </body>
 </html>

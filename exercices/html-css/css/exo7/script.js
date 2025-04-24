@@ -62,6 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("Widgets réorganisés - réinitialisation des boutons");
         initAllWidgetButtons();
     });
+
+    // Initialiser le thème
+    initTheme();
 });
 
 // Initialisation des fonctionnalités principales du tableau de bord
@@ -446,4 +449,121 @@ function initAllWidgetButtons() {
             }
         });
     });
+}
+
+// Initialisation du thème jour/nuit
+function initTheme() {
+    // Créer le bouton de thème
+    const themeToggle = document.createElement('button');
+    themeToggle.classList.add('theme-toggle');
+    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    themeToggle.title = "Changer de thème";
+    document.body.appendChild(themeToggle);
+    
+    // Vérifier le thème sauvegardé
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+    
+    // Gérer le changement de thème
+    themeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('dark-theme');
+        const isDark = document.body.classList.contains('dark-theme');
+        
+        // Mettre à jour l'icône
+        this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        
+        // Sauvegarder la préférence
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        
+        // Mettre à jour les graphiques si nécessaire
+        document.querySelectorAll('canvas').forEach(canvas => {
+            if (window.Chart && Chart.getChart(canvas)) {
+                setTimeout(() => {
+                    Chart.getChart(canvas).resize();
+                }, 300);
+            }
+        });
+        
+        // Vérifier la visibilité des éléments du menu après le changement de thème
+        checkSidebarVisibility();
+    });
+    
+    // Vérifier la visibilité initiale
+    checkSidebarVisibility();
+}
+
+// Fonction pour vérifier et corriger la visibilité des éléments du menu latéral
+function checkSidebarVisibility() {
+    const isDark = document.body.classList.contains('dark-theme');
+    const sidebar = document.querySelector('.sidebar');
+    
+    if (!sidebar) return;
+    
+    // Force le rafraîchissement de certains éléments pour garantir leur visibilité
+    const menuItems = sidebar.querySelectorAll('.menu-item');
+    const menuHeaders = sidebar.querySelectorAll('.menu-header');
+    
+    // Appliquer temporairement une modification pour forcer le rafraîchissement du rendu
+    menuItems.forEach(item => {
+        item.style.opacity = '0.99';
+        setTimeout(() => item.style.opacity = '', 50);
+    });
+    
+    menuHeaders.forEach(header => {
+        header.style.opacity = '0.99';
+        setTimeout(() => header.style.opacity = '', 50);
+    });
+    
+    // Définir une couleur de fond et de texte explicite pour garantir la visibilité
+    sidebar.style.backgroundColor = isDark ? 'var(--sidebar-bg)' : 'var(--primary)';
+    sidebar.style.color = 'var(--sidebar-text)';
+    
+    console.log(`Visibilité du menu vérifiée - Mode ${isDark ? 'sombre' : 'clair'}`);
+}
+
+// Fonction pour montrer l'animation de chargement sur un widget
+function showWidgetLoading(widget, duration = 1500) {
+    if (!widget) return;
+    
+    // Ajouter la classe de chargement
+    widget.classList.add('loading');
+    
+    // Créer un toast de chargement
+    const toast = document.createElement('div');
+    toast.classList.add('loading-toast');
+    toast.innerHTML = '<i class="fas fa-sync-alt"></i> Chargement des données...';
+    document.body.appendChild(toast);
+    
+    // Afficher le toast
+    setTimeout(() => toast.classList.add('show'), 10);
+    
+    // Simuler un temps de chargement
+    setTimeout(() => {
+        // Supprimer la classe de chargement
+        widget.classList.remove('loading');
+        
+        // Cacher et supprimer le toast
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, duration);
+}
+
+// Améliorer la fonction de rafraîchissement pour utiliser les animations de chargement
+if (typeof WidgetRefresh !== 'undefined') {
+    const originalRefresh = WidgetRefresh.refreshWidget;
+    
+    WidgetRefresh.refreshWidget = function(widget) {
+        if (!widget) return;
+        
+        // Montrer l'animation de chargement
+        showWidgetLoading(widget);
+        
+        // Exécuter la fonction originale
+        if (originalRefresh) {
+            originalRefresh(widget);
+        }
+    };
 }

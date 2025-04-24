@@ -1055,11 +1055,8 @@ footer {
     gap: var(--spacing-md);
     padding: var(--spacing-md);
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto auto auto;
-    grid-template-areas: 
-        "stats stats stats stats chart chart chart chart chart chart chart chart"
-        "table table table table table table table table form form form form"
-        "kpi kpi kpi kpi kpi kpi notif notif notif notif notif notif";
+    grid-auto-rows: min-content; /* Les lignes s'adaptent au contenu */
+    grid-auto-flow: row; /* Force les widgets à s'organiser par lignes */
     min-height: 600px;
     max-width: 100%; /* Pour éviter le défilement horizontal */
     overflow-x: hidden; /* Empêcher le défilement horizontal */
@@ -1080,28 +1077,31 @@ footer {
 }
 
 /* Assignation des zones de grille aux widgets */
-#stats-widget {
-    grid-area: stats;
+/* SUPPRIMER ces règles d'assignation de grid-area fixe */
+/* 
+#stats-widget { grid-area: stats; }
+#chart-widget { grid-area: chart; }
+#table-widget { grid-area: table; }
+#form-widget { grid-area: form; }
+#kpi-widget { grid-area: kpi; }
+#notifications-widget { grid-area: notif; }
+*/
+
+/* À la place, utiliser des classes pour définir la largeur des widgets */
+.widget-col-4 {
+    grid-column: span 4; /* 3 widgets de cette taille par ligne (4×3=12) */
 }
 
-#chart-widget {
-    grid-area: chart;
+.widget-col-6 {
+    grid-column: span 6; /* 2 widgets de cette taille par ligne (6×2=12) */
 }
 
-#table-widget {
-    grid-area: table;
+.widget-col-8 {
+    grid-column: span 8; /* 1 widget large + 1 petit par ligne (8+4=12) */
 }
 
-#form-widget {
-    grid-area: form;
-}
-
-#kpi-widget {
-    grid-area: kpi;
-}
-
-#notifications-widget {
-    grid-area: notif; /* Correction: utiliser "notif" au lieu de "notifications" */
+.widget-col-12 {
+    grid-column: span 12; /* Pleine largeur */
 }
 
 /* Styles des widgets */
@@ -2250,4 +2250,533 @@ footer {
 /* S'assurer que les boutons dans les widgets sont cliquables */
 .widget button {
     pointer-events: auto !important;
+}
+
+/* Ajouter ces styles à la fin du fichier pour le nouveau système de drag and drop */
+/* Styles améliorés pour le drag and drop basé sur les événements souris */
+.widget-placeholder {
+    background-color: rgba(57, 50, 187, 0.1);
+    border: 2px dashed var(--primary);
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin: var(--spacing-md) 0;
+    min-height: 100px;
+    visibility: visible;
+    transition: none;
+    z-index: 0;
+    display: block;
+}
+
+.widget.dragging {
+    opacity: 0.8;
+    box-shadow: var(--shadow-lg);
+    pointer-events: none;
+}
+
+.widget.draggable .widget-header {
+    cursor: grab;
+}
+
+.widget.dragging .widget-header {
+    cursor: grabbing;
+}
+
+.drag-active {
+    background-color: rgba(57, 50, 187, 0.02);
+    outline: 1px dashed rgba(57, 50, 187, 0.2);
+}
+
+.drop-before {
+    border-top: 5px solid var(--primary);
+    margin-top: -5px;
+}
+
+.drop-after {
+    border-bottom: 5px solid var(--primary);
+    margin-bottom: -5px;
+}
+
+/* Améliorations pour le système de drag and drop */
+
+/* Styles pour le placeholder qui montre où le widget sera déposé */
+.widget-placeholder {
+    background-color: rgba(57, 50, 187, 0.1);
+    border: 2px dashed var(--primary);
+    border-radius: 8px;
+    margin: var(--spacing-md) 0;
+    min-height: 100px;
+    display: block;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+/* Style pour le widget pendant qu'on le déplace */
+.widget.dragging {
+    opacity: 0.8;
+    pointer-events: none;
+    box-shadow: var(--shadow-lg) !important;
+    z-index: 1000;
+}
+
+/* Style pour le conteneur pendant le drag */
+.dashboard-container.drag-active {
+    background-color: rgba(57, 50, 187, 0.02);
+    outline: 2px dashed rgba(57, 50, 187, 0.1);
+}
+
+/* Styles pour les indicateurs de drop */
+.widget.drop-before {
+    border-top: 5px solid var(--primary);
+    padding-top: 5px;
+    margin-top: -10px;
+}
+
+.widget.drop-after {
+    border-bottom: 5px solid var(--primary);
+    padding-bottom: 5px;
+    margin-bottom: -10px;
+}
+
+/* S'assurer que le conteneur de dashboard accepte bien les widgets déplacés */
+.dashboard-container {
+    min-height: 300px;
+    position: relative;
+    padding: 20px;
+    display: grid;
+}
+
+/* Curseurs appropriés */
+.widget.draggable .widget-header {
+    cursor: grab;
+}
+
+.widget.dragging .widget-header {
+    cursor: grabbing !important;
+}
+
+/* Améliorations pour le mobile */
+@media (max-width: 768px) {
+    .widget-placeholder {
+        margin: 10px 0;
+    }
+    
+    .widget.drop-before {
+        border-top-width: 3px;
+        margin-top: -6px;
+    }
+    
+    .widget.drop-after {
+        border-bottom-width: 3px;
+        margin-bottom: -6px;
+    }
+}
+
+/* Améliorations pour la fluidité et l'ergonomie du drag and drop */
+
+/* Styles pour le widget en mouvement */
+.widget-moving {
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Placeholder plus visible et attractif */
+.widget-placeholder {
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(57, 50, 187, 0.05),
+        rgba(57, 50, 187, 0.05) 10px,
+        rgba(57, 50, 187, 0.1) 10px,
+        rgba(57, 50, 187, 0.1) 20px
+    );
+    border: 2px dashed var(--primary);
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin: var(--spacing-md) 0;
+    min-height: 100px;
+    visibility: visible;
+    z-index: 0;
+    display: block;
+    opacity: 0.8;
+}
+
+/* Amélioration de l'aperçu de drop */
+.drop-before, .drop-after {
+    position: relative;
+    z-index: 2;
+}
+
+.drop-before::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background-color: var(--primary);
+    z-index: 100;
+    border-radius: 4px;
+    animation: pulse 1s infinite;
+}
+
+.drop-after::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background-color: var(--primary);
+    z-index: 100;
+    border-radius: 4px;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* Style du widget pendant le drag */
+.widget.dragging {
+    opacity: 0.9 !important;
+    transform: scale(1.02);
+    box-shadow: var(--shadow-lg) !important;
+    cursor: grabbing !important;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* Amélioration visuelle du conteneur pendant le drag */
+.dashboard-container.drag-active {
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(67, 63, 145, 0.02),
+        rgba(67, 63, 145, 0.02) 20px,
+        rgba(67, 63, 145, 0.04) 20px,
+        rgba(67, 63, 145, 0.04) 40px
+    );
+    outline: 2px dashed rgba(57, 50, 187, 0.2);
+    padding-bottom: 40px; /* Ajouter de l'espace en bas pour faciliter le drop */
+}
+
+/* Améliorer le feedback visuel pendant le déplacement */
+.widget-header {
+    transition: background-color 0.2s;
+}
+
+.widget.draggable .widget-header:hover {
+    background-color: rgba(57, 50, 187, 0.05);
+}
+
+.widget.dragging .widget-header {
+    background-color: rgba(57, 50, 187, 0.1);
+}
+
+/* Assurer que les widgets sont affichés ergonomiquement */
+.dashboard-container {
+    /* Supprimer les espaces négatifs */
+    min-height: 300px;
+    position: relative;
+    padding: 20px;
+    display: grid;
+    gap: var(--spacing-md);
+    grid-template-columns: repeat(12, 1fr); 
+    grid-auto-rows: min-content;
+    grid-auto-flow: row dense; /* 'dense' aide à combler les trous */
+}
+
+/* Rendre la transition des boutons plus fluide */
+.widget-header-actions button {
+    transition: all 0.15s ease-out;
+}
+
+/* Améliorer le feedback visuel des boutons d'action */
+.widget-header-actions button:active {
+    transform: scale(0.9);
+}
+
+/* Animations de chargement pour les données */
+@keyframes pulse-loading {
+    0% { opacity: 0.6; transform: scale(0.98); }
+    50% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.6; transform: scale(0.98); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@keyframes rotate {
+    100% { transform: rotate(360deg); }
+}
+
+.widget.loading .widget-body {
+    position: relative;
+}
+
+.widget.loading .widget-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.widget.loading .widget-body::after {
+    content: '';
+    position: absolute;
+    top: calc(50% - 20px);
+    left: calc(50% - 20px);
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(57, 50, 187, 0.1);
+    border-left: 4px solid var(--primary);
+    border-radius: 50%;
+    z-index: 10;
+    animation: rotate 1s linear infinite;
+}
+
+.loading-placeholder {
+    height: 20px;
+    width: 100%;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, 
+        var(--gray) 8%, 
+        var(--light) 18%, 
+        var(--gray) 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+.loading-placeholder.title {
+    width: 60%;
+    height: 24px;
+}
+
+.loading-placeholder.text {
+    width: 100%;
+}
+
+.loading-placeholder.chart {
+    height: 200px;
+}
+
+.loading-placeholder.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* Notification de chargement */
+.loading-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.loading-toast.show {
+    opacity: 1;
+}
+
+.loading-toast i {
+    animation: rotate 1s linear infinite;
+}
+
+/* Thème jour/nuit */
+:root {
+    /* Thème clair (par défaut) */
+    --bg-color: #f5f7ff;
+    --text-color: #2E2E3C;
+    --card-bg: #ffffff;
+    --border-color: #e1e5ee;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    
+    /* Couleurs spécifiques pour la sidebar en mode clair */
+    --sidebar-bg: var(--primary);
+    --sidebar-text: #ffffff;
+    --sidebar-hover: rgba(255, 255, 255, 0.1);
+}
+
+/* Thème sombre */
+body.dark-theme {
+    --bg-color: #1a1a2e;
+    --text-color: #e1e5ee;
+    --card-bg: #242444;
+    --border-color: #3a3a5e;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    
+    /* Ajustement des autres couleurs pour le thème sombre */
+    --gray: #3a3a5e;
+    --gray-dark: #9a9ab8;
+    --light: #242444;
+    
+    /* Couleurs spécifiques pour la sidebar en mode sombre */
+    --sidebar-bg: #2a2a45;
+    --sidebar-text: #e1e5ee;
+    --sidebar-hover: rgba(255, 255, 255, 0.15);
+}
+
+/* Application des variables de thème */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Application des couleurs pour la sidebar selon le thème */
+.sidebar {
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar .menu-item:hover, 
+.sidebar .menu-item.active {
+    background-color: var(--sidebar-hover);
+}
+
+.menu-header {
+    color: rgba(255, 255, 255, 0.6); /* Couleur par défaut */
+}
+
+body.dark-theme .menu-header {
+    color: rgba(255, 255, 255, 0.7); /* Légèrement plus visible en mode sombre */
+}
+
+/* Pour assurer que la bordure du logo container est visible dans les deux modes */
+.logo-container {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .logo-container {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.widget, .modal-content, header, footer, .sidebar {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Ajustements spécifiques pour le thème sombre */
+body.dark-theme .stat-card,
+body.dark-theme .chart-period-option,
+body.dark-theme .kpi-card {
+    background-color: var(--light);
+    border-color: var(--border-color);
+}
+
+body.dark-theme .data-table th {
+    background-color: var(--light);
+}
+
+body.dark-theme .data-table td {
+    border-color: var(--border-color);
+}
+
+body.dark-theme .search-bar {
+    background-color: var(--light);
+}
+
+body.dark-theme .contact-form input,
+body.dark-theme .contact-form textarea {
+    background-color: var(--light);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+/* Ajustement des ombres pour le thème sombre */
+body.dark-theme .widget {
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+body.dark-theme .widget:hover {
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+/* Classes pour la visualisation des lignes de la grille en mode déplacement */
+.dashboard-container.drag-active {
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(67, 63, 145, 0.02),
+        rgba(67, 63, 145, 0.02) 20px,
+        rgba(67, 63, 145, 0.04) 20px,
+        rgba(67, 63, 145, 0.04) 40px
+    );
+    outline: 2px dashed rgba(57, 50, 187, 0.2);
+    padding-bottom: 40px;
+}
+
+/* Indicateur de ligne pour visualiser les rangées */
+.row-indicator {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: rgba(57, 50, 187, 0.5);
+    z-index: 5;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Indicateurs directionnels pour le drag and drop */
+.direction-indicator {
+    position: absolute;
+    background-color: var(--primary);
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.7;
+    border-radius: 3px;
+}
+
+.direction-indicator.left {
+    width: 4px;
+    height: 40px;
+    left: -2px;
+    top: calc(50% - 20px);
+    animation: pulse 1s infinite;
+}
+
+.direction-indicator.right {
+    width: 4px;
+    height: 40px;
+    right: -2px;
+    top: calc(50% - 20px);
+    animation: pulse 1s infinite;
+}
+
+.direction-indicator.top {
+    height: 4px;
+    width: 40px;
+    top: -2px;
+    left: calc(50% - 20px);
+    animation: pulse 1s infinite;
+}
+
+.direction-indicator.bottom {
+    height: 4px;
+    width: 40px;
+    bottom: -2px;
+    left: calc(50% - 20px);
+    animation: pulse 1s infinite;
 }
