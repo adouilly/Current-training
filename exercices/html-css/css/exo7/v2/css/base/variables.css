@@ -1,0 +1,93 @@
+/* Variables CSS globales */
+:root {
+  /* Couleurs */
+  --primary-color: #4361ee;
+  --primary-light: #4895ef;
+  --primary-dark: #3f37c9;
+  --secondary-color: #7209b7;
+  --secondary-light: #b5179e;
+  --accent-color: #00f2ff;
+  --success-color: #4cc9f0;
+  --danger-color: #ef476f;
+  --warning-color: #ff9e00;
+  --info-color: #4361ee;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  
+  /* Dégradés thématiques */
+  --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  --gradient-secondary: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-light) 100%);
+  --gradient-sidebar: linear-gradient(180deg, #2b2d42 0%, #1a1a2e 100%);
+  --gradient-header: linear-gradient(90deg, #2b2d42 0%, #1a1a2e 100%);
+  --gradient-accent: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
+  
+  /* Couleurs de texte */
+  --text-primary: #ffffff;
+  --text-secondary: #e9ecef;
+  --text-muted: #ced4da;
+  --text-dark: #212529;
+  
+  /* Couleurs de fond */
+  --background-color: #f5f7fb;
+  --widget-bg-color: #ffffff;
+  --bg-primary: #151a30;
+  --bg-secondary: #1c2237;
+  --bg-light: #f8f9fa;
+  --bg-dark: #0f172a;
+  --bg-widget: rgba(255, 255, 255, 0.95);
+  
+  /* Structure */
+  --header-height: 60px;
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 70px;
+  --footer-height: 60px;
+  --widget-padding: 1rem;
+  --container-padding: 1.5rem;
+  --border-radius: 10px;
+  --widget-border-radius: 12px;
+  --button-border-radius: 6px;
+  
+  /* Espacements */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Bordures */
+  --border-color: #e0e0e0;
+  
+  /* Ombres */
+  --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 15px 30px rgba(0, 0, 0, 0.1);
+  --shadow-tech: 0 8px 30px rgba(67, 97, 238, 0.15);
+  --shadow-glow: 0 0 15px rgba(76, 201, 240, 0.3);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Z-index */
+  --z-dropdown: 1020;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-sidebar: 1000;
+  --z-header: 1010;
+  
+  /* Grille */
+  --grid-columns: 12;
+  --grid-gutter: 1.5rem;
+  
+  /* Breakpoints */
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+}

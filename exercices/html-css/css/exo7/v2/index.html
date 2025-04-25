@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <!-- Métadonnées essentielles / Essential metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tableau de bord">
+    <meta name="author" content="adouilly">
+    <title>Tableau de bord</title>
+    
+    <!-- Favicon d'icône de site -->
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2621/2621040.png">
+    
+    <!-- Chargement des fichiers CSS / Loading CSS files -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- FontAwesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js pour les graphiques -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <div class="header-left">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <span>AdminPanel</span>
+                </div>
+                <button id="toggle-sidebar"><i class="fas fa-bars"></i></button>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Rechercher...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="header-right">
+                <div class="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+                <div class="messages">
+                    <i class="fas fa-envelope"></i>
+                    <span class="badge">5</span>
+                </div>
+                <div class="user-profile">
+                    <img src="https://via.placeholder.com/40" alt="Photo de profil">
+                    <span>Admin</span>
+                </div>
+            </div>
+        </header>
+
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li class="active"><a href="#"><i class="fas fa-home"></i> Tableau de bord</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> Utilisateurs</a></li>
+                    <li><a href="#"><i class="fas fa-shopping-cart"></i> Commandes</a></li>
+                    <li><a href="#"><i class="fas fa-boxes"></i> Produits</a></li>
+                    <li><a href="#"><i class="fas fa-chart-pie"></i> Statistiques</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Paramètres</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#"><i class="fas fa-question-circle"></i> Aide</a>
+                <a href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+            </div>
+        </aside>
+
+        <main>
+            <div class="dashboard-header">
+                <h1>Tableau de bord</h1>
+                <div class="dashboard-actions">
+                    <button id="add-widget" class="btn"><i class="fas fa-plus"></i> Ajouter un widget</button>
+                    <div class="layout-toggle">
+                        <button class="btn active" data-layout="grid"><i class="fas fa-th-large"></i></button>
+                        <button class="btn" data-layout="list"><i class="fas fa-list"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="widgets-container" id="widgets-grid">
+                <!-- Widget Stats - Utilisateurs -->
+                <div class="widget" data-widget-id="stats-users" draggable="true" data-size="small">
+                    <div class="widget-header">
+                        <h3>Utilisateurs</h3>
+                        <div class="widget-controls">
+                            <button class="toggle-size" title="Redimensionner"><i class="fas fa-expand-alt"></i></button>
+                            <button class="toggle-view" title="Vue compacte"><i class="fas fa-compress"></i></button>
+                            <button class="move-widget" title="Déplacer"><i class="fas fa-arrows-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="widget-content">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Total utilisateurs</h4>
+                                <div class="stat-value">2,845</div>
+                                <div class="stat-change positive">+5.27%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Widget Stats - Ventes -->
+                <div class="widget" data-widget-id="stats-sales" draggable="true" data-size="small">
+                    <div class="widget-header">
+                        <h3>Ventes</h3>
+                        <div class="widget-controls">
+                            <button class="toggle-size" title="Redimensionner"><i class="fas fa-expand-alt"></i></button>
+                            <button class="toggle-view" title="Vue compacte"><i class="fas fa-compress"></i></button>
+                            <button class="move-widget" title="Déplacer"><i class="fas fa-arrows-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="widget-content">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Total ventes</h4>
+                                <div class="stat-value">1,253</div>
+                                <div class="stat-change positive">+12.8%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Widget Stats - Visites -->
+                <div class="widget" data-widget-id="stats-visits" draggable="true" data-size="small">
+                    <div class="widget-header">
+                        <h3>Visites</h3>
+                        <div class="widget-controls">
+                            <button class="toggle-size" title="Redimensionner"><i class="fas fa-expand-alt"></i></button>
+                            <button class="toggle-view" title="Vue compacte"><i class="fas fa-compress"></i></button>
+                            <button class="move-widget" title="Déplacer"><i class="fas fa-arrows-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="widget-content">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Total visites</h4>
+                                <div class="stat-value">9,721</div>
+                                <div class="stat-change positive">+8.3%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Widget Stats - Revenus -->
+                <div class="widget" data-widget-id="stats-revenue" draggable="true" data-size="small">
+                    <div class="widget-header">
+                        <h3>Revenus</h3>
+                        <div class="widget-controls">
+                            <button class="toggle-size" title="Redimensionner"><i class="fas fa-expand-alt"></i></button>
+                            <button class="toggle-view" title="Vue compacte"><i class="fas fa-compress"></i></button>
+                            <button class="move-widget" title="Déplacer"><i class="fas fa-arrows-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="widget-content">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-euro-sign"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Total revenus</h4>
+                                <div class="stat-value">75,245€</div>
+                                <div class="stat-change positive">+15.1%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Widget Graphique - Ventes mensuelles -->
+                <div class="widget" data-widget-id="sales-chart" draggable="true" data-size="large">
+                    <div class="widget-header">
+                        <h3>Ventes mensuelles</h3>
+                        <div class="widget-controls">
+                            <button class="toggle-size" title="Redimensionner"><i class="fas fa-expand-alt"></i></button>
+                            <button class="toggle-view" title="Vue compacte"><i class="fas fa-compress"></i></button>
+                            <button class="move-widget" title="Déplacer"><i class="fas fa-arrows-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="widget-content">
+                        <div class="chart-period-selector">
+                            <button class="btn active" data-period="month">Mois</button>
+                            <button class="btn" data-period="year">Année</button>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="sales-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Widget Tableau - Dernières commandes -->
+                <div class="widget" data-widget-id="recent-orders" draggable="true" data-size="large">
+                    <div class="widget-header">
+                        <h3>Dernières commandes</h3>
+                        <div class="widget-controls">
+                            <button class="toggle-size" title="Redimensionner"><i class="fas fa-expand-alt"></i></button>
+                            <button class="toggle-view" title="Vue compacte"><i class="fas fa-compress"></i></button>
+                            <button class="move-widget" title="Déplacer"><i class="fas fa-arrows-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="widget-content">
+                        <div class="orders-table-wrapper">
+                            <table class="orders-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Client</th>
+                                        <th>Date</th>
+                                        <th>Montant</th>
+                                        <th>Statut</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#1842</td>
+                                        <td>Jean Dupont</td>
+                                        <td>10/05/2023</td>
+                                        <td>125.99€</td>
+                                        <td><span class="status-badge completed">Livré</span></td>
+                                        <td><button class="btn-sm">Détails</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#1841</td>
+                                        <td>Marie Martin</td>
+                                        <td>09/05/2023</td>
+                                        <td>89.50€</td>
+                                        <td><span class="status-badge in-progress">En cours</span></td>
+                                        <td><button class="btn-sm">Détails</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#1840</td>
+                                        <td>Paul Bernard</td>
+                                        <td>09/05/2023</td>
+                                        <td>212.75€</td>
+                                        <td><span class="status-badge pending">En attente</span></td>
+                                        <td><button class="btn-sm">Détails</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#1839</td>
+                                        <td>Sophie Petit</td>
+                                        <td>08/05/2023</td>
+                                        <td>45.20€</td>
+                                        <td><span class="status-badge completed">Livré</span></td>
+                                        <td><button class="btn-sm">Détails</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#1838</td>
+                                        <td>Thomas Dubois</td>
+                                        <td>08/05/2023</td>
+                                        <td>310.00€</td>
+                                        <td><span class="status-badge cancelled">Annulé</span></td>
+                                        <td><button class="btn-sm">Détails</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Widget Formulaire - Contact rapide -->
+                <div class="widget" data-widget-id="quick-contact" draggable="true" data-size="medium">
+                    <div class="widget-header">
+                        <h3>Contact rapide</h3>
+                        <div class="widget-controls">
+                            <button class="toggle-size" title="Redimensionner"><i class="fas fa-expand-alt"></i></button>
+                            <button class="toggle-view" title="Vue compacte"><i class="fas fa-compress"></i></button>
+                            <button class="move-widget" title="Déplacer"><i class="fas fa-arrows-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="widget-content">
+                        <form id="quick-contact-form">
+                            <div class="form-group">
+                                <label for="contact-client">Client</label>
+                                <select id="contact-client">
+                                    <option value="">Sélectionnez un client</option>
+                                    <option value="1">Jean Dupont</option>
+                                    <option value="2">Marie Martin</option>
+                                    <option value="3">Paul Bernard</option>
+                                    <option value="4">Sophie Petit</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-subject">Sujet</label>
+                                <input type="text" id="contact-subject" placeholder="Sujet du message">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-message">Message</label>
+                                <textarea id="contact-message" rows="4" placeholder="Votre message"></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn">Envoyer</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="copyright">© Adouilly - Tous droits réservés</div>
+            <div class="footer-links">
+                <a href="#">Conditions d'utilisation</a>
+                <a href="#">Politique de confidentialité</a>
+                <a href="#">Contact</a>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="components/script.js"></script>
+    <script src="components/widgets.js"></script>
+    <script src="components/charts.js"></script>
+    <script src="components/drag-drop.js"></script>
+</body>
+</html>
+

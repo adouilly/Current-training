@@ -1,0 +1,21 @@
+/* Fichier CSS principal - importe tous les autres */
+@import 'base/reset.css';
+@import 'base/variables.css';
+@import 'base/typography.css';
+@import 'base/animations.css';
+
+@import 'layout/grid.css';
+@import 'layout/header.css';
+@import 'layout/sidebar.css';
+@import 'layout/footer.css';
+@import 'layout/responsive.css';
+
+@import 'components/widgets.css';
+@import 'components/buttons.css';
+@import 'components/forms.css';
+@import 'components/charts.css';
+@import 'components/tables.css';
+@import 'components/modal.css';
+@import 'components/drag-drop.css';
+
+@import 'utils/helpers.css';

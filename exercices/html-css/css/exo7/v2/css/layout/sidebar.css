@@ -1,0 +1,148 @@
+/* Sidebar / Barre latérale */
+.sidebar {
+  grid-area: sidebar;
+  background: var(--gradient-sidebar);
+  color: var(--text-primary);
+  width: var(--sidebar-width);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: width var(--transition-normal), transform var(--transition-normal);
+  z-index: var(--z-sidebar);
+  box-shadow: var(--shadow-md);
+}
+
+/* Navigation */
+.sidebar nav {
+  padding: var(--spacing-md) 0;
+  flex-grow: 1;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  color: var(--text-muted);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+  overflow: hidden;
+  white-space: nowrap;
+  text-decoration: none;
+  position: relative;
+}
+
+.sidebar li.active a {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-left: 3px solid var(--accent-color);
+}
+
+.sidebar li.active a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: var(--gradient-accent);
+  border-radius: 0 3px 3px 0;
+  transform: scaleY(1);
+  opacity: 0; /* Caché car on utilise la bordure à la place */
+}
+
+.sidebar a:hover {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar a i {
+  margin-right: var(--spacing-md);
+  width: 24px;
+  text-align: center;
+  font-size: 1.1em;
+  transition: transform var(--transition-fast);
+}
+
+.sidebar li.active a i {
+  color: var(--accent-color);
+}
+
+.sidebar a:hover i {
+  transform: translateX(2px);
+}
+
+/* Pied de page de la sidebar */
+.sidebar-footer {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+}
+
+.sidebar-footer a {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color var(--transition-fast);
+}
+
+.sidebar-footer a:hover {
+  color: var(--text-primary);
+}
+
+/* Sidebar réduite */
+.dashboard-container.sidebar-collapsed .sidebar {
+  width: var(--sidebar-collapsed-width);
+}
+
+.dashboard-container.sidebar-collapsed .sidebar span {
+  display: none;
+}
+
+.dashboard-container.sidebar-collapsed .sidebar a {
+  padding: var(--spacing-md);
+  justify-content: center;
+}
+
+.dashboard-container.sidebar-collapsed .sidebar a i {
+  margin-right: 0;
+  font-size: 1.25em;
+}
+
+.dashboard-container.sidebar-collapsed .sidebar-footer {
+  justify-content: center;
+  padding: var(--spacing-md);
+}
+
+.dashboard-container.sidebar-collapsed .sidebar-footer span {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: var(--header-height);
+    left: -100%;
+    height: calc(100% - var(--header-height));
+    transition: left var(--transition-normal);
+  }
+  
+  .dashboard-container.sidebar-active .sidebar {
+    left: 0;
+  }
+}

@@ -1,0 +1,179 @@
+/* Styles pour les formulaires */
+
+/* Style de base pour les formulaires */
+form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+/* Labels */
+label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--text-sm);
+  color: var(--text-dark);
+  font-weight: var(--font-medium);
+}
+
+/* Champs du formulaire */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #f9fafc;
+  border: 1px solid #e0e5ec;
+  border-radius: 8px;
+  font-size: var(--text-base);
+  color: var(--text-dark);
+  transition: all var(--transition-fast);
+}
+
+/* Styles pour les états des champs */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #a0aec0;
+}
+
+/* Select personnalisé */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23a0aec0' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 1rem) center;
+  padding-right: 2.5rem;
+}
+
+/* Textarea */
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Checkbox & Radio avec style personnalisé */
+input[type="checkbox"],
+input[type="radio"] {
+  margin-right: var(--spacing-xs);
+}
+
+/* Style pour les boutons de formulaire */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.form-actions .btn {
+  min-width: 100px;
+}
+
+/* Validation et erreurs */
+.form-group.error label {
+  color: var(--danger-color);
+}
+
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+  border-color: var(--danger-color);
+  background-color: rgba(239, 71, 111, 0.05);
+}
+
+.form-group.success input,
+.form-group.success select,
+.form-group.success textarea {
+  border-color: var(--success-color);
+  background-color: rgba(76, 201, 240, 0.05);
+}
+
+.error-message {
+  color: var(--danger-color);
+  font-size: var(--text-xs);
+  margin-top: 0.25rem;
+}
+
+/* Styles spécifiques pour le widget de contact rapide */
+#quick-contact-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#quick-contact-form .form-actions {
+  margin-top: auto;
+}
+
+#quick-contact-form textarea {
+  flex-grow: 1;
+  min-height: 100px;
+}
+
+/* Formulaires en ligne */
+.form-inline {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.form-inline .form-group {
+  margin-bottom: 0;
+  flex-grow: 1;
+}
+
+/* Inputs groupés */
+.input-group {
+  display: flex;
+  position: relative;
+}
+
+.input-group input {
+  flex-grow: 1;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group-append {
+  display: flex;
+}
+
+.input-group-append button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border: 1px solid var(--primary-color);
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions .btn {
+    width: 100%;
+  }
+  
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
