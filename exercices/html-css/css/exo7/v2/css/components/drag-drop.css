@@ -1,43 +1,125 @@
-/* Styles pour le système de drag & drop simplifié */
+/* Styles pour le système de drag & drop optimisé */
 
 /* Widget en cours de déplacement */
 .widget.dragging {
   opacity: 0.6;
   transform: scale(0.98);
+  z-index: 100;
   pointer-events: none;
-  z-index: 1000;
+  will-change: opacity, transform;
 }
 
-/* Widget fantôme pour le déplacement */
+/* Clone pour le drag & drop */
 .widget-ghost {
   border: 2px dashed var(--primary-color);
   box-shadow: var(--shadow-glow);
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
+  border-radius: var(--widget-border-radius);
   opacity: 0.7;
   pointer-events: none;
-  z-index: 1000;
+  will-change: transform;
 }
 
-/* Curseurs pour les zones interactives */
-.widget-draggable {
-  cursor: grab;
+/* Indicateur de drop */
+.drop-indicator {
+  position: absolute;
+  background: var(--gradient-accent);
+  z-index: 200;
+  pointer-events: none;
+  will-change: opacity;
+  animation: pulse 0.6s infinite alternate;
 }
 
-.widget-draggable:active {
-  cursor: grabbing;
+@keyframes pulse {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
 }
 
-/* Zone utilisable pour déplacer le widget */
+/* Animation de transition lors du repositionnement */
+.widget.repositioning {
+  transition: all 0.5s ease-in-out;
+}
+
+/* Grille optimisée */
+.widgets-container.grid-optimized {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(80px, auto);
+  grid-auto-flow: dense; /* Pour une meilleure utilisation de l'espace */
+}
+
+/* Styles pour le header draggable */
 .widget-header {
   cursor: grab;
 }
 
-/* Indicateurs de drop */
-.drop-highlight {
-  position: absolute;
-  background: var(--accent-color);
-  z-index: 900;
-  transition: all 0.2s ease;
-  box-shadow: 0 0 10px var(--accent-color);
+.widget-header:active {
+  cursor: grabbing;
+}
+
+/* Conteneur pendant le drag */
+.widgets-container.drag-active {
+  background-color: rgba(67, 97, 238, 0.03);
+  transition: background-color 0.3s;
+  box-shadow: inset 0 0 0 2px rgba(67, 97, 238, 0.3);
+}
+
+/* Masquer explicitement les contours quand l'opération est terminée */
+.widgets-container:not(.drag-active) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Zone de drop désactivée */
+.drop-target,
+.container-drop-target {
+  transition: box-shadow 0.3s ease, outline 0.3s ease;
+}
+
+/* Pour le mode sombre */
+body.dark-mode .widget-ghost {
+  background-color: rgba(30, 41, 55, 0.7);
+}
+
+/* Curseurs pour les zones interactives */
+.draggable {
+  cursor: grab;
+}
+
+.draggable:active {
+  cursor: grabbing;
+}
+
+/* Mode compact des widgets */
+.widget.compact .widget-content {
+  display: none;
+}
+
+.compact-summary {
+  display: none;
+  padding: 0.75rem var(--spacing-md);
+  color: var(--text-dark);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.widget.compact .compact-summary {
+  display: block;
+}
+
+.widget.compact {
+  min-height: auto;
+}
+
+.compact-summary strong {
+  font-weight: var(--font-semibold);
+  color: var(--primary-color);
+}
+
+/* Animation lors des déplacements */
+.widget {
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 /* Poignée de redimensionnement */
@@ -51,7 +133,7 @@
   border-radius: 50%;
   cursor: nwse-resize;
   opacity: 0;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.2s, transform 0.2s;
   z-index: 10;
 }
 
@@ -64,21 +146,153 @@
   transform: scale(1.3);
 }
 
-/* Widget en cours de redimensionnement */
-.widget.resizing {
-  opacity: 0.8;
-  z-index: 100;
-  transition: none;
+/* Modal pour ajouter des widgets */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
 }
 
-/* Animation de transition pour le placement des widgets */
-.widgets-container[data-layout="grid"] .widget {
-  transition: grid-row 0.3s ease, grid-column 0.3s ease, transform 0.3s ease;
+.modal.show {
+  display: flex;
 }
 
-/* Styles pour les widgets en cours de déplacement */
-.widget.moving {
-  transform: scale(1.02);
-  box-shadow: var(--shadow-glow);
-  z-index: 50;
+.modal-dialog {
+  width: 100%;
+  max-width: 600px;
+  background: var(--bg-light);
+  border-radius: var(--widget-border-radius);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  transform: translateY(0);
+  animation: modal-in 0.3s ease;
+}
+
+@keyframes modal-in {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-content {
+  position: relative;
+}
+
+.modal-header {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--gradient-header);
+  color: var(--text-primary);
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: white;
+}
+
+.close-modal {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: white;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.widget-list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.widget-item {
+  padding: 1rem;
+  background: white;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.widget-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.widget-item-info h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: var(--text-md);
+}
+
+.widget-item-type {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.add-widget-btn {
+  background: var(--gradient-accent);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--button-border-radius);
+  cursor: pointer;
+  font-weight: var(--font-medium);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.add-widget-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Animation de chargement pour les données */
+.loading-indicator {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(76, 201, 240, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Thème sombre */
+body.dark-mode .widget-item {
+  background: var(--dark-card-bg);
+  color: var(--text-primary);
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .widget-clone {
+  background-color: rgba(30, 35, 45, 0.7);
+}
+
+body.dark-mode .widget-item-type {
+  color: var(--dark-text-muted);
+}
+
+body.dark-mode .modal-dialog {
+  background: var(--dark-bg);
 }

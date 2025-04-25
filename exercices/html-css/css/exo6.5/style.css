@@ -1,0 +1,28 @@
+.container {  display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "moto1 moto1 moto2 moto2"
+      "moto1 moto1 moto3 moto4"
+      "moto5 moto6 moto8 moto8"
+      "moto5 moto7 moto8 moto8";
+  }
+  
+  .moto2 { grid-area: moto2; }
+  
+  .moto3 { grid-area: moto3; }
+  
+  .moto4 { grid-area: moto4; }
+  
+  .moto5 { grid-area: moto5; }
+  
+  .moto6 { grid-area: moto6; }
+  
+  .moto7 { grid-area: moto7; }
+  
+  .moto1 { grid-area: moto1; }
+  
+  .moto8 { grid-area: moto8; }
+  

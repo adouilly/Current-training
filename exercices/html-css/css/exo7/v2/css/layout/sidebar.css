@@ -11,12 +11,64 @@
   transition: width var(--transition-normal), transform var(--transition-normal);
   z-index: var(--z-sidebar);
   box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+/* Barre de recherche dans la sidebar - Centrage amélioré */
+.sidebar-search {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center; /* Centrer horizontalement */
+}
+
+.sidebar .search-bar {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 0.25rem 0.5rem;
+  transition: background-color var(--transition-fast);
+  width: 90%; /* Réduire légèrement la largeur pour un meilleur rendu */
+  max-width: 220px; /* Limiter la largeur maximale */
+}
+
+.sidebar .search-bar:focus-within {
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.sidebar .search-bar input {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  padding: 0.5rem;
+  width: 100%;
+  outline: none;
+}
+
+.sidebar .search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sidebar .search-bar button {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color var(--transition-fast);
+}
+
+.sidebar .search-bar button:hover {
+  color: var(--text-primary);
 }
 
 /* Navigation */
 .sidebar nav {
   padding: var(--spacing-md) 0;
   flex-grow: 1;
+  overflow-y: auto;
 }
 
 .sidebar ul {
@@ -57,8 +109,6 @@
   width: 3px;
   background: var(--gradient-accent);
   border-radius: 0 3px 3px 0;
-  transform: scaleY(1);
-  opacity: 0; /* Caché car on utilise la bordure à la place */
 }
 
 .sidebar a:hover {
@@ -87,7 +137,7 @@
   padding: var(--spacing-md) var(--spacing-lg);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .sidebar-footer a {
@@ -98,10 +148,22 @@
   align-items: center;
   gap: 8px;
   transition: color var(--transition-fast);
+  padding: var(--spacing-md);
 }
 
 .sidebar-footer a:hover {
   color: var(--text-primary);
+}
+
+/* Améliorer l'effet hover du bouton de déconnexion */
+.sidebar-footer a:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: background-color 0.3s ease, border-radius 0.3s ease;
+}
+
+body.dark-mode .sidebar-footer a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Sidebar réduite */
@@ -145,4 +207,48 @@
   .dashboard-container.sidebar-active .sidebar {
     left: 0;
   }
+}
+
+/* Dark mode */
+body.dark-mode .sidebar {
+  background: var(--gradient-sidebar-dark);
+}
+
+body.dark-mode .sidebar a {
+  color: var(--dark-text-muted);
+}
+
+body.dark-mode .sidebar li.active a,
+body.dark-mode .sidebar a:hover {
+  color: var(--dark-text-primary);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .sidebar-footer {
+  border-top-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Mode clair: Rendre le placeholder visible */
+body:not(.dark-mode) .sidebar .search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive: sidebar réduite */
+.dashboard-container.sidebar-collapsed .sidebar .search-bar {
+  width: 36px;
+  padding: 0.25rem;
+  justify-content: center;
+}
+
+.dashboard-container.sidebar-collapsed .sidebar-search {
+  padding: var(--spacing-md) 0;
+}
+
+.dashboard-container.sidebar-collapsed .sidebar .search-bar input,
+.dashboard-container.sidebar-collapsed .sidebar-search span {
+  display: none;
+}
+
+.dashboard-container.sidebar-collapsed .sidebar .search-bar button {
+  margin: 0 auto;
 }

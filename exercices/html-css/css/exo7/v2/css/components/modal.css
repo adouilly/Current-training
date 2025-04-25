@@ -1,0 +1,277 @@
+/* Styles pour les modales */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    backdrop-filter: blur(3px);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-dialog {
+    width: 500px;
+    max-width: 90%;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    transform: scale(0.9);
+    animation: scaleIn 0.3s forwards;
+}
+
+body.dark-mode .modal-dialog {
+    background-color: var(--dark-card-bg);
+    color: var(--dark-text-primary);
+}
+
+/* Modification de l'en-tête pour centrer le titre */
+.modal-header {
+    display: flex;
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    position: relative; /* Pour positionner le bouton de fermeture */
+    background-color: var(--primary-color); /* Arrière-plan coloré pour le titre */
+    color: #ffffff; /* Texte blanc pour contraster avec le fond coloré */
+}
+
+body.dark-mode .modal-header {
+    border-color: var(--dark-border);
+}
+
+/* Améliorer la lisibilité du titre de la modale sur fond foncé */
+.modal-header h3 {
+    color: #ffffff; /* Texte blanc pour meilleur contraste */
+    margin: 0;
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    text-align: center; /* Centrer le texte */
+}
+
+/* S'assurer que le texte reste lisible en mode clair également */
+body:not(.dark-mode) .modal-header h3 {
+    color: #ffffff; /* Blanc pour le mode clair aussi si l'arrière-plan est foncé */
+}
+
+/* Mode sombre */
+body.dark-mode .modal-header h3 {
+    color: #ffffff; /* Blanc en mode sombre */
+}
+
+/* Repositionner le bouton de fermeture à droite absolument */
+.close-modal {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ffffff; /* Blanc pour contraster avec le fond */
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.close-modal:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Plus visible sur fond coloré */
+    color: #ffffff;
+}
+
+.modal-body {
+    padding: 1.5rem;
+    max-height: 70vh;
+    overflow-y: auto;
+    text-align: center; /* Centrer le texte */
+    color: var(--text-dark); /* Couleur par défaut */
+}
+
+body.dark-mode .modal-body {
+    color: #ffffff; /* Blanc en mode sombre */
+}
+
+/* Styles pour les widgets à ajouter */
+.widget-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    justify-items: center; /* Centrer les items dans la grille */
+    margin: 0 auto; /* Centrer la grille elle-même */
+    max-width: 90%; /* Limiter la largeur pour maintenir l'aspect centré */
+}
+
+.widget-item {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column; /* Empiler les éléments verticalement */
+    justify-content: space-between;
+    align-items: center; /* Centrer horizontalement */
+    background-color: var(--bg-light);
+    transition: all 0.3s ease;
+    width: 100%; /* Prendre toute la largeur disponible */
+    text-align: center; /* Centrer le texte */
+}
+
+body.dark-mode .widget-item {
+    border-color: var(--dark-border);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.widget-item.dark-bg {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.widget-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.widget-item-info {
+    margin-bottom: 1rem; /* Espace entre les infos et le bouton */
+    text-align: center; /* Centrer le texte */
+    width: 100%; /* Prendre toute la largeur */
+}
+
+.widget-item h4 {
+    margin: 0 0 0.5rem;
+    color: var(--text-dark);
+    font-weight: var(--font-medium);
+}
+
+body.dark-mode .widget-item h4 {
+    color: var(--dark-text-primary);
+}
+
+.widget-item.dark-bg h4 {
+    color: #ffffff;
+}
+
+.widget-item-type {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: block;
+}
+
+body.dark-mode .widget-item .widget-item-type {
+    color: #ffffff;
+}
+
+.widget-item.dark-bg .widget-item-type {
+    color: #ffffff;
+}
+
+.add-widget-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-widget-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.9); }
+    to { transform: scale(1); }
+}
+
+/* Améliorer la lisibilité du texte en mode sombre */
+body.dark-mode .modal-header h3,
+body.dark-mode .modal-body,
+body.dark-mode .widget-item h4,
+body.dark-mode .widget-item-type {
+    color: var(--dark-text-primary, #e9ecef);
+}
+
+body.dark-mode .no-widgets-message p {
+    color: var(--dark-text-primary, #e9ecef);
+}
+
+/* Améliorer le contraste des boutons */
+body.dark-mode .add-widget-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+body.dark-mode .add-widget-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Message quand aucun widget n'est disponible */
+.no-widgets-message {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--text-muted);
+}
+
+body.dark-mode .no-widgets-message {
+    color: #ffffff;
+}
+
+.no-widgets-message p {
+    margin: 0.5rem 0;
+}
+
+/* Assurer que tous les textes sont lisibles sur fond sombre */
+.modal-header,
+.modal-header h3,
+.close-modal {
+    color: #ffffff; /* Texte blanc pour contraster avec le fond coloré */
+}
+
+/* S'assurer que le texte est blanc sur les fonds sombres */
+body.dark-mode .modal-body,
+body.dark-mode .no-widgets-message {
+    color: #ffffff;
+}
+
+/* Améliorer la lisibilité du texte en mode sombre - règle générale */
+body.dark-mode [class*="text-dark"] {
+    color: #ffffff !important; /* Forcer le texte blanc en mode sombre */
+}
+
+/* Améliorer la lisibilité des textes par défaut */
+.modal-body, 
+.modal-body p,
+.modal-body label,
+.modal-body h4,
+.modal-body .widget-item-info {
+    color: var(--text-dark); /* Couleur par défaut */
+}
+
+/* Adaptation pour le mode sombre */
+body.dark-mode .modal-body, 
+body.dark-mode .modal-body p,
+body.dark-mode .modal-body label,
+body.dark-mode .modal-body h4,
+body.dark-mode .modal-body .widget-item-info {
+    color: #ffffff; /* Blanc en mode sombre */
+}

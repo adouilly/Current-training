@@ -13,6 +13,7 @@
   width: 100%;
   background: linear-gradient(140deg, var(--bg-light), #e9f0fc);
   position: relative;
+  overflow: hidden; /* Empêcher le scroll au niveau du dashboard */
 }
 
 /* When sidebar is collapsed */
@@ -29,12 +30,14 @@ header {
   grid-area: sidebar;
 }
 
-/* Main content area */
+/* Main content area - Permettre le scroll vertical */
 main {
   grid-area: main;
-  overflow-y: auto;
+  overflow-y: auto; /* Permettre le scroll vertical */
   padding: var(--spacing-lg);
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 main::before {
@@ -62,6 +65,7 @@ footer {
   margin-bottom: var(--spacing-lg);
   padding-bottom: var(--spacing-md);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  flex-shrink: 0; /* Ne pas rétrécir */
 }
 
 .dashboard-header h1 {
@@ -76,21 +80,43 @@ footer {
   align-items: center;
 }
 
-/* Widget grid container - Nouveau système plus flexible */
+/* Widget grid container - Configuration optimisée pour les widgets */
 .widgets-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--spacing-lg);
-  padding: var(--spacing-lg);
-  position: relative;
-  transition: all var(--transition-normal);
-  min-height: 200px;
+  /* Utiliser auto-fit au lieu de auto-fill pour mieux gérer l'espace */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-md);
+  
+  /* Permettre des hauteurs variables dans la grille */
+  grid-auto-rows: min-content;
+  
+  /* Aligner les éléments au début de leur cellule */
+  align-items: start;
 }
 
-/* Modification pour permettre le positionnement dynamique */
-.widgets-container[data-layout="grid"] .widget {
-  /* Les positions exactes sont définies par JavaScript */
+/* Supprimer toutes les classes de layout spécifiques puisqu'on garde uniquement le mode grille */
+.widgets-container.layout-grid,
+.widgets-container.layout-list,
+.widgets-container.layout-areas {
+  display: grid;
+}
+
+/* Les widgets sont positionnés explicitement par JavaScript */
+.widget {
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Important pour que les widgets puissent rétrécir */
+  max-height: 100%; /* Ne pas dépasser la hauteur disponible */
+  overflow: hidden; /* Empêcher le débordement de contenu */
+}
+
+.widget-content {
+  flex-grow: 1;
+  overflow: auto; /* Permettre le défilement à l'intérieur du widget si nécessaire */
+  min-height: 0; /* Important pour que le contenu puisse rétrécir */
 }
 
 /* Indicateur de drop */
@@ -114,16 +140,41 @@ footer {
   opacity: 0.6;
   box-shadow: var(--shadow-glow);
   pointer-events: none;
+  transform: scale(0.98);
 }
 
 /* Widget fantôme pendant le déplacement */
 .widget-ghost {
-  box-shadow: var(--shadow-tech), 0 0 0 2px var(--primary-color);
-  opacity: 0.7;
+  border: 2px dashed var(--primary-color);
+  box-shadow: var(--shadow-glow);
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
   border-radius: var(--widget-border-radius);
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(5px);
-  pointer-events: none;
+  z-index: 1000;
+}
+
+/* Cible de dépôt */
+.drop-target {
+  box-shadow: 0 0 0 2px var(--primary-color);
+  animation: pulse 1s infinite alternate;
+  z-index: 2;
+}
+
+.drop-container {
+  border: 2px dashed var(--primary-color);
+  background-color: rgba(74, 108, 247, 0.05);
+  box-shadow: inset 0 0 0 2px var(--primary-color);
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  from { box-shadow: 0 0 0 2px var(--primary-color); }
+  to { box-shadow: 0 0 0 4px var(--primary-color); }
+}
+
+/* Animation de transition pour les widgets */
+.widget.repositioning {
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Zone de dépôt */
@@ -142,59 +193,46 @@ footer {
   transition: none;
 }
 
-/* Définition des tailles standard pour les widgets */
-.widget[data-size="small"] {
+/* Types de taille pour les widgets avec disposition dynamique */
+.widget[data-size="small"],
+.widget.small {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.widget[data-size="medium"],
+.widget.medium {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.widget[data-size="large"],
+.widget.large {
+  grid-column: span 3;
+  grid-row: span 2; /* Sur deux lignes */
+}
+
+.widget[data-size="full"],
+.widget.full {
+  grid-column: span 4;
+  grid-row: span 2; /* Sur deux lignes */
+}
+
+/* Correction pour les widgets compacts */
+.widget[data-size="small"].compact {
   grid-column: span 1;
 }
 
-.widget[data-size="medium"] {
+.widget[data-size="medium"].compact {
   grid-column: span 2;
 }
 
-.widget[data-size="large"] {
+.widget[data-size="large"].compact {
   grid-column: span 3;
 }
 
-.widget[data-size="full"] {
-  grid-column: span 4;
-}
-
-/* Disposition en liste */
-.widgets-container.layout-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.widgets-container.layout-list .widget {
-  grid-column: initial;
-  width: 100%;
-}
-
-/* Disposition en grille avec zones nommées */
-.widgets-container.layout-areas {
-  display: grid;
-  grid-template-areas:
-    "stats-1 stats-2 stats-3 stats-4"
-    "chart chart chart contact"
-    "orders orders orders contact";
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto minmax(300px, auto) auto;
-  gap: var(--spacing-lg);
-}
-
-/* Placement par défaut des widgets */
-.widget[data-widget-id="stats-users"] { grid-area: stats-1; }
-.widget[data-widget-id="stats-sales"] { grid-area: stats-2; }
-.widget[data-widget-id="stats-visits"] { grid-area: stats-3; }
-.widget[data-widget-id="stats-revenue"] { grid-area: stats-4; }
-.widget[data-widget-id="sales-chart"] { grid-area: chart; }
-.widget[data-widget-id="recent-orders"] { grid-area: orders; }
-.widget[data-widget-id="quick-contact"] { grid-area: contact; }
-
-/* Add animation when changing layout */
-.widgets-container.changing-layout .widget {
-  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+.widget[data-size="full"].compact {
+  grid-column: 1 / -1;
 }
 
 /* Responsive grid */
@@ -202,11 +240,27 @@ footer {
   .widgets-container {
     grid-template-columns: repeat(3, 1fr);
   }
+  
+  .widget[data-size="large"],
+  .widget[data-size="full"],
+  .widget.large,
+  .widget.full {
+    grid-column: span 3;
+  }
 }
 
 @media (max-width: 992px) {
   .widgets-container {
     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .widget[data-size="medium"],
+  .widget[data-size="large"],
+  .widget[data-size="full"],
+  .widget.medium,
+  .widget.large,
+  .widget.full {
+    grid-column: span 2;
   }
 }
 
@@ -228,7 +282,7 @@ footer {
   }
   
   main {
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
   }
   
   .dashboard-header {
@@ -244,10 +298,15 @@ footer {
   
   .widgets-container {
     grid-template-columns: 1fr;
-    padding: var(--spacing-md);
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    max-height: calc(100vh - var(--header-height) - var(--footer-height) - 100px);
   }
   
-  .widget[data-size] {
+  .widget[data-size],
+  .widget[class*="medium"],
+  .widget[class*="large"],
+  .widget[class*="full"] {
     grid-column: span 1;
   }
 }
@@ -272,4 +331,17 @@ footer {
   .widget {
     grid-column: 1 / -1 !important;
   }
+}
+
+/* Tableau et graphiques dans les widgets - adaptations */
+.orders-table-wrapper {
+  overflow: auto; /* Permettre le défilement si nécessaire */
+  max-height: 100%;
+}
+
+.chart-container {
+  flex-grow: 1;
+  min-height: 0;
+  height: 100%;
+  position: relative;
 }

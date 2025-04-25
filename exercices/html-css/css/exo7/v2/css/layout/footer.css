@@ -1,45 +1,50 @@
-/* Styles du pied de page */
+/* Footer du dashboard */
 footer {
   grid-area: footer;
   background: var(--gradient-header);
-  color: var(--text-primary);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* Centrage du contenu */
   padding: 0 var(--spacing-lg);
-  height: var(--footer-height);
-  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centrage du contenu */
+  width: 100%;
+  text-align: center; /* Centrage du texte */
 }
 
 .copyright {
+  margin: 0;
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   opacity: 0.8;
+  justify-content: center;
 }
 
-.footer-links {
-  display: flex;
-  gap: var(--spacing-md);
+/* Mode sombre */
+body.dark-mode footer {
+  background: var(--gradient-header-dark);
+  border-top-color: rgba(0, 0, 0, 0.15);
+  color: var(--dark-text-muted);
 }
 
-.footer-links a {
-  color: var(--text-muted);
-  font-size: var(--text-xs);
-  text-decoration: none;
-  transition: color var(--transition-fast);
-}
-
-.footer-links a:hover {
-  color: var(--text-primary);
-  text-decoration: underline;
-}
-
-/* Responsive */
+/* Mode responsif */
 @media (max-width: 768px) {
   footer {
     padding: 0 var(--spacing-md);
     flex-direction: column;
     justify-content: center;
     gap: 8px;
+  }
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
   }
 }

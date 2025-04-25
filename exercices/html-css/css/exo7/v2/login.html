@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - AdminPanel</title>
+    
+    <!-- ================================ -->
+    <!-- CONFIGURATION GOOGLE OAUTH       -->
+    <!-- ================================ -->
+    <!-- IMPORTANT: Remplacez YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com par votre ID client Google OAuth -->
+    <meta name="google-signin-client_id" content="610070679331-jro330mqcc5ciqrgegg9stgih8208spq.apps.googleusercontent.com">
+    <meta name="google-signin-scope" content="profile email">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/base/reset.css">
+    <link rel="stylesheet" href="css/base/typography.css">
+    <link rel="stylesheet" href="css/base/variables.css">
+    <link rel="stylesheet" href="css/components/login.css">
+    <script src="components/oauth-setup.js"></script>
+
+    <script>
+    // Afficher l'URL actuelle pour aider à la configuration OAuth
+    console.log('URL actuelle (à ajouter aux URIs de redirection autorisées) : ' + window.location.href);
+
+    // Fonction pour détecter les erreurs OAuth dans l'URL
+    window.addEventListener('DOMContentLoaded', function() {
+        // Vérifier si l'URL contient des paramètres d'erreur Google
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        
+        if (error === 'redirect_uri_mismatch') {
+            showErrorMessage(`
+                <strong>Erreur de redirection OAuth</strong><br>
+                L'URL actuelle ne correspond pas aux URIs de redirection autorisées.<br>
+                Ajoutez cette URL à votre configuration OAuth Google :<br>
+                <code>${window.location.href.split('?')[0]}</code><br>
+                <a href="https://console.cloud.google.com/" target="_blank">Ouvrir la Console Google Cloud</a>
+            `);
+        } else if (urlParams.has('error')) {
+            showErrorMessage(`Erreur d'authentification Google: ${urlParams.get('error')}`);
+        }
+    });
+
+    function showErrorMessage(message) {
+        const errorBox = document.createElement('div');
+        errorBox.className = 'oauth-error';
+        errorBox.innerHTML = message;
+        
+        // Insérer après le chargement du DOM
+        setTimeout(() => {
+            const loginContainer = document.querySelector('.login-container');
+            if (loginContainer) {
+                loginContainer.insertAdjacentElement('beforebegin', errorBox);
+            } else {
+                document.body.insertAdjacentElement('afterbegin', errorBox);
+            }
+        }, 100);
+    }
+    </script>
+
+    <script>
+    // Ajoutons cette fonction au début du fichier juste après les balises <script> existantes
+    window.addEventListener('DOMContentLoaded', function() {
+        // Afficher l'URL exacte que Google utilise pour la redirection
+        console.log('URL exacte pour la redirection:', window.location.href);
+        
+        // Modification du paramètre client_id pour inclure l'URL de redirection explicite
+        const g_id_onload = document.getElementById('g_id_onload');
+        if (g_id_onload) {
+            // Ajouter l'URL de redirection explicite
+            g_id_onload.setAttribute('data-ux_mode', 'popup');
+            
+            // Log pour vérifier les paramètres
+            console.log('Configuration Google Sign-In:', {
+                client_id: g_id_onload.getAttribute('data-client_id'),
+                ux_mode: g_id_onload.getAttribute('data-ux_mode')
+            });
+        }
+    });
+    </script>
+
+    <style>
+    /* Style pour le message d'erreur OAuth */
+    .oauth-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-left: 4px solid #dc3545;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        max-width: 500px;
+        margin: 0 auto 20px;
+    }
+
+    body.dark-mode .oauth-error {
+        background-color: #3d1c1e;
+        color: #f8d7da;
+    }
+
+    .oauth-error code {
+        display: block;
+        background: rgba(0,0,0,0.05);
+        padding: 8px;
+        margin: 8px 0;
+        border-radius: 4px;
+        white-space: nowrap;
+        overflow: auto;
+        font-family: monospace;
+    }
+
+    body.dark-mode .oauth-error code {
+        background-color: rgba(255,255,255,0.1);
+    }
+
+    .oauth-error a {
+        display: inline-block;
+        margin-top: 10px;
+        color: #0d6efd;
+        text-decoration: none;
+    }
+
+    .oauth-error a:hover {
+        text-decoration: underline;
+    }
+    </style>
+    <script src="components/oauth-diagnostics.js"></script>
+    <script src="components/google-auth-helper.js"></script>
+    <script src="components/fix-redirect-uri.js"></script>
+</head>
+<body class="login-page">
+    <button id="theme-toggle" class="theme-toggle" title="Changer de thème">
+        <i class="fas fa-sun"></i>
+    </button>
+    
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>AdminPanel</span>
+            </div>
+            <h1>Connexion</h1>
+        </div>
+        
+        <form class="login-form" id="login-form">
+            <div class="form-group">
+                <label for="username">Nom d'utilisateur</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
+                </div>
+            </div>
+            
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" name="remember"> Se souvenir de moi
+                </label>
+                <a href="#" class="forgot-password">Mot de passe oublié?</a>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Se connecter
+                </button>
+            </div>
+        </form>
+        
+        <div class="separator">ou</div>
+
+        <div class="social-login">
+            <h4 class="social-login-title">Connexion avec Google</h4>
+            
+            <!-- Option 1: Authentification Google standard -->
+            <div class="google-auth-option">
+                <div class="auth-option-label">
+                    <span>Option principale</span>
+                </div>
+                <!-- Le bouton Google standard -->
+                <div class="g_id_signin google-button-container"
+                     data-type="standard"
+                     data-size="large"
+                     data-theme="outline"
+                     data-text="sign_in_with"
+                     data-shape="rectangular"
+                     data-logo_alignment="left"
+                     data-width="100%">
+                </div>
+            </div>
+            
+            <!-- Option 2: Méthode alternative -->
+            <div class="google-auth-option">
+                <div class="auth-option-label">
+                    <span>Option alternative</span>
+                    <small>(si l'option ci-dessus échoue)</small>
+                </div>
+                <button type="button" id="alternative-google-signin" class="btn btn-google-fallback">
+                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google">
+                    <span>Se connecter avec Google (solution alternative)</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="form-footer">
+            <p>Utilisez "admin" / "admin" pour vous connecter en mode démo</p>
+        </div>
+    </div>
+    
+    <div class="login-background">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+    </div>
+    
+    <script>
+        // Vérifier si l'utilisateur est déjà connecté
+        if (localStorage.getItem('auth_token')) {
+            window.location.href = 'index.html';
+        }
+        
+        // Gestion du thème
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            
+            this.innerHTML = isDarkMode ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+            
+            // Mise à jour du thème pour le bouton Google
+            const googleButtons = document.querySelectorAll('.g_id_signin');
+            if (googleButtons.length > 0) {
+                for (const btn of googleButtons) {
+                    btn.setAttribute('data-theme', isDarkMode ? 'filled_blue' : 'outline');
+                }
+            }
+        });
+        
+        // Appliquer le thème sauvegardé
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-moon"></i>';
+        }
+        
+        // Gestion du formulaire de connexion
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Affichage de l'indicateur de chargement
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Connexion...';
+            
+            // Simulation d'une requête d'authentification (pour démo)
+            setTimeout(() => {
+                // Vérification basique des identifiants (pour démo uniquement)
+                if ((username === 'admin' && password === 'admin') || (username === 'user' && password === 'user')) {
+                    // Créer un token fictif
+                    const token = btoa(username + ':' + new Date().getTime());
+                    
+                    // Enregistrer dans localStorage
+                    localStorage.setItem('auth_token', token);
+                    localStorage.setItem('auth_user', username);
+                    localStorage.setItem('auth_role', username === 'admin' ? 'administrator' : 'user');
+                    
+                    // Afficher le loader avant la redirection
+                    showTransitionLoader();
+                    
+                    // Délai avant la redirection pour voir le loader
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1000);
+                    
+                    // Ne pas exécuter le code suivant qui redirige directement
+                    return;
+                } else {
+                    // Réinitialiser le bouton
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    
+                    // Afficher un message d'erreur
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'error-message';
+                    errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Identifiants incorrects. Utilisez "admin/admin" pour la démonstration.';
+                    
+                    // Supprimer les anciens messages d'erreur
+                    const oldErrors = document.querySelectorAll('.error-message');
+                    oldErrors.forEach(err => err.remove());
+                    
+                    // Ajouter le nouveau message d'erreur
+                    this.insertAdjacentElement('beforebegin', errorMsg);
+                    
+                    // Animer le formulaire pour indiquer une erreur
+                    this.classList.add('shake');
+                    setTimeout(() => {
+                        this.classList.remove('shake');
+                    }, 500);
+                }
+            }, 1000);
+        });
+        
+        // Fonction de callback pour Google Sign-In
+        function handleGoogleSignIn(response) {
+            console.log("Réponse de Google Sign-In reçue:", response);
+            
+            // Vérification et décodage JWT
+            if (response && response.credential) {
+                try {
+                    // Décoder le JWT (juste pour extraire les informations)
+                    const base64Url = response.credential.split('.')[1];
+                    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    }).join(''));
+                    
+                    console.log("Payload décodé:", JSON.parse(jsonPayload));
+                    const profile = JSON.parse(jsonPayload);
+                    
+                    // Enregistrer les informations dans localStorage
+                    localStorage.setItem('auth_token', response.credential);
+                    localStorage.setItem('auth_user', profile.name || profile.email);
+                    localStorage.setItem('auth_email', profile.email);
+                    localStorage.setItem('auth_avatar', profile.picture);
+                    localStorage.setItem('auth_role', profile.email.includes('admin') ? 'administrator' : 'user');
+                    localStorage.setItem('auth_provider', 'google');
+                    
+                    // Afficher un message de succès
+                    alert("Connexion avec Google réussie! Redirection vers le tableau de bord...");
+                    
+                    // Afficher le loader avant la redirection
+                    showTransitionLoader();
+                    
+                    // Délai avant la redirection pour voir le loader
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1000);
+                    
+                    // Ne pas exécuter le code suivant qui redirige directement
+                    return;
+                } catch (err) {
+                    console.error('Erreur lors du décodage JWT:', err);
+                    alert('Erreur lors de la connexion Google. Veuillez réessayer.');
+                }
+            } else {
+                console.error("Réponse de Google Sign-In invalide:", response);
+                alert("Erreur: Réponse de Google Sign-In invalide");
+            }
+        }
+        
+        // Ajouter une méthode de simulation de connexion Google pour les démonstrations
+        window.simulateGoogleLogin = function() {
+            const mockProfile = {
+                name: "Utilisateur Test",
+                email: "test@example.com",
+                picture: "https://ui-avatars.com/api/?name=Test+User&background=4361ee&color=fff&size=100"
+            };
+            
+            localStorage.setItem('auth_token', 'mock_google_token');
+            localStorage.setItem('auth_user', mockProfile.name);
+            localStorage.setItem('auth_email', mockProfile.email);
+            localStorage.setItem('auth_avatar', mockProfile.picture);
+            localStorage.setItem('auth_role', 'user');
+            localStorage.setItem('auth_provider', 'google');
+            
+            showTransitionLoader();
+            
+            // Délai avant la redirection pour voir le loader
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        }
+        
+        // Ajouter un bouton de secours si Google ne se charge pas
+        setTimeout(() => {
+            const googleButton = document.querySelector('.g_id_signin div[role="button"]');
+            if (!googleButton) {
+                const socialLogin = document.querySelector('.social-login');
+                if (socialLogin) {
+                    const fallbackButton = document.createElement('button');
+                    fallbackButton.className = 'btn btn-google-fallback';
+                    fallbackButton.innerHTML = '<img src="https://developers.google.com/identity/images/g-logo.png" alt="G"> Se connecter avec Google (fallback)';
+                    fallbackButton.onclick = window.simulateGoogleLogin;
+                    socialLogin.appendChild(fallbackButton);
+                    
+                    // Ajouter un message d'information
+                    const infoMsg = document.createElement('p');
+                    infoMsg.className = 'google-load-error';
+                    infoMsg.innerHTML = 'Le bouton Google officiel n\'a pas pu être chargé. Vérifiez votre configuration OAuth.';
+                    socialLogin.appendChild(infoMsg);
+                }
+            }
+        }, 3000);
+    </script>
+
+    <!-- Ajoutez ce script avant la balise </body> -->
+    <script>
+        // Initialiser le bouton de connexion Google alternatif
+        document.addEventListener('DOMContentLoaded', function() {
+            const alternativeButton = document.getElementById('alternative-google-signin');
+            if (alternativeButton) {
+                alternativeButton.addEventListener('click', function() {
+                    // Afficher un indicateur de chargement
+                    this.disabled = true;
+                    this.innerHTML = '<div class="loading-spinner-small"></div> <span>Connexion en cours...</span>';
+                    
+                    // Simuler une connexion avec Google
+                    setTimeout(function() {
+                        // Créer un profil utilisateur simulé
+                        const mockProfile = {
+                            name: "Utilisateur Google",
+                            email: "utilisateur@example.com",
+                            picture: "https://ui-avatars.com/api/?name=Google+User&background=4285F4&color=fff&size=100"
+                        };
+                        
+                        // Sauvegarder dans localStorage
+                        localStorage.setItem('auth_token', 'simulated_google_auth_token_' + Date.now());
+                        localStorage.setItem('auth_user', mockProfile.name);
+                        localStorage.setItem('auth_email', mockProfile.email);
+                        localStorage.setItem('auth_avatar', mockProfile.picture);
+                        localStorage.setItem('auth_role', 'user');
+                        localStorage.setItem('auth_provider', 'google');
+                        
+                        // Rediriger vers la page principale
+                        window.location.href = 'index.html';
+                    }, 1500);
+                });
+            }
+        });
+    </script>
+
+    <style>
+        /* Style pour le petit spinner de chargement */
+        .loading-spinner-small {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        body.dark-mode .loading-spinner-small {
+            border-color: rgba(255, 255, 255, 0.1);
+            border-top-color: #3498db;
+        }
+    </style>
+
+    <!-- Ajouter juste avant la fermeture du body -->
+    <div id="transition-loader" class="transition-loader">
+        <div class="spinner-container">
+            <div class="spinner"></div>
+        </div>
+        <p>Chargement du tableau de bord...</p>
+    </div>
+
+    <style>
+        /* Styles pour le loader de transition */
+        .transition-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-light, #f5f7fb);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        body.dark-mode .transition-loader {
+            background-color: var(--dark-bg-primary, #111827);
+            color: #ffffff;
+        }
+
+        .transition-loader.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .spinner-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-left-color: var(--primary-color, #4361ee);
+            animation: spin 1s linear infinite;
+        }
+
+        body.dark-mode .spinner {
+            border-color: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--primary-color, #4361ee);
+        }
+
+        .transition-loader p {
+            font-size: 1rem;
+            color: var(--text-dark, #333);
+            margin-top: 1rem;
+        }
+
+        body.dark-mode .transition-loader p {
+            color: #ffffff;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    <script>
+        // Fonction pour afficher le loader lors de la connexion
+        function showTransitionLoader() {
+            const loader = document.getElementById('transition-loader');
+            if (loader) {
+                loader.classList.add('show');
+            }
+        }
+        
+        // Modifier les gestionnaires d'événements de connexion pour afficher le loader
+        
+        // 1. Connexion standard
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            // ... existing code ...
+            
+            setTimeout(() => {
+                // Avant de rediriger vers le tableau de bord
+                if ((username === 'admin' && password === 'admin') || (username === 'user' && password === 'user')) {
+                    // ... existing code ...
+                    
+                    // Afficher le loader avant la redirection
+                    showTransitionLoader();
+                    
+                    // Délai avant la redirection pour voir le loader
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1000);
+                    
+                    // Ne pas exécuter le code suivant qui redirige directement
+                    return;
+                } else {
+                    // ... existing code for error handling ...
+                }
+            }, 1000);
+        });
+        
+        // 2. Connexion Google
+        function handleGoogleSignIn(response) {
+            // ... existing code ...
+            
+            if (response && response.credential) {
+                try {
+                    // ... existing code ...
+                    
+                    // Après avoir enregistré les informations
+                    showTransitionLoader();
+                    
+                    // Délai avant la redirection pour voir le loader
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1000);
+                    
+                    // Ne pas exécuter le code suivant qui redirige directement
+                    return;
+                } catch (err) {
+                    // ... existing error handling code ...
+                }
+            }
+        }
+        
+        // 3. Connexion alternative
+        window.simulateGoogleLogin = function() {
+            // ... existing code ...
+            
+            showTransitionLoader();
+            
+            // Délai avant la redirection pour voir le loader
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentification en cours...</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fb;
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(67, 97, 238, 0.2);
+            border-top-color: #4361ee;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            color: #666;
+            max-width: 500px;
+            line-height: 1.5;
+        }
+        
+        button {
+            background-color: #4361ee;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #3451b2;
+        }
+    </style>
+</head>
+<body>
+    <div class="spinner"></div>
+    <h2>Authentification en cours...</h2>
+    <p>Nous traitons votre connexion avec Google. Vous allez être redirigé automatiquement.</p>
+    <button id="manual-continue">Continuer manuellement</button>
+    
+    <script>
+        // Script pour traiter la réponse OAuth et rediriger vers la page principale
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simuler le traitement de l'authentification
+            setTimeout(function() {
+                window.location.href = 'index.html';
+            }, 3000);
+            
+            // Option de continuation manuelle
+            document.getElementById('manual-continue').addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>

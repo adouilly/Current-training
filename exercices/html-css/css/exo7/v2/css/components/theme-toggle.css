@@ -1,0 +1,153 @@
+/* Styles pour le toggle du thème jour/nuit */
+
+.theme-toggle {
+  margin-right: 1rem;
+}
+
+#theme-toggle {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+#theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#theme-toggle:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+  transform: scale(0);
+  border-radius: 50%;
+  transition: transform var(--transition-normal);
+}
+
+#theme-toggle:hover:before {
+  transform: scale(1.5);
+}
+
+#theme-toggle i {
+  position: relative;
+  z-index: 2;
+  transition: transform var(--transition-normal);
+}
+
+#theme-toggle:hover i {
+  transform: rotate(15deg);
+}
+
+/* Thème sombre */
+body.dark-mode {
+  color-scheme: dark;
+}
+
+body.dark-mode .widget {
+  background: var(--dark-bg-widget);
+  border: 1px solid var(--dark-border);
+}
+
+body.dark-mode .widget-header {
+  border-bottom: 1px solid var(--dark-border);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.05));
+}
+
+body.dark-mode .widget-header h3 {
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode .widget-content {
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode .stat-info h4 {
+  color: var(--dark-text-muted);
+}
+
+body.dark-mode .stat-value {
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode .stat-icon {
+  background: linear-gradient(135deg, rgba(67, 97, 238, 0.15), rgba(76, 201, 240, 0.25));
+}
+
+body.dark-mode .dashboard-container {
+  background: linear-gradient(140deg, #111827, #1e2937);
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-color: var(--dark-border);
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: var(--placeholder-dark);
+}
+
+body:not(.dark-mode) input::placeholder,
+body:not(.dark-mode) textarea::placeholder {
+  color: var(--placeholder-light);
+}
+
+body.dark-mode .orders-table thead {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+}
+
+body.dark-mode .orders-table th {
+  color: var(--dark-text-primary);
+  border-bottom-color: var(--dark-border);
+}
+
+body.dark-mode .orders-table td {
+  color: var(--dark-text-muted);
+}
+
+body.dark-mode .orders-table tbody tr {
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .orders-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+body.dark-mode .chart-period-selector .btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode .btn {
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode label {
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode .compact-summary {
+  color: var(--dark-text-primary);
+}
+
+/* Animation de transition entre les thèmes */
+.theme-transition {
+  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+}

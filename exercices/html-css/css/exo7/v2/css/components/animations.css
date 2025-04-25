@@ -1,0 +1,210 @@
+/* Animations et effets visuels */
+
+/* Animation pour l'apparition des widgets */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.widget {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.widget.appearing {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Animation pour la disparition des widgets */
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(20px); }
+}
+
+.widget.removing {
+  animation: fadeOut 0.3s forwards;
+  pointer-events: none;
+}
+
+/* Widget mis en évidence (pour la navigation) */
+@keyframes highlight {
+  0% { box-shadow: 0 0 0 2px var(--primary-color); }
+  50% { box-shadow: 0 0 0 6px var(--primary-color); }
+  100% { box-shadow: 0 0 0 2px var(--primary-color); }
+}
+
+.highlight-widget {
+  animation: highlight 1s ease-in-out 2;
+}
+
+/* Overlay de chargement pour les widgets - Version compacte */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  transition: opacity 0.5s;
+}
+
+body.dark-mode .loading-overlay {
+  background-color: rgba(30, 41, 55, 0.7);
+}
+
+.loading-overlay.fade-out {
+  opacity: 0;
+}
+
+.loading-overlay p {
+  margin-top: 0.5rem;
+  color: var(--text-dark);
+  font-size: var(--text-xs);
+}
+
+body.dark-mode .loading-overlay p {
+  color: var(--dark-text-primary);
+}
+
+/* Spinner de chargement - Version plus petite */
+.loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(74, 108, 247, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Notifications - Plus compactes */
+#notification-container {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notification {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  padding: 0;
+  width: 250px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transform: translateX(120%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.notification.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  flex: 1;
+}
+
+.notification-content i {
+  margin-right: 8px;
+  font-size: 1rem;
+}
+
+.notification-content p {
+  margin: 0;
+  font-size: var(--text-xs);
+}
+
+.close-notification {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 6px 8px;
+  transition: color var(--transition-fast);
+}
+
+.close-notification:hover {
+  color: var(--text-dark);
+}
+
+/* Couleurs des notifications */
+.notification.success .notification-content i {
+  color: var(--success-color);
+}
+
+.notification.error .notification-content i {
+  color: var(--danger-color);
+}
+
+.notification.warning .notification-content i {
+  color: var(--warning-color);
+}
+
+.notification.info .notification-content i {
+  color: var(--primary-color);
+}
+
+/* Styles pour le mode sombre */
+body.dark-mode .notification {
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode .close-notification {
+  color: var(--dark-text-muted);
+}
+
+body.dark-mode .close-notification:hover {
+  color: var(--dark-text-primary);
+}
+
+/* Animations pour les transitions de mode compact */
+
+@keyframes compactCollapse {
+  from { max-height: 500px; opacity: 1; }
+  to { max-height: 90px; opacity: 0.5; }
+}
+
+@keyframes compactExpand {
+  from { max-height: 90px; opacity: 0.5; }
+  to { max-height: 500px; opacity: 1; }
+}
+
+.widget.compact {
+  animation: compactCollapse 0.3s forwards;
+}
+
+.widget:not(.compact) {
+  animation: compactExpand 0.3s forwards;
+}
+
+/* Animation pour l'apparition du résumé compact */
+.compact-summary {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.widget.compact .compact-summary {
+  opacity: 1;
+  transform: translateY(0);
+}

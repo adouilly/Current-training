@@ -7,16 +7,16 @@
   box-shadow: var(--shadow-tech);
   display: flex;
   flex-direction: column;
-  transition: all var(--transition-normal);
+  transition: all 0.3s ease-out, opacity 0.3s ease, background-color 0.3s ease;
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /* Empêcher le contenu de déborder */
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 0; /* Important pour flexbox */
 }
 
 .widget:hover {
   box-shadow: var(--shadow-glow);
-  transform: translateY(-3px);
 }
 
 /* En-tête du widget */
@@ -24,9 +24,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem var(--spacing-md);
+  padding: 0.75rem var(--spacing-md);
   border-bottom: 1px solid rgba(230, 230, 250, 0.1);
   background: linear-gradient(to right, rgba(250, 250, 255, 0.03), rgba(250, 250, 255, 0.1));
+  cursor: grab; /* Curseur indiquant que l'élément est déplaçable */
+  flex-shrink: 0; /* Empêcher le header de rétrécir */
+  transition: background-color 0.3s ease;
+}
+
+.widget-header:active {
+  cursor: grabbing;
 }
 
 .widget-header h3 {
@@ -35,6 +42,10 @@
   font-weight: var(--font-medium);
   color: var(--text-dark);
   position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70%; /* Éviter que le titre ne prenne trop de place */
 }
 
 .widget-header h3::after {
@@ -50,17 +61,34 @@
 
 /* Contenu du widget */
 .widget-content {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md);
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow: visible; /* Ne pas masquer le contenu qui dépasse */
+  min-height: 0; /* Permettre au contenu de rétrécir */
+}
+
+/* Adaptation pour les widgets avec tableau */
+.widget[data-widget-id="recent-orders"] .widget-content {
+  padding: 0.5rem; /* Réduire le padding pour maximiser l'espace du tableau */
+}
+
+/* Adaptation pour les widgets de statistiques */
+.widget[data-size="small"] .stat-card {
+  padding: 0.25rem 0;
+}
+
+.widget[data-size="small"] .stat-icon {
+  width: 50px;
+  height: 50px;
 }
 
 /* Contrôles du widget */
 .widget-controls {
   display: flex;
   gap: 0.35rem;
+  flex-shrink: 0;
 }
 
 .widget-controls button {
@@ -75,6 +103,7 @@
   align-items: center;
   justify-content: center;
   transition: all var(--transition-fast);
+  position: relative;
 }
 
 .widget-controls button:hover {
@@ -82,13 +111,263 @@
   color: var(--primary-color);
 }
 
-/* Widget en mode compact */
-.widget.compact .widget-content {
-  display: none;
+/* Tooltip pour les boutons */
+.widget-controls button::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: var(--text-xs);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 10;
 }
 
+.widget-controls button:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Styles pour le bouton de rafraîchissement */
+.widget-controls .refresh-widget {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.widget-controls .refresh-widget:hover {
+  background-color: rgba(67, 97, 238, 0.1);
+  color: var(--primary-color);
+}
+
+/* Animation de rotation pour le rafraîchissement */
+.widget-controls .refresh-widget.spinning i {
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Overlay de chargement */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: opacity 0.5s ease;
+}
+
+body.dark-mode .loading-overlay {
+  background-color: rgba(30, 41, 55, 0.85);
+}
+
+.loading-overlay.fade-out {
+  opacity: 0;
+}
+
+.loading-overlay p {
+  margin-top: 1rem;
+  color: var(--text-dark);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(67, 97, 238, 0.1);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+body.dark-mode .loading-overlay p {
+  color: var(--dark-text-primary);
+}
+
+/* Widget en mode compact */
 .widget.compact {
-  min-height: auto;
+  min-height: 0;
+  max-height: fit-content;
+  /* Augmenter la hauteur minimale pour éviter la troncature du contenu */
+  min-height: 120px;
+}
+
+/* Widget en mode compact avec plus d'espace */
+.widget.compact {
+  /* Supprimer les limites de hauteur restrictives */
+  max-height: none !important;
+  /* Ajouter une marge spécifique pour le conteneur compact */
+  margin-bottom: var(--spacing-md);
+  /* Assurer une transition fluide */
+  transition: all 0.3s ease-out;
+}
+
+/* Masquer le contenu principal mais garder l'en-tête visible */
+.widget.compact .widget-content {
+  display: none !important;
+}
+
+/* Styles pour le résumé compact avec plus d'espace */
+.compact-summary {
+  display: none;
+  padding: var(--spacing-md);
+  color: var(--text-dark);
+  background-color: var(--bg-light);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  /* Assurer qu'il n'y a pas de contenu masqué */
+  overflow: visible;
+  transition: opacity 0.3s ease;
+  background-color: transparent;
+  border-top: 1px solid var(--border-color);
+}
+
+body.dark-mode .compact-summary {
+  background-color: var(--dark-card-bg);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--dark-text-primary);
+  border-top: 1px solid var(--dark-border);
+}
+
+/* Activer l'affichage du résumé quand le widget est compact */
+.widget.compact .compact-summary {
+  display: flex;
+  align-items: flex-start; /* Aligner au début pour un meilleur espace */
+  gap: var(--spacing-md);
+  /* Augmenter le padding pour plus d'espace */
+  padding: var(--spacing-md) var(--spacing-lg);
+  /* Garantir une hauteur minimum mais permettre l'expansion */
+  min-height: 85px;
+  height: auto;
+}
+
+/* Icône dans le résumé compact - maintenant avec taille fixe */
+.summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: rgba(67, 97, 238, 0.1);
+  border-radius: 50%;
+  flex-shrink: 0; /* Empêcher l'icône de se réduire */
+  margin-top: 4px; /* Légèrement déplacer vers le bas pour un meilleur alignement */
+}
+
+.summary-icon i {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+}
+
+/* Contenu du résumé optimisé pour l'espace */
+.summary-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  /* Assurer que le contenu peut s'étendre si nécessaire */
+  min-height: 60px;
+  /* Ajouter de la marge pour éviter le débordement */
+  margin-bottom: 8px;
+}
+
+.summary-title {
+  font-size: 0.9rem;
+  font-weight: var(--font-medium);
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-xs);
+}
+
+.summary-value {
+  font-size: 1rem;
+  font-weight: var(--font-semibold);
+  color: var(--text-dark);
+  /* Important: permettre le retour à la ligne pour les textes longs */
+  white-space: normal;
+  line-height: 1.5;
+  /* Assurer qu'il y a assez d'espace en bas */
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Style du texte en mode sombre */
+body.dark-mode .summary-value {
+  color: var(--dark-text-primary);
+}
+
+/* Amélioration des badges de changement/statut */
+.summary-change {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  background-color: rgba(40, 167, 69, 0.15);
+  color: #28a745;
+  /* Un peu d'espace autour */
+  margin: 0.25rem 0;
+}
+
+/* Versions compactes spécifiques à certains widgets */
+/* Pour les widgets de statistiques */
+.widget[data-widget-id^="stats-"].compact .compact-summary {
+  height: auto;
+  min-height: 85px;
+}
+
+/* Pour les widgets de graphiques - besoin de plus d'espace */
+.widget[data-widget-id="sales-chart"].compact .compact-summary {
+  height: auto;
+  min-height: 100px;
+}
+
+/* Pour les widgets de tableaux - besoin de plus d'espace pour lister les éléments */
+.widget[data-widget-id="recent-orders"].compact .compact-summary {
+  height: auto;
+  min-height: 120px;
+}
+
+/* Ajustements pour le layout à grille */
+#widgets-grid {
+  /* Augmenter légèrement l'espacement entre les widgets */
+  gap: var(--spacing-md);
+}
+
+/* Animation pour la transition compact */
+.widget {
+  transition: all 0.3s ease-out;
+}
+
+@keyframes expandSummary {
+  from { max-height: 0; opacity: 0; }
+  to { max-height: 200px; opacity: 1; }
+}
+
+.widget.compact .compact-summary {
+  animation: expandSummary 0.3s forwards;
 }
 
 /* Widget en cours de déplacement */
@@ -96,9 +375,8 @@
   opacity: 0.7;
   transform: scale(0.98);
   z-index: 100;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: var(--shadow-lg);
-  border: 2px dashed var(--primary-color);
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 /* Widget actif (sélectionné) */
@@ -150,7 +428,6 @@
 
 .widget:hover .resize-handle {
   opacity: 0.8;
-  transform: scale(1);
 }
 
 .widget.resizing .resize-handle {
@@ -253,17 +530,17 @@
 .chart-period-selector {
   display: flex;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px; /* Réduire la marge */
 }
 
 .chart-period-selector .btn {
   border: none;
   background-color: rgba(67, 97, 238, 0.1);
   color: var(--text-dark);
-  padding: 6px 12px;
+  padding: 4px 8px; /* Réduire le padding */
   border-radius: 4px;
   cursor: pointer;
-  font-size: var(--text-sm);
+  font-size: var(--text-xs); /* Réduire la taille de police */
   transition: all var(--transition-fast);
 }
 
@@ -296,10 +573,238 @@
   
   .stat-icon {
     margin-right: 0;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
   }
   
   .widget-content {
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
   }
+  
+  .widget-header {
+    padding: 0.5rem var(--spacing-sm);
+  }
+}
+
+/* Ajustements spécifiques pour certains types de widgets */
+/* Tableau des commandes */
+.orders-table {
+  font-size: var(--text-xs); /* Réduire la taille de police pour économiser de l'espace */
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 0.5rem 0.75rem; /* Réduire le padding */
+}
+
+/* Formulaire dans le widget de contact */
+#quick-contact-form .form-group {
+  margin-bottom: 0.75rem; /* Réduire la marge entre les éléments */
+}
+
+#quick-contact-form .form-actions {
+  margin-top: 0.75rem; /* Réduire la marge */
+}
+
+#quick-contact-form textarea {
+  min-height: 60px; /* Hauteur minimale réduite */
+  resize: none; /* Empêcher le redimensionnement */
+}
+
+/* Correction pour le mode sombre */
+body.dark-mode .compact-summary {
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode .summary-title {
+  color: var(--dark-text-muted);
+}
+
+body.dark-mode .summary-icon {
+  background: rgba(67, 97, 238, 0.2);
+}
+
+/* Clone pour le drag & drop */
+.widget-ghost {
+  box-shadow: var(--shadow-glow);
+  border: 2px dashed var(--primary-color);
+}
+
+/* Zone de drop */
+.drop-indicator {
+  position: absolute;
+  background: var(--primary-color);
+  z-index: 1000;
+  pointer-events: none;
+  animation: pulse 0.6s infinite alternate;
+}
+
+@keyframes pulse {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}
+
+.drop-target {
+  box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.container-drop-target {
+  outline: 2px dashed var(--primary-color);
+  outline-offset: -2px;
+}
+
+/* Widget en mode compact - Correction de la hauteur */
+.widget.compact {
+    /* Empêcher l'extension verticale automatique */
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    
+    /* Placer le widget en dehors du flux normal de la grille pour éviter l'alignement automatique */
+    position: relative;
+    
+    /* Autres styles neumorphiques déjà présents */
+    background-color: var(--widget-bg);
+    color: var(--text-color);
+    border-radius: var(--widget-border-radius);
+    box-shadow: var(--neuro-shadow-raised);
+    margin-bottom: var(--spacing-md);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    
+    /* Supprimer l'animation de survol qui pourrait affecter la hauteur */
+    transform: none !important;
+}
+
+.widget.compact:hover {
+    transform: none !important;
+}
+
+/* Masquer complètement le contenu en mode compact */
+.widget.compact .widget-content {
+    display: none !important;
+}
+
+/* Style spécifique pour le résumé compact */
+.widget.compact .compact-summary {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--primary-color);
+    box-shadow: var(--neuro-shadow-inset);
+    border-radius: 0 0 var(--widget-border-radius) var(--widget-border-radius);
+}
+
+/* Widget en mode compact - élimination de l'espace blanc */
+.widget.compact {
+  /* Supprimer les limites de hauteur restrictives */
+  max-height: none !important;
+  /* Réduire la hauteur au strict minimum en mode compact */
+  height: auto !important;
+  /* Éliminer les marges supplémentaires */
+  margin-bottom: var(--spacing-sm);
+  /* Assurer une transition fluide */
+  transition: all 0.3s ease-out;
+  /* Supprimer les paddings inutiles dans le bas */
+  padding-bottom: 0 !important;
+  /* Structurer le widget avec flexbox pour contrôle total */
+  display: flex;
+  flex-direction: column;
+  /* Supprimer l'effet grisé / Remove grayed effect */
+  opacity: 1 !important;
+  filter: none !important;
+  background-color: var(--bg-widget) !important;
+}
+
+/* Mode sombre pour les widgets compacts */
+body.dark-mode .widget.compact {
+  background-color: var(--dark-bg-widget) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+/* Assurer que les contenus du widget compact ne sont pas grisés */
+.widget.compact .widget-header,
+.widget.compact .compact-summary {
+  opacity: 1 !important;
+  color: inherit !important;
+}
+
+body.dark-mode .widget.compact .widget-header,
+body.dark-mode .widget.compact .compact-summary {
+  color: var(--dark-text-primary) !important;
+}
+
+/* Assurer que les icônes restent visibles */
+.widget.compact .widget-controls button i,
+.widget.compact .summary-icon i {
+  opacity: 1 !important;
+}
+
+/* Masquer le contenu principal mais garder l'en-tête visible */
+.widget.compact .widget-content {
+  display: none !important;
+}
+
+/* Assurer que le widget compact n'a pas d'éléments invisibles qui créent de l'espace */
+.widget.compact::after {
+  display: none !important;
+}
+
+/* Styles pour le résumé compact avec plus d'espace */
+.compact-summary {
+  display: none;
+  padding: var(--spacing-md);
+  color: var(--text-dark);
+  background-color: var(--bg-light);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  /* Assurer qu'il n'y a pas de contenu masqué */
+  overflow: visible;
+  /* Arrondir les coins inférieurs pour un rendu cohérent */
+  border-bottom-left-radius: var(--widget-border-radius);
+  border-bottom-right-radius: var(--widget-border-radius);
+  /* S'assurer qu'il n'y a pas de marge en bas */
+  margin-bottom: 0;
+}
+
+/* Styles du résumé en mode sombre */
+body.dark-mode .compact-summary {
+  background-color: var(--dark-card-bg);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--dark-text-primary);
+}
+
+/* Activer l'affichage du résumé quand le widget est compact */
+.widget.compact .compact-summary {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  /* Padding optimal pour le contenu */
+  padding: var(--spacing-md) var(--spacing-lg);
+  /* Garantir une hauteur minimum mais permettre l'expansion */
+  min-height: 85px;
+  height: auto;
+  /* S'assurer que c'est le dernier élément du widget */
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+/* Hack pour éliminer l'espace blanc causé par des éléments invisibles */
+.widget.compact > *:not(.widget-header):not(.compact-summary) {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Ajustement pour les widgets avec des styles spécifiques */
+.widget.compact {
+  /* Forcer tous les éléments à respecter les nouvelles contraintes */
+  overflow: hidden;
+}
+
+/* Ajustement pour le conteneur principal des widgets */
+#widgets-grid {
+  /* Augmenter légèrement l'espacement entre les widgets */
+  gap: var(--spacing-md);
 }

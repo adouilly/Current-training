@@ -2,7 +2,6 @@
 @import 'base/reset.css';
 @import 'base/variables.css';
 @import 'base/typography.css';
-@import 'base/animations.css';
 
 @import 'layout/grid.css';
 @import 'layout/header.css';
@@ -17,5 +16,88 @@
 @import 'components/tables.css';
 @import 'components/modal.css';
 @import 'components/drag-drop.css';
+@import 'components/theme-toggle.css';
+@import 'components/animations.css';
 
 @import 'utils/helpers.css';
+
+/* Améliorer l'effet hover du bouton de déconnexion */
+.sidebar-footer a:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: background-color 0.3s ease, border-radius 0.3s ease;
+}
+
+body.dark-mode .sidebar-footer a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Correction pour les widgets compacts */
+.widget.compact {
+    height: auto !important;
+    align-self: flex-start !important;
+    
+    /* Empêcher les effets de surbrillance bleue */
+    box-shadow: var(--widget-shadow) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+body.dark-mode .widget.compact {
+    border: 1px solid var(--dark-border) !important;
+}
+
+/* Corriger la surbrillance des résumés compacts */
+.widget.compact .compact-summary {
+    background-color: var(--bg-light) !important;
+    box-shadow: none !important;
+}
+
+body.dark-mode .widget.compact .compact-summary {
+    background-color: var(--dark-bg-light) !important;
+}
+
+/* Améliorer la grille pour les widgets de hauteurs différentes */
+.widgets-container {
+    align-items: flex-start;
+}
+
+/* Égaliser la hauteur des widgets en mode étendu sur une même ligne */
+.widget:not(.compact) {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Assurer que le contenu prend tout l'espace vertical disponible */
+.widget:not(.compact) .widget-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Styles spécifiques pour différents types de contenu pour remplir l'espace */
+.widget:not(.compact) .stat-card,
+.widget:not(.compact) .chart-container,
+.widget:not(.compact) .orders-table-wrapper,
+.widget:not(.compact) form {
+    height: 100%;
+    flex-grow: 1;
+}
+
+/* Assurer que les graphiques s'étendent correctement */
+.widget:not(.compact) .chart-container {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Assurer que les tables peuvent défiler si nécessaire */
+.widget:not(.compact) .orders-table-wrapper {
+    overflow-y: auto;
+}
+
+/* Assurer que les formulaires utilisent tout l'espace disponible */
+.widget:not(.compact) form {
+    display: flex;
+    flex-direction: column;
+}

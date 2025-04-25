@@ -1,93 +1,148 @@
 /* Variables CSS globales */
 :root {
   /* Couleurs */
-  --primary-color: #4361ee;
-  --primary-light: #4895ef;
-  --primary-dark: #3f37c9;
-  --secondary-color: #7209b7;
-  --secondary-light: #b5179e;
-  --accent-color: #00f2ff;
-  --success-color: #4cc9f0;
-  --danger-color: #ef476f;
-  --warning-color: #ff9e00;
-  --info-color: #4361ee;
-  --light-color: #f8f9fa;
-  --dark-color: #343a40;
-  
-  /* Dégradés thématiques */
-  --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-  --gradient-secondary: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-light) 100%);
-  --gradient-sidebar: linear-gradient(180deg, #2b2d42 0%, #1a1a2e 100%);
-  --gradient-header: linear-gradient(90deg, #2b2d42 0%, #1a1a2e 100%);
-  --gradient-accent: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
-  
-  /* Couleurs de texte */
-  --text-primary: #ffffff;
-  --text-secondary: #e9ecef;
-  --text-muted: #ced4da;
-  --text-dark: #212529;
+  --primary-color: #4a6cf7;
+  --primary-dark: #3451b2;
+  --secondary-color: #6c757d;
+  --accent-color: #4CC9F0;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
   
   /* Couleurs de fond */
-  --background-color: #f5f7fb;
-  --widget-bg-color: #ffffff;
-  --bg-primary: #151a30;
-  --bg-secondary: #1c2237;
-  --bg-light: #f8f9fa;
-  --bg-dark: #0f172a;
+  --bg-light: #f5f7fb;
+  --bg-dark: #1e2937;
+  --card-bg: #ffffff;
+  --dark-card-bg: #2b3648;
+  
+  /* Widget background */
   --bg-widget: rgba(255, 255, 255, 0.95);
+  --dark-bg-widget: rgba(43, 54, 72, 0.95);
   
-  /* Structure */
-  --header-height: 60px;
-  --sidebar-width: 260px;
-  --sidebar-collapsed-width: 70px;
-  --footer-height: 60px;
-  --widget-padding: 1rem;
-  --container-padding: 1.5rem;
-  --border-radius: 10px;
-  --widget-border-radius: 12px;
-  --button-border-radius: 6px;
+  /* Couleurs de texte */
+  --text-dark: #343a40;
+  --text-muted: #6c757d;
+  --text-primary: #ffffff;
+  --dark-text-primary: #e9ecef;
+  --dark-text-muted: #adb5bd;
   
-  /* Espacements */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
+  /* Texte des inputs et placeholders */
+  --placeholder-light: #718096;
+  --placeholder-dark: #a0aec0;
   
   /* Bordures */
   --border-color: #e0e0e0;
+  --dark-border: #404854;
+  --border-radius: 8px;
+  --widget-border-radius: 10px;
+  --button-border-radius: 8px;
+  
+  /* Structure */
+  --header-height: 60px;
+  --sidebar-width: 250px;
+  --sidebar-collapsed-width: 70px;
+  --footer-height: 50px;
+  
+  /* Espacement */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  
+  /* Typographie */
+  --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-secondary: 'SF Pro Display', Arial, sans-serif;
+  --font-mono: 'Consolas', 'Courier New', monospace;
+  
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-md: 1.125rem;   /* 18px */
+  --text-lg: 1.25rem;    /* 20px */
+  --text-xl: 1.5rem;     /* 24px */
+  --text-2xl: 1.75rem;   /* 28px */
+  --text-3xl: 2rem;      /* 32px */
+  
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
   
   /* Ombres */
-  --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 15px 30px rgba(0, 0, 0, 0.1);
-  --shadow-tech: 0 8px 30px rgba(67, 97, 238, 0.15);
-  --shadow-glow: 0 0 15px rgba(76, 201, 240, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+  --shadow-tech: 0 5px 15px rgba(67, 97, 238, 0.05);
+  --shadow-glow: 0 5px 15px rgba(76, 201, 240, 0.15);
+  
+  --dark-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --dark-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.25);
+  --dark-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+  --dark-shadow-glow: 0 5px 15px rgba(76, 201, 240, 0.1);
   
   /* Transitions */
-  --transition-fast: 0.15s ease;
+  --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
   --transition-slow: 0.5s ease;
   
   /* Z-index */
-  --z-dropdown: 1020;
+  --z-dropdown: 1000;
   --z-sticky: 1020;
   --z-fixed: 1030;
-  --z-modal-backdrop: 1040;
-  --z-modal: 1050;
-  --z-popover: 1060;
-  --z-tooltip: 1070;
-  --z-sidebar: 1000;
-  --z-header: 1010;
+  --z-header: 1040;
+  --z-sidebar: 1050;
+  --z-modal: 2000;
   
-  /* Grille */
-  --grid-columns: 12;
-  --grid-gutter: 1.5rem;
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #4361ee, #4CC9F0);
+  --gradient-accent: linear-gradient(135deg, #4CC9F0, #4361ee);
+  --gradient-header: linear-gradient(to right, #1e2937, #2b3648);
+  --gradient-sidebar: linear-gradient(to bottom, #1e2937, #2b3648);
   
-  /* Breakpoints */
-  --breakpoint-xs: 0;
-  --breakpoint-sm: 576px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
+  --gradient-header-light: linear-gradient(to right, #f5f7fb, #e9f0fc);
+  --gradient-sidebar-light: linear-gradient(to bottom, #f5f7fb, #e9f0fc);
+  --gradient-header-dark: linear-gradient(to right, #111827, #1e2937);
+  --gradient-sidebar-dark: linear-gradient(to bottom, #111827, #1e2937);
+}
+
+/* Variables pour le thème sombre */
+body.dark-mode {
+  --bg-light: #111827;
+  --card-bg: #1e2937;
+  --text-dark: #e9ecef;
+  --text-muted: #adb5bd;
+  --border-color: #404854;
+  --bg-widget: var(--dark-bg-widget);
+  
+  --shadow-sm: var(--dark-shadow-sm);
+  --shadow-md: var(--dark-shadow-md);
+  --shadow-lg: var(--dark-shadow-lg);
+  --shadow-glow: var(--dark-shadow-glow);
+  
+  --gradient-header: var(--gradient-header-dark);
+  --gradient-sidebar: var(--gradient-sidebar-dark);
+  
+  /* Inversion des gradients pour le mode sombre */
+  --gradient-primary: linear-gradient(135deg, #3d57d0, #4CC9F0);
+  --gradient-accent: linear-gradient(135deg, #4CC9F0, #3d57d0);
+}
+
+/* Pour les écrans retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  :root {
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* Pour les préférences de réduction de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0s;
+    --transition-normal: 0s;
+    --transition-slow: 0s;
+  }
 }
