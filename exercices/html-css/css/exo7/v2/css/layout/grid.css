@@ -76,17 +76,73 @@ footer {
   align-items: center;
 }
 
-/* Widget grid container */
+/* Widget grid container - Nouveau système plus flexible */
 .widgets-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  grid-auto-rows: minmax(160px, auto);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
   position: relative;
   transition: all var(--transition-normal);
+  min-height: 200px;
 }
 
-/* Classes pour contrôler la taille des widgets */
+/* Modification pour permettre le positionnement dynamique */
+.widgets-container[data-layout="grid"] .widget {
+  /* Les positions exactes sont définies par JavaScript */
+  transition: all 0.3s ease;
+}
+
+/* Indicateur de drop */
+.drop-highlight {
+  position: absolute;
+  background: var(--gradient-accent);
+  box-shadow: 0 0 5px rgba(76, 201, 240, 0.5);
+  z-index: 900;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* Animation de déplacement */
+.widget {
+  transition: transform 0.2s ease, grid-row-start 0.3s ease, grid-column-start 0.3s ease, 
+              grid-row-end 0.3s ease, grid-column-end 0.3s ease;
+}
+
+.widget.dragging {
+  z-index: 1000;
+  opacity: 0.6;
+  box-shadow: var(--shadow-glow);
+  pointer-events: none;
+}
+
+/* Widget fantôme pendant le déplacement */
+.widget-ghost {
+  box-shadow: var(--shadow-tech), 0 0 0 2px var(--primary-color);
+  opacity: 0.7;
+  border-radius: var(--widget-border-radius);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  pointer-events: none;
+}
+
+/* Zone de dépôt */
+.widget-draggable {
+  cursor: grab;
+}
+
+.widget-draggable:active {
+  cursor: grabbing;
+}
+
+/* Widget en cours de redimensionnement */
+.widget.resizing {
+  opacity: 0.8;
+  z-index: 100;
+  transition: none;
+}
+
+/* Définition des tailles standard pour les widgets */
 .widget[data-size="small"] {
   grid-column: span 1;
 }
@@ -100,7 +156,7 @@ footer {
 }
 
 .widget[data-size="full"] {
-  grid-column: 1 / -1;
+  grid-column: span 4;
 }
 
 /* Disposition en liste */
@@ -144,44 +200,13 @@ footer {
 /* Responsive grid */
 @media (max-width: 1200px) {
   .widgets-container {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-  
-  .widgets-container.layout-areas {
-    grid-template-areas:
-      "stats-1 stats-2 stats-3 stats-4"
-      "chart chart chart chart"
-      "orders orders contact contact";
-    grid-template-columns: repeat(4, 1fr);
-  }
-  
-  .widget[data-size="medium"] {
-    grid-column: span 2;
-  }
-  
-  .widget[data-size="large"] {
-    grid-column: span 4;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 992px) {
   .widgets-container {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  }
-  
-  .widgets-container.layout-areas {
-    grid-template-areas:
-      "stats-1 stats-2"
-      "stats-3 stats-4"
-      "chart chart"
-      "orders orders"
-      "contact contact";
     grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .widget[data-size="medium"],
-  .widget[data-size="large"] {
-    grid-column: span 2;
   }
 }
 
@@ -218,23 +243,11 @@ footer {
   }
   
   .widgets-container {
-    gap: var(--spacing-md);
-  }
-  
-  .widgets-container.layout-areas {
-    grid-template-areas:
-      "stats-1"
-      "stats-2"
-      "stats-3"
-      "stats-4"
-      "chart"
-      "orders"
-      "contact";
     grid-template-columns: 1fr;
+    padding: var(--spacing-md);
   }
   
-  .widget[data-size="medium"],
-  .widget[data-size="large"] {
+  .widget[data-size] {
     grid-column: span 1;
   }
 }
