@@ -1,0 +1,131 @@
+@import 'variables.css';
+
+/* Responsive Styles */
+@media (max-width: 1280px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .hero h1, .hero h2 {
+    font-size: 3rem;
+  }
+  
+  /* Menu avec défilement horizontal pour les écrans moyens */
+  .menu {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 10px; /* Espace pour la barre de défilement */
+  }
+  
+  .text-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, auto);
+  }
+}
+
+@media (max-width: 992px) {
+  /* Transformation en menu burger pour les petits écrans */
+  .menu {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    background-color: var(--header-color);
+    flex-direction: column;
+    gap: 0;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-speed);
+    padding: 1rem 0;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    overflow-x: visible;
+    white-space: normal;
+  }
+  
+  .menu.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .menu-item {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .menu-link {
+    display: block;
+    padding: 1rem;
+    font-size: 1rem;
+    color: var(--secondary-color);
+  }
+  
+  .menu-toggle {
+    display: flex;
+  }
+  
+  .hero h1, .hero h2 {
+    font-size: 2.5rem;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+  }
+  
+  .text-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, auto);
+  }
+  
+  .header-content {
+    justify-content: space-between;
+  }
+  
+  .logo {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .hero h1, .hero h2 {
+    font-size: 2rem;
+  }
+  
+  .text-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .divider-line {
+    width: 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-content {
+    padding: 1rem;
+  }
+  
+  .btn {
+    padding: 0.5rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .text-grid-item p {
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,31 @@
+:root {
+  /* Couleurs principales */
+  --primary-color: #181818;
+  --secondary-color: #fff;
+  --accent-color: #f1c40f;
+  --text-color: #333;
+  --text-light: #fff;
+  --header-color: #0F0E0A;
+  
+  /* Typographie */
+  --font-family: 'Roboto', sans-serif;
+  
+  /* Animation */
+  --transition-speed: 0.3s;
+  
+  /* Espacements */
+  --spacing-sm: 5px;
+  --spacing-md: 10px;
+  --spacing-lg: 20px;
+  --spacing-xl: 40px;
+}
+
+/* Variables pour le thème sombre */
+[data-theme="dark"] {
+  --primary-color: #000;
+  --secondary-color: #ddd;
+  --text-color: #eee;
+  --background-color: #121212;
+  --surface-color: #1e1e1e;
+  --hero-overlay-opacity: 0.6;
+}

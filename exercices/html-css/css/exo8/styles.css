@@ -1,0 +1,605 @@
+/* Variables CSS pour un système de thème sombre/clair */
+:root {
+  /* Couleurs et styles principaux */
+  --primary-color: #181818;
+  --secondary-color: #fff;
+  --accent-color: #f1c40f;
+  --text-color: #333;
+  --text-light: #fff;
+  --header-color: #0F0E0A;
+  --background-color: #181818;
+  --overlay-opacity: 0.4;
+  --font-family: 'Roboto', sans-serif;
+  --transition-speed: 0.3s;
+  
+  /* Système d'espacement standardisé */
+  --spacing-sm: 10px;
+  --spacing-md: 20px;
+  --spacing-lg: 40px;
+}
+
+/* Variables pour le thème clair */
+body.light-theme {
+  --primary-color: #f8f9fa;
+  --secondary-color: #333;
+  --text-color: #222;
+  --text-light: #333;
+  --header-color: #e9ecef;
+  --background-color: #fff;
+  --overlay-opacity: 0.2;
+}
+
+/* Styles de base et réinitialisation */
+body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Système de boutons */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: all var(--transition-speed);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+/* Header et navigation principale */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: var(--header-color);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.5s ease;
+  min-height: 90px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.logo {
+  position: absolute;
+  left: 0;
+}
+
+.logo img {
+  max-height: 50px;
+  background: transparent;
+}
+
+/* Navigation desktop et mobile */
+.navigation {
+  display: flex;
+  align-items: center;
+}
+
+.menu {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.menu-link {
+  color: var(--secondary-color);
+  font-weight: 500;
+  text-transform: uppercase;
+  position: relative;
+  transition: color var(--transition-speed);
+  font-size: 0.9rem;
+}
+
+/* Animation de soulignement au survol des liens */
+.menu-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--accent-color);
+  transform: scaleX(0);
+  transition: transform var(--transition-speed);
+}
+
+.menu-link:hover {
+  color: var(--accent-color);
+}
+
+.menu-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Menu hamburger pour mobile */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  z-index: 1001;
+}
+
+.menu-toggle span {
+  display: block;
+  height: 3px;
+  background-color: var(--secondary-color);
+  border-radius: 3px;
+  min-width: 25px;
+  transition: transform var(--transition-speed);
+}
+
+/* Animation du menu hamburger en X */
+.menu-toggle.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Sections héros avec images de fond */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  color: var(--text-light);
+  margin-bottom: var(--spacing-md);
+  padding-top: 90px; /* Espace pour éviter que le header fixe ne chevauche le contenu */
+}
+
+.huracan-sterrato {
+  background-image: url('images/background1.jpg');
+}
+
+.urus-performante {
+  background-image: url('images/background2.jpg');
+  color: var(--primary-color);
+}
+
+/* Overlays pour les sections héros */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: background-color 0.3s ease;
+}
+
+.overlay-dark {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.overlay-light {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Effet au survol des sections héros */
+.hero:hover .overlay-dark {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.hero:hover .overlay-light {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.hero h1, .hero h2 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+/* Galerie de modèles */
+.gallery-section {
+  padding: var(--spacing-md) 0;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-md);
+  text-transform: uppercase;
+}
+
+/* Grille responsive pour la galerie */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: var(--spacing-md);
+  margin: 0 var(--spacing-md);
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform var(--transition-speed);
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Animation au survol des éléments de la galerie */
+.gallery-item:hover {
+  transform: translateY(-10px);
+}
+
+.gallery-item img {
+  transition: transform var(--transition-speed);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-item h3 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: var(--text-light);
+  padding: 1rem;
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Séparateur décoratif */
+.divider-section {
+  background-color: var(--primary-color);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md) 0;
+}
+
+.divider-line {
+  width: 25%;
+  height: 2px;
+  background-color: var(--secondary-color);
+}
+
+/* Section de grille de texte */
+.text-grid-section {
+  background-color: var(--primary-color);
+  padding: var(--spacing-md) 0;
+  margin-bottom: var(--spacing-md);
+  transition: background-color 0.5s ease;
+}
+
+.text-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: var(--spacing-md);
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.text-grid-item {
+  color: var(--secondary-color);
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: color 0.5s ease;
+}
+
+.text-grid-item strong {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.text-grid-item p {
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+/* Pied de page */
+.footer {
+  color: var(--secondary-color);
+  padding: 2rem 0;
+  background-color: var(--header-color);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.footer-bottom {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+}
+
+/* Bouton de changement de thème */
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle svg {
+  width: 24px;
+  height: 24px;
+  color: #333;
+}
+
+/* Gestion des icônes du switch de thème */
+.sun-icon {
+  display: none;
+}
+
+.moon-icon {
+  display: block;
+}
+
+body.light-theme .sun-icon {
+  display: block;
+}
+
+body.light-theme .moon-icon {
+  display: none;
+}
+
+/* Classe utilitaire pour masquer visuellement mais garder accessible */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Ajustements spécifiques pour le thème clair */
+body.light-theme .overlay-dark {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+body.light-theme .overlay-light {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+body.light-theme .divider-section {
+  background-color: var(--primary-color);
+}
+
+body.light-theme .divider-line {
+  background-color: var(--text-color);
+}
+
+body.light-theme .gallery-item h3 {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: var(--secondary-color);
+}
+
+body.light-theme .btn-primary {
+  background-color: var(--header-color);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+}
+
+body.light-theme .btn-secondary {
+  background-color: var(--text-color);
+  color: var(--primary-color);
+}
+
+/* Adaptations pour écrans larges et moyens */
+@media (max-width: 1280px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .hero h1, .hero h2 {
+    font-size: 3rem;
+  }
+  
+  .menu {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 10px;
+  }
+  
+  .text-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, auto);
+  }
+}
+
+/* Adaptations pour tablettes */
+@media (max-width: 992px) {
+  .header-content {
+    justify-content: space-between;
+  }
+  
+  .logo {
+    position: static;
+  }
+  
+  /* Transformation du menu en hamburger */
+  .menu {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    background-color: var(--header-color);
+    flex-direction: column;
+    gap: 0;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-speed);
+    padding: 1rem 0;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    overflow-x: visible;
+    white-space: normal;
+  }
+  
+  .menu.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .menu-item {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .menu-link {
+    display: block;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  
+  .menu-toggle {
+    display: flex;
+  }
+  
+  .hero h1, .hero h2 {
+    font-size: 2.5rem;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+  }
+  
+  .text-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, auto);
+  }
+}
+
+/* Adaptations pour mobiles */
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .hero h1, .hero h2 {
+    font-size: 2rem;
+  }
+  
+  .divider-line {
+    width: 50%;
+  }
+}
+
+/* Adaptations pour petits mobiles */
+@media (max-width: 576px) {
+  .hero-content {
+    padding: 1rem;
+  }
+  
+  .btn {
+    padding: 0.5rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-grid {
+    gap: 10px;
+  }
+  
+  .text-grid-item p {
+    font-size: 0.8rem;
+  }
+}

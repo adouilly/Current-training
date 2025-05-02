@@ -1,0 +1,22 @@
+/* Styles spécifiques au thème sombre */
+[data-theme="dark"] {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .gallery-item {
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .btn-secondary {
+  background-color: var(--surface-color);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .overlay-dark {
+  background-color: rgba(0, 0, 0, var(--hero-overlay-opacity));
+}
+
+[data-theme="dark"] .overlay-light {
+  background-color: rgba(30, 30, 30, var(--hero-overlay-opacity));
+}
