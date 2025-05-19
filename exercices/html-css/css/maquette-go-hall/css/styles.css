@@ -221,15 +221,26 @@ nav ul li:not(.logo-item) a:hover {
   /* Ajoutez d'autres effets de hover si nécessaire */
 }
 
+/* Ajustement du call-to-action pour une mise en page homogène */
 .call-to-action {
   position: relative;
-  z-index: 2; /* Pour que le contenu soit au-dessus de l'overlay éventuel */
+  z-index: 2;
   color: white;
-  text-align: right; /* Aligné à droite */
-  padding-top: 25vh; /* Augmenté pour ajouter plus d'espace entre le menu et le CTA */
-  max-width: 800px; 
-  margin-left: auto; /* Pousse le bloc vers la droite */
-  margin-right: 250px; /* Augmenté à 80px pour plus d'espace entre le CTA et le bord de page */
+  text-align: right;
+  padding-top: 25vh;
+  max-width: 1200px; /* Même largeur maximale que les conteneurs */
+  width: 100%;
+  margin: 0 auto; /* Centrage automatique */
+  padding-left: 32px;
+  padding-right: 32px;
+  box-sizing: border-box; /* Inclut le padding dans la largeur */
+}
+
+.call-to-action h1,
+.call-to-action p,
+.call-to-action button {
+  margin-left: auto; /* Pousse le contenu vers la droite */
+  max-width: 800px; /* Limite la largeur du contenu texte */
 }
 
 .call-to-action h1 {
