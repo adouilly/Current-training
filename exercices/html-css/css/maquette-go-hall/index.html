@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="css/styles.css">
     
     <!-- Chargement icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
 </head>
 <body>
@@ -32,11 +33,26 @@
       <ul>
         <li><a href="#"><i class="nav-home"></i> <span>HOME</span></a></li>
         <li><a href="#"><i class="nav-about"></i> <span>ABOUT</span></a></li>
-        <li><a href="#" class="active"><i class="nav-thehall"></i> <span>THE HALL</span></a></li> <!-- Ajout de la classe active -->
+        <li class="logo-item"><a href="index.html">
+            <img src="assets/logo_header.png" alt="Go Hall Logo" class="nav-logo">
+        </a></li> <!-- Logo avec sa propre classe et lien vers la home -->
         <li><a href="#"><i class="nav-projects"></i> <span>PROJECTS</span></a></li>
         <li><a href="#"><i class="nav-contacts"></i> <span>CONTACTS</span></a></li>
       </ul>
     </nav>
+  </div>
+  
+  <!-- Bloc de réseaux sociaux -->
+  <div class="social-sidebar">
+    <a href="#" class="social-icon">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="#" class="social-icon">
+      <i class="fab fa-pinterest-p"></i>
+    </a>
+    <a href="#" class="social-icon">
+      <i class="fab fa-youtube"></i>
+    </a>
   </div>
   
   <div class="call-to-action">
@@ -45,6 +61,8 @@
     <p>Concert Hall is the architecture of a new generation a building<br>that exists not only in the dimension of space,<br>but also in the dimension of time and communication.</p>
     <button>LOOK MORE <span class="arrow-icon">→</span></button>
   </div>
+  
+  <!-- Suppression du doublon inutile -->
 </header>
 
         <!-- Main : 3 conteners / Formats paysage centré et padding lateral -->

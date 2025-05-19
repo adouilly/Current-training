@@ -1,3 +1,9 @@
+/* Réinitialisation pour garantir l'absence de marges */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 .hero-header {
   /* Image d'arrière-plan */
   background-image: url('../assets/bg_header.png');
@@ -9,8 +15,87 @@
   min-height: 80vh; /* Hauteur minimale, à ajuster selon vos besoins */
   padding: 0; /* Supprime le padding pour que la nav soit collée au bord */
   position: relative;
+  margin-top: 0;
+  padding-top: 0;
   
   /* Suppression complète du pseudo-élément qui crée l'overlay */
+}
+
+/* Navigation styles */
+.nav-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: transparent;
+  height: 50px; /* Hauteur de la barre de navigation, ajustez selon vos besoins */
+  margin-top: 0; /* Suppression de la marge en haut */
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  margin: 0;
+  padding: 0;
+}
+
+/* Correction pour le gap du menu navigation */
+nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 64px !important; /* Doublé de 32px à 64px pour mieux voir l'espacement */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Suppression des règles contradictoires d'espacement */
+nav ul li:nth-child(1),
+nav ul li:nth-child(2),
+nav ul li:nth-child(3),
+nav ul li:nth-child(4),
+nav ul li:nth-child(5) {
+  margin: 0 !important; /* Supprime toutes les marges spécifiques */
+}
+
+nav ul li {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+/* Style général pour les liens de navigation - suppression des paddings latéraux */
+nav ul li a {
+  display: flex;
+  align-items: center;
+  padding-top: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  padding-left: 0;
+  padding-right: 0;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition-normal);
+}
+
+/* Style spécifique pour THE HALL avec padding supplémentaire */
+nav ul li:nth-child(3) a {
+  padding-left: calc(var(--spacing-lg) * 1.5);
+  padding-right: calc(var(--spacing-lg) * 1.5);
+}
+
+nav ul li a.active {
+  background-color: var(--brand-gold);
+  border-radius: 0; /* Suppression du border-radius */
+  color: var(--brand-black);
+  padding-top: var(--spacing-md);
+  margin-top: 0;
+}
+
+nav ul li a:hover:not(.active) {
+  color: var(--brand-gold);
 }
 
 .nav-container {
@@ -20,6 +105,7 @@
   justify-content: center; /* Centre le menu */
   margin-top: 0; /* Supprime la marge supérieure */
   background-color: transparent;
+  height: 50px; /* Hauteur de la barre de navigation, ajustez selon vos besoins */
 }
 
 .nav-container nav ul {
@@ -30,7 +116,7 @@
 }
 
 .nav-container nav ul li {
-  margin-right: 100px; /* Espacement doublé de 50px à 100px entre les éléments du nav */
+  margin-right: 0 !important; /* Supprime la marge de 100px */
 }
 
 .nav-container nav ul li:last-child {
@@ -77,12 +163,70 @@
   border-radius: 0; /* Supprime le border-radius */
 }
 
+/* Style pour le logo dans la navigation */
+.nav-logo {
+  height: 40px; /* Ajustez cette valeur selon vos besoins */
+  vertical-align: middle;
+  /* Si vous avez besoin d'un padding spécifique pour le logo */
+  padding: 5px 15px;
+}
+
+/* Style spécifique pour le logo dans la navigation */
+.logo-item {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.logo-item a {
+  background-color: transparent !important;
+  padding: 0;
+  display: flex;
+  height: 100%;
+  margin: 0;
+  border-bottom: none !important; /* Empêche toute bordure inférieure */
+}
+
+.logo-item a:hover, 
+.logo-item a:focus, 
+.logo-item a:active {
+  background-color: transparent !important;
+  border-bottom: none !important;
+  text-decoration: none !important;
+  outline: none !important;
+}
+
+.nav-logo {
+  height: 100%;
+  width: auto;
+  max-height: 60px;
+  margin: 0;
+  padding: 0;
+  object-fit: cover; /* Assure que l'image couvre tout l'espace disponible */
+  vertical-align: middle;
+}
+
+/* Désactivation spécifique de tous les effets hover possibles pour le logo */
+.logo-item a::after,
+.logo-item a::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* Style général pour les liens de navigation (hors logo) */
+nav ul li:not(.logo-item) a:hover {
+  /* Ici vous pouvez conserver les effets de hover pour les autres éléments du menu */
+  color: var(--brand-gold);
+  /* Ajoutez d'autres effets de hover si nécessaire */
+}
+
 .call-to-action {
   position: relative;
   z-index: 2; /* Pour que le contenu soit au-dessus de l'overlay éventuel */
   color: white;
   text-align: right; /* Aligné à droite */
-  padding-top: 15vh; /* Espace pour centrer verticalement, à ajuster */
+  padding-top: 25vh; /* Augmenté pour ajouter plus d'espace entre le menu et le CTA */
   max-width: 800px; 
   margin-left: auto; /* Pousse le bloc vers la droite */
   margin-right: 250px; /* Augmenté à 80px pour plus d'espace entre le CTA et le bord de page */
@@ -136,9 +280,11 @@ button:hover .arrow-icon {
 }
 
 .container {
-  padding: var(--spacing-2xl) 40px;
-  margin: 0 auto;
-  max-width: calc(100% - 500px); /* 250px de chaque côté */
+  max-width: 1200px; /* Largeur fixe de 1200px */
+  width: 100%;
+  padding: var(--spacing-2xl) 32px; /* Padding externe de 32px */
+  margin: 0 auto; /* Centrage automatique */
+  box-sizing: border-box; /* Inclut le padding dans la largeur */
 }
 
 h2 {
@@ -225,7 +371,7 @@ h2 {
   width: 100%; /* Utilise toute la largeur du bloc */
   height: auto; /* Hauteur auto pour préserver les proportions */
   max-height: 350px; /* Hauteur maximale fixe */
-  border-radius: var(--border-radius-sm);
+  border-radius: var (--border-radius-sm);
   display: block;
   margin: 0;
   object-fit: cover; /* Contient l'image dans la limite des dimensions spécifiées */
@@ -265,13 +411,37 @@ h2 {
 }
 
 .bg-image-column {
-  height: 400px; /* Augmentation de la hauteur (était 350px) */
-  position: relative;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+}
+
+.column-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+}
+
+/* Ajustement des proportions pour les colonnes d'images dans Container 2 */
+.container-2 .bg-image-column {
+  position: relative;
+  max-width: 85%; /* Réduit légèrement la largeur */
+  height: 380px; /* Augmente la hauteur */
+  aspect-ratio: 3/4; /* Force un ratio d'aspect plus vertical */
+  overflow: hidden;
+}
+
+.column-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: var(--spacing-lg);
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
   color: white;
-  width: 90%; /* Réduit légèrement la largeur */
-  margin: 0 auto; /* Centre le bloc */
 }
 
 .bg-image-column:nth-child(1) {
@@ -543,7 +713,7 @@ h2 {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: var(--spacing-2xl) 400px; /* Padding latéral de 400px */
+  padding: var(--spacing-2xl) 32px; /* Padding latéral de 32px au lieu de 400px */
   color: white;
   position: relative;
 }
@@ -551,8 +721,9 @@ h2 {
 .footer-container {
   position: relative;
   z-index: 2; /* Au-dessus de l'overlay */
-  max-width: 100%; /* Permet d'occuper toute la largeur disponible */
-  margin: 0;
+  max-width: 1200px; /* Largeur fixe de 1200px */
+  width: 100%;
+  margin: 0 auto; /* Centrage automatique */
   display: flex;
   gap: 0; /* Supprime l'espace entre les blocs */
 }
@@ -771,4 +942,84 @@ h2 {
 /* Suppression des classes inutilisées */
 .gold-bar, .top-bar, .bottom-bar {
   display: none;
+}
+
+/* Styles pour la barre de réseaux sociaux */
+.social-sidebar {
+  position: absolute;
+  bottom: 0; /* Modifié de 20px à 0 pour coller au bas du conteneur */
+  left: 0; /* Déjà à 0, garantit qu'il colle au bord gauche */
+  display: flex;
+  flex-direction: column;
+  gap: var(--social-gap);
+  padding: var(--social-padding);
+  background-color: var(--semi-transparent-grey);
+  z-index: 10;
+  margin: 0; /* Garantit qu'il n'y a pas de marge */
+}
+
+.social-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  padding: var(--social-icon-padding);
+  text-decoration: none;
+  border: 1px solid white;
+}
+
+.social-icon i {
+  color: var(--light-white); /* Icône en blanc clair */
+  font-size: var(--font-size-md);
+}
+
+.social-icon-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid white;
+  color: var(--light-white);
+  font-family: var(--font-title);
+  font-weight: bold;
+  font-size: var(--font-size-sm);
+}
+
+/* Reset ciblé pour supprimer les espaces en haut du menu */
+.nav-container,
+.nav-container nav,
+.nav-container ul,
+.nav-container li,
+nav ul,
+nav ul li,
+nav ul li a {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Exception pour les liens du menu qui ont besoin d'un padding vertical */
+nav ul li:not(.logo-item) a {
+  padding: var(--spacing-md) 0 !important; /* Padding vertical uniquement */
+}
+
+/* Correction spécifique pour le conteneur de navigation */
+.nav-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: transparent;
+}
+
+/* Forcer l'alignement en haut pour le logo */
+.logo-item a {
+  align-items: flex-start;
+}
+
+.nav-logo {
+  vertical-align: top;
+  display: block;
 }

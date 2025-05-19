@@ -11,6 +11,7 @@
   --light-white: rgba(255, 255, 255, 0.70); /* FFFFFF avec 70% d'opacité */
   --light-black: rgba(0, 0, 0, 0.89); /* 000000 avec 89% d'opacité */
   --light-grey: #606060;
+  --semi-transparent-grey: rgba(96, 96, 96, 0.5); /* Gris avec 50% d'opacité */
   
   /* Typographies */
   --font-title: 'Roboto', sans-serif;
@@ -54,6 +55,37 @@
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
   --transition-slow: 0.5s ease;
+
+  /* Variables d'espacement */
+  
+  /* Navigation */
+  --nav-gap: 32px; /* Vérification que le gap est bien à 32px */
+  
+  /* Call to action */
+  --cta-gap: 16px;
+  
+  /* Réseaux sociaux */
+  --social-padding: 16px;
+  --social-gap: 8px;
+  --social-icon-padding: 4px;
+  
+  /* Conteneurs communs */
+  --container-padding: 64px;
+  --container-gap: 64px;
+  
+  /* Conteneur 1 spécifique */
+  --container1-blocks-space: 400px;
+  
+  /* Conteneur 2 spécifique */
+  --container2-gap: 32px;
+  --container2-right-block-gap: 16px;
+  
+  /* Conteneur 3 spécifique */
+  --container3-right-block-gap: 32px;
+  
+  /* Footer */
+  --footer-padding-y: 16px;
+  --footer-gap: 16px;
 }
 
 /* Comment utiliser ces variables:
