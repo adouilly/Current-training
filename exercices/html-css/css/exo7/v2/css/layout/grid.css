@@ -88,10 +88,10 @@ footer {
   gap: var(--spacing-md);
   
   /* Permettre des hauteurs variables dans la grille */
-  grid-auto-rows: min-content;
+  grid-auto-rows: 1fr; /* Utiliser une fraction pour que les rangées s'adaptent */
   
   /* Aligner les éléments au début de leur cellule */
-  align-items: start;
+  align-items: stretch; /* Étirer les éléments pour qu'ils prennent toute la hauteur */
 }
 
 /* Supprimer toutes les classes de layout spécifiques puisqu'on garde uniquement le mode grille */
@@ -233,6 +233,30 @@ footer {
 
 .widget[data-size="full"].compact {
   grid-column: 1 / -1;
+}
+
+/* Règles pour les différentes tailles de widgets */
+.widget[data-size="small"] {
+  grid-column: span 1;
+}
+
+.widget[data-size="medium"] {
+  grid-column: span 2;
+}
+
+.widget[data-size="large"] {
+  grid-column: span 3;
+}
+
+.widget[data-size="full"] {
+  grid-column: 1 / -1;
+}
+
+/* Exception pour les widgets compacts */
+.widget.compact {
+  align-self: flex-start;
+  height: auto !important; /* Forcer une hauteur automatique pour les compacts */
+  grid-row: auto !important; /* Ne pas étirer sur les lignes */
 }
 
 /* Responsive grid */

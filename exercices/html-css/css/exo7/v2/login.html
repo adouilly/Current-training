@@ -131,6 +131,83 @@
     <script src="components/oauth-diagnostics.js"></script>
     <script src="components/google-auth-helper.js"></script>
     <script src="components/fix-redirect-uri.js"></script>
+
+    <!-- Ajouter ce script juste après pour résoudre les problèmes de largeur et d'initialisation -->
+    <script>
+    window.addEventListener('load', function() {
+        // Vérifier si la bibliothèque Google est chargée
+        if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+            console.log('Bibliothèque Google Identity Services chargée avec succès.');
+            
+            try {
+                // Configurer le bouton Google correctement
+                const btnContainer = document.querySelector('.g_id_signin');
+                if (btnContainer) {
+                    // Supprimer l'attribut data-width qui cause l'erreur
+                    btnContainer.removeAttribute('data-width');
+                    
+                    // S'assurer que les autres attributs sont corrects
+                    btnContainer.setAttribute('data-type', 'standard');
+                    btnContainer.setAttribute('data-size', 'large');
+                    btnContainer.setAttribute('data-shape', 'rectangular');
+                    
+                    console.log('Configuration du bouton Google Sign-In corrigée');
+                }
+            } catch (err) {
+                console.error('Erreur lors de la reconfiguration du bouton:', err);
+            }
+        } else {
+            console.warn('Bibliothèque Google Identity Services non chargée correctement.');
+        }
+        
+        // Vérifier l'URL de redirection OAuth
+        const currentUrl = window.location.href.split('?')[0]; // Enlever les paramètres
+        console.log('URL à ajouter aux URIs de redirection OAuth:', currentUrl);
+        
+        // Afficher un message d'instruction si logout=success est dans l'URL
+        if (window.location.search.includes('logout=success')) {
+            const container = document.querySelector('.login-container');
+            if (container) {
+                const successMsg = document.createElement('div');
+                successMsg.className = 'success-message';
+                successMsg.innerHTML = '<i class="fas fa-check-circle"></i> Vous avez été déconnecté avec succès.';
+                
+                // Insérer au début du conteneur
+                if (container.firstChild) {
+                    container.insertBefore(successMsg, container.firstChild);
+                } else {
+                    container.appendChild(successMsg);
+                }
+                
+                // Ajouter un style pour le message
+                const style = document.createElement('style');
+                style.textContent = `
+                    .success-message {
+                        background-color: rgba(40, 167, 69, 0.2);
+                        color: #28a745;
+                        border-left: 4px solid #28a745;
+                        padding: 12px;
+                        margin-bottom: 20px;
+                        border-radius: 4px;
+                        display: flex;
+                        align-items: center;
+                    }
+                    
+                    .success-message i {
+                        margin-right: 10px;
+                        font-size: 1.2rem;
+                    }
+                    
+                    body.dark-mode .success-message {
+                        background-color: rgba(40, 167, 69, 0.1);
+                        color: #5cdb95;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+    });
+    </script>
 </head>
 <body class="login-page">
     <button id="theme-toggle" class="theme-toggle" title="Changer de thème">
@@ -187,15 +264,21 @@
                 <div class="auth-option-label">
                     <span>Option principale</span>
                 </div>
-                <!-- Le bouton Google standard -->
+                <!-- Corriger la configuration du bouton Google pour éviter l'erreur de largeur -->
+                <div id="g_id_onload"
+                     data-client_id="610070679331-jro330mqcc5ciqrgegg9stgih8208spq.apps.googleusercontent.com"
+                     data-context="signin"
+                     data-ux_mode="popup"
+                     data-callback="handleGoogleSignIn"
+                     data-auto_prompt="false">
+                </div>
                 <div class="g_id_signin google-button-container"
                      data-type="standard"
                      data-size="large"
                      data-theme="outline"
                      data-text="sign_in_with"
                      data-shape="rectangular"
-                     data-logo_alignment="left"
-                     data-width="100%">
+                     data-logo_alignment="left">
                 </div>
             </div>
             

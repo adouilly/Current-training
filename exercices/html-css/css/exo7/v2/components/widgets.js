@@ -1273,6 +1273,89 @@ document.addEventListener('DOMContentLoaded', function() {
     optimizeWidgetLayout();
 });
 
+/**
+ * Fonction pour égaliser la hauteur des widgets sur une même ligne
+ */
+function equalizeWidgetHeights() {
+    // Obtenir tous les widgets non-compacts
+    const nonCompactWidgets = Array.from(document.querySelectorAll('.widget:not(.compact)'));
+    
+    // Si peu de widgets, pas besoin d'égalisation
+    if (nonCompactWidgets.length <= 1) return;
+    
+    // Réinitialiser les hauteurs
+    nonCompactWidgets.forEach(widget => {
+        widget.style.height = '';
+    });
+    
+    // Structure pour stocker les widgets par ligne
+    let widgetRows = [];
+    const grid = document.getElementById('widgets-grid');
+    const gridStyle = window.getComputedStyle(grid);
+    const gridColumnCount = parseInt(gridStyle.gridTemplateColumns.split(' ').length);
+    
+    // Regrouper les widgets par ligne (approximation)
+    for (let i = 0; i < nonCompactWidgets.length; i += gridColumnCount) {
+        widgetRows.push(nonCompactWidgets.slice(i, i + gridColumnCount));
+    }
+    
+    // Pour chaque ligne, égaliser les hauteurs
+    widgetRows.forEach(row => {
+        // Trouver la hauteur maximale dans cette ligne
+        const maxHeight = Math.max(...row.map(widget => widget.scrollHeight));
+        
+        // Appliquer la hauteur maximale à tous les widgets de la ligne
+        row.forEach(widget => {
+            widget.style.height = maxHeight + 'px';
+        });
+    });
+}
+
+// Appeler la fonction lorsque la page est chargée, après un redimensionnement ou
+// quand les widgets sont modifiés
+document.addEventListener('DOMContentLoaded', function() {
+    // Exécution initiale
+    setTimeout(equalizeWidgetHeights, 500);
+    
+    // Lors du redimensionnement de la fenêtre
+    window.addEventListener('resize', debounce(equalizeWidgetHeights, 250));
+    
+    // Lorsque les widgets changent de taille ou de mode
+    const sizeButtons = document.querySelectorAll('.toggle-size');
+    sizeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            setTimeout(equalizeWidgetHeights, 300);
+        });
+    });
+    
+    const viewButtons = document.querySelectorAll('.toggle-view');
+    viewButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            setTimeout(equalizeWidgetHeights, 300);
+        });
+    });
+    
+    // Après un glisser-déposer
+    document.addEventListener('widgetMoved', () => {
+        setTimeout(equalizeWidgetHeights, 300);
+    });
+});
+
+/**
+ * Fonction debounce pour limiter les appels fréquents
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function() {
+        const context = this;
+        const args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            func.apply(context, args);
+        }, wait);
+    };
+}
+
 // Exportation des fonctions pour une utilisation externe
 window.WidgetManager = {
     toggleWidgetSize,

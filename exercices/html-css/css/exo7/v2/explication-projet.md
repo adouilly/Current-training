@@ -12,8 +12,10 @@ Ce document explique étape par étape les différentes composantes et fonctionn
 6. [Système de thème jour/nuit](#système-de-thème-journuit)
 7. [Fonctionnalités drag & drop](#fonctionnalités-drag--drop)
 8. [Responsive design](#responsive-design)
-9. [Technologies utilisées](#technologies-utilisées)
-10. [Comment étendre le projet](#comment-étendre-le-projet)
+9. [Techniques avancées d'animation](#techniques-avancées-danimation)
+10. [Technologies utilisées](#technologies-utilisées)
+11. [Comment étendre le projet](#comment-étendre-le-projet)
+12. [Aspects techniques JavaScript](#aspects-techniques-javascript)
 
 ## 🔍 Vue d'ensemble
 

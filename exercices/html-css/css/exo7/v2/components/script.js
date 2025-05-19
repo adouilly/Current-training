@@ -1928,3 +1928,23 @@ function createContactWidget() {
         </div>
     `;
 }
+
+// Fonction pour démarrer le cycle de mise à jour des widgets
+function startWidgetUpdates() {
+    console.log('Démarrage des mises à jour des widgets');
+    
+    // Définir les intervalles de mise à jour pour différents widgets
+    const updateIntervals = {
+        'stats-users': 60000,     // 1 minute
+        'stats-sales': 30000,     // 30 secondes
+        'stats-visits': 45000,    // 45 secondes
+        'stats-revenue': 120000,  // 2 minutes
+        'sales-chart': 300000,    // 5 minutes
+        'recent-orders': 60000    // 1 minute
+    };
+    
+    // Pour chaque type de widget, configurer une mise à jour périodique
+        Object.entries(updateIntervals).forEach(([widgetType, interval]) => {
+            setInterval(() => updateWidget(widgetType), interval);
+        });
+    }
