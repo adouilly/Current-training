@@ -9,17 +9,162 @@
     <title>Maquette Go Hall</title>
     
     <!-- Favicon d'icône de site -->
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2621/2621040.png">
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+
     <!-- Chargement des fichiers CSS / Loading CSS files -->
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/styles.css">
     
     <!-- Chargement icônes -->
     
-    
-    </script>
 </head>
 <body>
+        <!-- Header : Barre de nav fixe hdp + Image hero bloc header + cta dans l'image -->
+<header class="hero-header">
+  <div class="nav-container">
+    <nav>
+      <!-- Menu de navigation -->
+      <ul>
+        <li><a href="#"><i class="nav-home"></i> <span>HOME</span></a></li>
+        <li><a href="#"><i class="nav-about"></i> <span>ABOUT</span></a></li>
+        <li><a href="#" class="active"><i class="nav-thehall"></i> <span>THE HALL</span></a></li> <!-- Ajout de la classe active -->
+        <li><a href="#"><i class="nav-projects"></i> <span>PROJECTS</span></a></li>
+        <li><a href="#"><i class="nav-contacts"></i> <span>CONTACTS</span></a></li>
+      </ul>
+    </nav>
+  </div>
+  
+  <div class="call-to-action">
+    <!-- Votre call to action -->
+    <h1>CONCERT HALL<br>NEW YORK</h1>
+    <p>Concert Hall is the architecture of a new generation a building<br>that exists not only in the dimension of space,<br>but also in the dimension of time and communication.</p>
+    <button>LOOK MORE <span class="arrow-icon">→</span></button>
+  </div>
+</header>
+
+        <!-- Main : 3 conteners / Formats paysage centré et padding lateral -->
+<main class="main-section">
+  <!-- Container 1 -->
+  <section class="container container-1">
+    <h2><span class="title-white">ABOUT</span> <span class="title-gold">GO.HALL</span></h2>
+    <p class="intro-text">we turn ideas into<br>works of art;</p>
+    
+    <div class="content-wrapper">
+      <div class="text-blocks">
+        <div class="text-block">
+          <p>Lorem ipsum dolor sit amet consectetur. Posuere leo ultricies senectus quam scelerisque consectetur. Sociis neque pellentesque egestas porta in ultrices vel tellus at. Sagittis scelerisque felis nunc et. Amet auctor bibendum viverra nunc integer sit. Lobortis urna a id ac volutpat pellentesque ac malesuada. Tristique iaculis venenatis magna euismod nulla gravida et lorem etiam.</p>
+        </div>
+        <div class="text-block gold-text">
+          <p>Lorem ipsum dolor sit amet consectetur. Posuere leo ultricies senectus quam scelerisque consectetur. Sociis neque pellentesque egestas porta in ultrices vel tellus at. Sagittis scelerisque felis nunc et. Amet auctor bibendum viverra nunc integer sit. Lobortis urna a id ac volutpat pellentesque ac malesuada. Tristique iaculis venenatis magna euismod nulla gravida et lorem etiam.</p>
+        </div>
+        <div class="text-block">
+          <p>Lorem ipsum dolor sit amet consectetur. Posuere leo ultricies senectus quam scelerisque consectetur. Sociis neque pellentesque egestas porta in ultrices vel tellus at. Sagittis scelerisque felis nunc et. Amet auctor bibendum viverra nunc integer sit. Lobortis urna a id ac volutpat pellentesque ac malesuada. Tristique iaculis venenatis magna euismod nulla gravida et lorem etiam.</p>
+        </div>
+      </div>
+      
+      <div class="image-block">
+        <img src="assets/london_hall.png" alt="London Hall">
+        <button class="cta-button">LOOK MORE <span class="arrow-icon">→</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Container 2 -->
+  <section class="container container-2">
+    <h2><span class="title-white">ABOUT</span> <span class="title-grey">PROJETS</span></h2>
+    
+    <div class="three-columns-wrapper">
+      <div class="column bg-image-column">
+        <div class="column-content">
+          <h3>CONCERT HALL<br>IN <span class="location-gold">PARIS</span></h3>
+          <div class="tag">JANVIER 2027</div>
+        </div>
+      </div>
+      
+      <div class="column bg-image-column">
+        <div class="column-content">
+          <h3>CONCERT HALL<br>IN <span class="location-gold">LONDON</span></h3>
+          <div class="tag">MARS 2028</div>
+        </div>
+      </div>
+      
+      <div class="column special-column">
+        <img src="assets/logo12.png" alt="Logo 12">
+        <div class="subtitles-group">
+          <h4 class="special-subtitle-1">YEAR OF SUCCESSFULL WORK</h4>
+          <h4 class="special-subtitle-2">IN THE MARKET</h4>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur. Posuere leo ultricies senectus quam scelerisque consectetur. Sociis.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Container 3 -->
+  <section class="container container-3">
+    <h2><span class="title-white">ABOUT</span> <span class="title-gold">SERVICES</span></h2>
+    
+    <div class="three-columns-wrapper">
+      <div class="column feature-column">
+        <div class="icon">
+          <img src="assets/poly-logo.png" alt="Logo Poly">
+        </div>
+        <h3>DEVELOPMENT</h3>
+        <p>Lorem ipsum dolor sit amet consectetur. Posuere leo ultricies senectus quam scelerisque consectetur. Sociis neque pellentesque egestas porta in ultrices vel tellus at. Sagittis scelerisque felis nunc et. Amet auctor bibendum viverra nunc integer sit. </p>
+        <button class="feature-button">MORE</button>
+      </div>
+      
+      <div class="column feature-column">
+        <div class="icon">
+          <img src="assets/3d-logo.png" alt="Logo 3D">
+        </div>
+        <h3>PLAN WORKS</h3>
+        <p>Lorem ipsum dolor sit amet consectetur. Posuere leo ultricies senectus quam scelerisque consectetur. Sociis neque pellentesque egestas porta in ultrices vel tellus at. </p>
+        <button class="feature-button">MORE</button>
+      </div>
+      
+      <div class="column image-with-text">
+        <!-- Ajout d'un conteneur pour l'image avec les barres -->
+        <div class="image-container">
+          <img src="assets/map.png" alt="Map">
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur. pellentesque egestas porta in ultrices vel tellus at. Sagittis scelerisque felis nunc Posuere leo ultricies senectus quam scelerisque consectetur. Sociis neque pellentesque egestas porta in ultrices vel tellus at. Sagittis scelerisque felis nunc </p>
+      </div>
+    </div>
+  </section>
+</main>
+         <!-- Footer : formulaire de contact simple sur deux blocs / semi square paysage -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-left">
+      <h2 class="footer-title">
+        <span class="title-line">REQUEST<br>A CALL BACK</span>
+      </h2>
+    </div>
+    
+    <div class="footer-right">
+      <form class="contact-form">
+        <div class="form-group">
+          <input type="text" id="name" name="name" placeholder="Nom" required>
+        </div>
+        
+        <div class="form-group">
+          <input type="email" id="email" name="email" placeholder="Email" required>
+        </div>
+        
+        <div class="form-group">
+          <textarea id="message" name="message" placeholder="Message" rows="4" required></textarea>
+        </div>
+        
+        <button type="submit" class="submit-button">Envoyer</button>
+      </form>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>

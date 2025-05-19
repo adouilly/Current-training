@@ -1,0 +1,774 @@
+.hero-header {
+  /* Image d'arrière-plan */
+  background-image: url('../assets/bg_header.png');
+  background-size: cover; /* Pour couvrir tout l'espace */
+  background-position: center; /* Centrer l'image */
+  background-repeat: no-repeat;
+  
+  /* Dimensions et espacement */
+  min-height: 80vh; /* Hauteur minimale, à ajuster selon vos besoins */
+  padding: 0; /* Supprime le padding pour que la nav soit collée au bord */
+  position: relative;
+  
+  /* Suppression complète du pseudo-élément qui crée l'overlay */
+}
+
+.nav-container {
+  position: relative;
+  z-index: 2; /* Pour que la navigation soit au-dessus de l'overlay éventuel */
+  display: flex;
+  justify-content: center; /* Centre le menu */
+  margin-top: 0; /* Supprime la marge supérieure */
+  background-color: transparent;
+}
+
+.nav-container nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0; /* Supprime les marges */
+}
+
+.nav-container nav ul li {
+  margin-right: 100px; /* Espacement doublé de 50px à 100px entre les éléments du nav */
+}
+
+.nav-container nav ul li:last-child {
+  margin-right: 0; /* Supprime la marge du dernier élément */
+}
+
+.nav-container nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 300;
+  letter-spacing: 1px;
+  font-family: var(--font-text);
+  font-size: 1.33rem; /* Taille de police réduite de 2rem à 1.33rem (divisée par 1.5) */
+  position: relative; /* Pour positionner la ligne sous le texte */
+  transition: color var(--transition-normal), transform var(--transition-normal);
+  display: block; /* Pour que les marges s'appliquent */
+  padding: 20px; /* Ajoute un padding de 20px en haut et en bas au lieu des marges */
+}
+
+.nav-container nav ul li a:hover {
+  color: var(--brand-gold); /* Couleur gold au survol */
+  transform: scale(1.05); /* Légèrement grossi */
+}
+
+.nav-container nav ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; /* Ajustez pour positionner la ligne */
+  left: 0;
+  width: 0; /* Ligne invisible par défaut */
+  height: 2px;
+  background-color: var(--brand-gold);
+  transition: width var(--transition-normal);
+}
+
+.nav-container nav ul li a:hover::after {
+  width: 100%; /* La ligne apparaît au survol */
+}
+
+/* Style pour le nav actif */
+.nav-container nav ul li a.active {
+  background-color: var(--light-black);
+  padding: 20px; /* Conserve le même padding que les autres éléments */
+  border-radius: 0; /* Supprime le border-radius */
+}
+
+.call-to-action {
+  position: relative;
+  z-index: 2; /* Pour que le contenu soit au-dessus de l'overlay éventuel */
+  color: white;
+  text-align: right; /* Aligné à droite */
+  padding-top: 15vh; /* Espace pour centrer verticalement, à ajuster */
+  max-width: 800px; 
+  margin-left: auto; /* Pousse le bloc vers la droite */
+  margin-right: 250px; /* Augmenté à 80px pour plus d'espace entre le CTA et le bord de page */
+}
+
+.call-to-action h1 {
+  color: white; /* Titre en blanc */
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--spacing-md);
+  font-family: var(--font-title);
+  font-weight: 300; /* Typographie moins épaisse comme les éléments du nav */
+  letter-spacing: 1px; /* Ajoute un peu d'espacement entre les lettres */
+}
+
+.call-to-action p {
+  color: white;
+  margin-bottom: var(--spacing-lg);
+}
+
+button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--brand-gold);
+  color: white;
+  border: none;
+  border-radius: 50px; /* Border-radius à 50 */
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  transition: background-color var(--transition-normal);
+}
+
+button:hover {
+  background-color: var(--light-gold);
+}
+
+.arrow-icon {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 1.2em;
+  transition: transform var(--transition-normal);
+}
+
+button:hover .arrow-icon {
+  transform: translateX(5px); /* Animation de la flèche lors du survol */
+}
+
+/* Styles généraux */
+.main-section {
+  width: 100%;
+  background-color: #606060;
+  padding: 0;
+}
+
+.container {
+  padding: var(--spacing-2xl) 40px;
+  margin: 0 auto;
+  max-width: calc(100% - 500px); /* 250px de chaque côté */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 80px; /* Espace de 80px entre les titres et le contenu */
+  font-size: var(--font-size-3xl);
+}
+
+.title-white, .title-gold, .title-grey {
+  color: white;
+  font-weight: 300; /* Typographie moins épaisse pour tous les spans de titre */
+}
+
+.title-gold {
+  color: var(--brand-gold);
+}
+
+.title-grey {
+  color: var(--brand-grey);
+}
+
+/* Styles Container 1 */
+.container-1 {
+  background-color: #272727;
+  padding-bottom: 80px; /* Ajoute la même marge en bas qu'en haut */
+}
+
+.container-1 .intro-text {
+  text-align: left;
+  margin-bottom: var(--spacing-xl);
+  font-size: var(--font-size-md);
+  color: white;
+  font-weight: bold; /* Remis en gras pour le texte d'intro */
+}
+
+.content-wrapper {
+  display: flex;
+  gap: var(--gap-md); /* Gap standardisé de 40px */
+  padding: 0; /* Supprimé le padding de 40px des deux côtés */
+}
+
+.text-blocks {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm); /* Gap standardisé de 20px */
+  /* Alignement avec l'intro-text */
+  padding-left: 0; /* S'assure qu'il n'y a pas de padding à gauche */
+}
+
+.text-block {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  text-align: left;
+}
+
+.text-block p {
+  color: white;
+}
+
+.text-block.gold-text p {
+  color: var(--brand-gold);
+  padding-left: 40px; /* Conserve un décalage total de 80px (40px + 40px) */
+  border-left: 2px solid var(--brand-gold); /* Barre verticale gold de 2px */
+  margin-left: 40px; /* Décalage initial de 40px pour placer la barre */
+}
+
+.image-block {
+  flex: 2;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* Le bloc lui-même n'a plus besoin de s'étirer */
+  align-self: flex-start;
+  margin-top: 0; /* Ajusté pour un meilleur alignement */
+  max-width: 200px; /* Réduit davantage la largeur (était 300px) */
+  margin-left: auto; /* Pousse l'image vers la droite */
+}
+
+.image-block img {
+  width: 100%; /* Utilise toute la largeur du bloc */
+  height: auto; /* Hauteur auto pour préserver les proportions */
+  max-height: 350px; /* Hauteur maximale fixe */
+  border-radius: var(--border-radius-sm);
+  display: block;
+  margin: 0;
+  object-fit: cover; /* Contient l'image dans la limite des dimensions spécifiées */
+  object-position: top; /* Aligne l'image vers le haut */
+}
+
+.image-block .cta-button {
+  position: absolute;
+  bottom: -20px; /* La moitié du bouton sort de l'image */
+  left: 20px; /* Décalage de 20px du bord gauche */
+  transform: none; /* Supprime la transformation précédente */
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--brand-gold);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  z-index: 2; /* Assure que le bouton reste au-dessus d'autres éléments */
+}
+
+/* Styles Container 2 */
+.container-2 {
+  background-color: var(--brand-gold);
+}
+
+.three-columns-wrapper {
+  display: flex;
+  gap: var(--spacing-lg);
+  padding: 0 40px;
+}
+
+.column {
+  flex: 1;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  width: 33.33%; /* Assure que tous les blocs ont la même taille */
+}
+
+.bg-image-column {
+  height: 400px; /* Augmentation de la hauteur (était 350px) */
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  width: 90%; /* Réduit légèrement la largeur */
+  margin: 0 auto; /* Centre le bloc */
+}
+
+.bg-image-column:nth-child(1) {
+  background-image: url('../assets/paris.png');
+}
+
+.bg-image-column:nth-child(2) {
+  background-image: url('../assets/london.png');
+}
+
+.column-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+}
+
+.column-content h3 {
+  color: white;
+  font-weight: 400; /* Un peu plus épais que 300 mais pas trop lourd */
+}
+
+.tag {
+  background-color: var(--brand-grey);
+  display: inline;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 400; /* Moins gras */
+  font-family: var(--font-title); /* Force l'utilisation de Roboto (pas Condensed) */
+  color: white;
+  width: fit-content;
+}
+
+.special-column {
+  background-color: transparent;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 400px; /* Même hauteur que les colonnes d'images */
+  text-align: left;
+  padding-top: 0; /* Enlève le padding du haut */
+}
+
+.special-column img {
+  max-width: 33%; /* Réduit la taille de l'image à 1/3 */
+  height: auto;
+  margin-bottom: 0; /* Supprime la marge pour laisser space-between faire son travail */
+  margin-top: 0; /* S'assure qu'il n'y a pas de marge en haut */
+}
+
+/* Groupe les sous-titres ensemble */
+.subtitles-group {
+  margin-bottom: 0;
+}
+
+.special-subtitle-1 {
+  font-size: var(--font-size-lg);
+  color: var(--brand-grey);
+  margin-bottom: var(--spacing-xs); /* Petit espace entre les sous-titres */
+  font-weight: 400; /* Un peu plus épais */
+}
+
+.special-subtitle-2 {
+  font-size: var(--font-size-lg);
+  color: white;
+  margin-bottom: 0; /* Supprime la marge pour laisser space-between faire son travail */
+  font-weight: 400; /* Un peu plus épais */
+}
+
+/* Styles Container 3 */
+.container-3 {
+  background-color: #272727;
+}
+
+.feature-column {
+  background-color: transparent; /* Supprime la couleur de fond */
+  padding: var(--spacing-lg);
+  padding-top: 0; /* Supprime le padding supérieur pour aligner avec l'image */
+  text-align: left; /* Aligne le texte à gauche */
+  display: flex;
+  flex-direction: column;
+  gap: var (--spacing-sm);
+  align-items: flex-start; /* Aligne les éléments à gauche */
+  box-shadow: none; /* Supprime l'ombre */
+}
+
+.icon {
+  background-color: transparent; /* Supprime la couleur de fond */
+  width: 200px; /* Augmenté de 80px à 200px (2.5x) */
+  height: 200px; /* Augmenté de 80px à 200px (2.5x) */
+  border-radius: var(--border-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Aligne l'icône à gauche */
+  margin-bottom: var(--spacing-sm);
+}
+
+.icon img {
+  width: 100px; /* Augmenté de 40px à 100px (2.5x) */
+  height: 100px; /* Augmenté de 40px à 100px (2.5x) */
+}
+
+.feature-column h3 {
+  color: white; /* Titre en blanc */
+  text-align: left;
+}
+
+.feature-column p {
+  color: var(--light-white); /* Texte en blanc léger */
+  text-align: left;
+}
+
+.feature-button {
+  margin-top: auto;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--brand-gold);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  align-self: flex-start; /* Aligne le bouton à gauche */
+  min-width: 80px; /* Largeur minimale de 80px */
+  text-align: right; /* Alignement du texte à droite */
+}
+
+/* Styles spécifiques pour les boutons du container 3 */
+.container-3 .three-columns-wrapper .column:nth-child(1) .feature-button {
+  background-color: var(--light-grey); /* Couleur light grey */
+  color: var(--brand-gold); /* Typographie gold */
+  border-left: 2px solid var(--brand-gold); /* Barre verticale gold sur le bord gauche */
+  padding-left: calc(var(--spacing-md) - 2px); /* Ajuste le padding pour compenser la bordure */
+  text-align: right; /* S'assure que le texte est aligné à droite */
+  min-width: 80px; /* S'assure que la largeur minimale est de 80px */
+}
+
+.container-3 .three-columns-wrapper .column:nth-child(2) .feature-button {
+  background-color: var(--brand-gold); /* Couleur gold */
+  color: var(--brand-grey); /* Typographie grey */
+  text-align: right; /* S'assure que le texte est aligné à droite */
+  min-width: 80px; /* S'assure que la largeur minimale est de 80px */
+}
+
+.container-3 .three-columns-wrapper .column:nth-child(1) .feature-button:hover {
+  background-color: var(--brand-gold);
+  color: var(--brand-grey);
+  border-left: 2px solid var(--brand-gold);
+}
+
+.container-3 .three-columns-wrapper .column:nth-child(2) .feature-button:hover {
+  background-color: var(--light-grey);
+  color: var(--brand-gold);
+}
+
+.image-with-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md); /* Gap standardisé de 40px entre les éléments */
+  position: relative; /* Pour positionner les barres */
+  padding-top: 2px; /* Espace pour la barre du haut */
+  padding-bottom: 2px; /* Espace pour la barre du bas */
+  height: 100%;
+  justify-content: flex-start;
+}
+
+.image-with-text img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-sm);
+  margin: 0; /* Supprime les marges existantes */
+  position: relative; /* Position relative pour les pseudo-éléments */
+  padding: 2px 0; /* Espace pour les barres */
+}
+
+.image-with-text img::before,
+.image-with-text img::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--brand-gold);
+}
+
+.image-with-text img::before {
+  top: -2px; /* Barre au-dessus de l'image */
+}
+
+.image-with-text img::after {
+  bottom: -2px; /* Barre en-dessous de l'image */
+}
+
+.image-with-text::before,
+.image-with-text::after {
+  content: none;
+}
+
+.image-with-text p {
+  color: white; /* Texte en blanc */
+  text-align: right; /* Texte aligné à droite */
+  margin-top: var(--spacing-md);
+}
+
+.container-3 .three-columns-wrapper {
+  align-items: flex-start; /* Aligne tous les blocs par le haut */
+}
+
+.container-3 .feature-column {
+  padding-top: 0; /* Supprime le padding supérieur pour un alignement avec l'image */
+}
+
+.location-gold {
+  color: var(--brand-gold) !important; /* Force l'application de la couleur */
+}
+
+.image-container {
+  position: relative;
+  margin-bottom: var(--spacing-md);
+}
+
+.gold-bar {
+  height: 2px;
+  background-color: var(--brand-gold);
+  width: 100%;
+}
+
+.top-bar {
+  margin-bottom: 2px;;
+}
+
+.bottom-bar {
+  margin-top: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .content-wrapper,
+  .three-columns-wrapper {
+    flex-direction: column;
+  }
+  
+  .container {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+  
+  .bg-image-column {
+    height: 250px;
+  }
+  
+  .footer-container {
+    flex-direction: column;
+  }
+
+  .footer {
+    padding: var(--spacing-2xl) var(--spacing-md);
+  }
+
+  .footer-title {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+.footer {
+  background-image: url('../assets/bg_footer.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: var(--spacing-2xl) 400px; /* Padding latéral de 400px */
+  color: white;
+  position: relative;
+}
+
+.footer-container {
+  position: relative;
+  z-index: 2; /* Au-dessus de l'overlay */
+  max-width: 100%; /* Permet d'occuper toute la largeur disponible */
+  margin: 0;
+  display: flex;
+  gap: 0; /* Supprime l'espace entre les blocs */
+}
+
+.footer-left {
+  flex: 1;
+  display: flex;
+  align-items: flex-start; /* Aligné en haut */
+  justify-content: flex-start; /* Aligné à gauche */
+  background-color: var(--light-gold); /* Arrière-plan light gold */
+  padding: var(--spacing-lg);
+}
+
+.footer-title {
+  font-size: var(--font-size-3xl);
+  font-weight: 300; /* Typographie moins épaisse */
+  line-height: 1.2;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  text-align: left;
+}
+
+.title-line {
+  display: block;
+  color: white; /* Toutes les lignes en blanc */
+}
+
+.title-line:first-child {
+  font-size: 1.2em;
+  color: white; /* Première ligne également en blanc */
+}
+
+.footer-right {
+  flex: 1;
+  background-color: var(--light-black); /* Arrière-plan light black */
+  padding: var(--spacing-lg);
+}
+
+.contact-form {
+  background-color: transparent; /* Supprime le fond du formulaire */
+  backdrop-filter: none; /* Supprime l'effet de flou */
+  padding: 0;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.form-group {
+  margin-bottom: var(--spacing-md);
+  border-bottom: 1px solid white; /* Ligne blanche pour indiquer l'emplacement */
+  padding-bottom: var(--spacing-xs);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: var(--spacing-sm) 0; /* Supprime le padding horizontal */
+  border: none; /* Supprime les bordures */
+  background-color: transparent; /* Fond transparent */
+  color: white;
+  border-radius: 0; /* Supprime les border-radius */
+  font-size: var(--font-size-base);
+  transition: all var(--transition-normal);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: white; /* Texte du placeholder en blanc */
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.submit-button {
+  background-color: var(--brand-gold);
+  color: white;
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-sm); /* Border-radius réduit comme les autres boutons */
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-normal);
+  margin-top: var(--spacing-md);
+  align-self: flex-start;
+}
+
+.submit-button:hover {
+  background-color: var(--light-gold);
+}
+
+/* Styles Container 3 - Corrections */
+.container-3 .three-columns-wrapper {
+  align-items: stretch; /* S'assure que tous les blocs s'étirent à la même hauteur */
+  gap: var(--gap-md); /* Gap standardisé de 40px entre les colonnes */
+}
+
+.feature-column {
+  background-color: transparent;
+  padding: var(--spacing-lg);
+  padding-top: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md); /* Gap standardisé de 40px entre les éléments */
+  align-items: flex-start;
+  box-shadow: none;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.icon {
+  background-color: transparent;
+  width: 200px;
+  height: 100px; /* Hauteur réduite pour mieux équilibrer */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 0; /* Supprime la marge pour utiliser le gap de feature-column */
+}
+
+.feature-button {
+  margin-top: auto; /* Pousse le bouton vers le bas */
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--brand-gold);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  align-self: flex-start; /* Aligne le bouton à gauche */
+  width: 50%; /* Largeur de 50% du conteneur */
+  text-align: right; /* Texte aligné à droite */
+  box-sizing: border-box; /* Inclut le padding dans la largeur */
+}
+
+/* Styles spécifiques pour les boutons du container 3 */
+.container-3 .three-columns-wrapper .column:nth-child(1) .feature-button {
+  background-color: var(--light-grey);
+  color: var(--brand-gold);
+  border-left: 2px solid var(--brand-gold);
+  padding-left: calc(var(--spacing-md) - 2px);
+  text-align: right;
+  width: 50%; /* Largeur de 50% du conteneur */
+}
+
+.container-3 .three-columns-wrapper .column:nth-child(2) .feature-button {
+  background-color: var(--brand-gold);
+  color: var(--brand-grey);
+  text-align: right;
+  width: 50%; /* Largeur de 50% du conteneur */
+}
+
+/* Correction pour l'image-container et ses barres */
+.image-container {
+  position: relative;
+  width: 100%;
+  padding-top: 2px; /* Espace pour la barre du haut */
+  padding-bottom: 2px; /* Espace pour la barre du bas */
+  margin-bottom: var(--spacing-md);
+}
+
+.image-container::before,
+.image-container::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--brand-gold);
+  z-index: 1; /* S'assure que les barres sont visibles */
+}
+
+.image-container::before {
+  top: 0; /* Barre en haut */
+}
+
+.image-container::after {
+  bottom: 0; /* Barre en bas */
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0;
+  border-radius: var(--border-radius-sm);
+}
+
+.image-with-text {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Assure la hauteur complète */
+  justify-content: flex-start; /* Aligne les éléments en haut */
+}
+
+.image-with-text p {
+  color: white;
+  text-align: right;
+  margin-top: var(--spacing-md);
+}
+
+/* Suppression des styles précédents qui sont maintenant redondants */
+.image-with-text img::before,
+.image-with-text img::after,
+.image-with-text::before,
+.image-with-text::after {
+  content: none;
+}
+
+/* Suppression des classes inutilisées */
+.gold-bar, .top-bar, .bottom-bar {
+  display: none;
+}

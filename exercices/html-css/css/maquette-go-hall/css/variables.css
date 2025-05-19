@@ -1,0 +1,113 @@
+/* variables.css - Fichier de variables CSS */
+
+:root {
+  /* Couleurs principales */
+  --brand-gold: #CCA57C;
+  --brand-black: #000000;
+  --brand-grey: #272727;
+  
+  /* Couleurs avec opacité */
+  --light-gold: rgba(204, 165, 124, 0.73); /* CCA57C avec 73% d'opacité */
+  --light-white: rgba(255, 255, 255, 0.70); /* FFFFFF avec 70% d'opacité */
+  --light-black: rgba(0, 0, 0, 0.89); /* 000000 avec 89% d'opacité */
+  --light-grey: #606060;
+  
+  /* Typographies */
+  --font-title: 'Roboto', sans-serif;
+  --font-text: 'Roboto Condensed', sans-serif;
+  
+  /* Tailles de police communes (à ajuster selon vos besoins) */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-md: 1.125rem;   /* 18px */
+  --font-size-lg: 1.25rem;    /* 20px */
+  --font-size-xl: 1.5rem;     /* 24px */
+  --font-size-2xl: 1.875rem;  /* 30px */
+  --font-size-3xl: 2.25rem;   /* 36px */
+  --font-size-4xl: 3rem;      /* 48px */
+  
+  /* Espacements (à ajuster selon vos besoins) */
+  --spacing-xs: 0.25rem;      /* 4px */
+  --spacing-sm: 0.5rem;       /* 8px */
+  --spacing-md: 1rem;         /* 16px */
+  --spacing-lg: 1.5rem;       /* 24px */
+  --spacing-xl: 2rem;         /* 32px */
+  --spacing-2xl: 3rem;        /* 48px */
+  
+  /* Système de gap standardisé */
+  --gap-sm: 20px;             /* Petit gap */
+  --gap-md: 40px;             /* Gap moyen */
+  
+  /* Bordures et rayons */
+  --border-radius-sm: 0.25rem;    /* 4px */
+  --border-radius-md: 0.5rem;     /* 8px */
+  --border-radius-lg: 1rem;       /* 16px */
+  --border-radius-full: 9999px;   /* Pour les éléments circulaires */
+  
+  /* Ombres */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Comment utiliser ces variables:
+
+Pour la couleur principale gold:
+color: var(--brand-gold);
+background-color: var(--brand-gold);
+
+Pour la typographie des titres:
+font-family: var(--font-title);
+font-size: var(--font-size-2xl);
+
+Pour la typographie du texte:
+font-family: var(--font-text);
+font-size: var(--font-size-base);
+
+*/
+
+/* Exemple de classes utilitaires basées sur ces variables */
+
+.text-gold {
+  color: var(--brand-gold);
+}
+
+.bg-black {
+  background-color: var(--brand-black);
+}
+
+.bg-light-white {
+  background-color: var(--light-white);
+}
+
+.title-font {
+  font-family: var(--font-title);
+}
+
+.text-font {
+  font-family: var(--font-text);
+}
+
+/* Réinitialisation des polices pour tous les éléments */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  color: var(--brand-black);
+  margin-top: 0;
+}
+
+p, span, a, button, input, textarea, select, option {
+  font-family: var(--font-text);
+}
+
+/* Importation des polices Google Fonts (à placer dans votre fichier HTML) */
+/*
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+*/
