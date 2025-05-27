@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+ <link rel="icon" href="data:,">
+
+
+  <title>Test JavaScript</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container-glass">
+    <span class="neon-border"></span>
+    <div class="titres">
+      <h1>Vérification de la majorité</h1>
+      <p>Ouvre la console pour voir le résultat !</p>
+    </div>
+    <div class="champs">
+      <form id="formulaireInscription">
+        <label for="nom">Nom :</label><br>
+        <input type="text" id="nom" name="nom" required><br><br>
+
+        <label for="prenom">Prénom :</label><br>
+        <input type="text" id="prenom" name="prenom" required><br><br>
+
+        <label for="email">Email :</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="ageInput">Entrez votre âge :</label>
+        <input type="number" id="ageInput" min="0" placeholder="ex: 21">
+        <label>
+          <input type="checkbox" id="checkMajeur">
+          Je suis majeur
+        </label>
+        <button id="verifier">Vérifier</button>
+        <br><br>
+        <button type="submit">Envoyer</button>
+      </form>
+    </div>
+  </div>
+  <!-- Lien vers le fichier JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

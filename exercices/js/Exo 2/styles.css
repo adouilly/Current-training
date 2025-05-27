@@ -1,0 +1,9 @@
+#consoleVirtuelle {
+      background-color: #111;
+      color: #0f0;
+      font-family: monospace;
+      padding: 1em;
+      border-radius: 5px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
