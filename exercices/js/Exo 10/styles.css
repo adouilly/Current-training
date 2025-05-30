@@ -1,0 +1,22 @@
+.testclic {
+    background-color: #4c00da;
+    width: 100%;
+    min-height: 350px;
+    margin-top: 450px;
+   display: flex;
+  justify-content: center; /* centre horizontalement */
+  align-items: center;     /* centre verticalement */
+  height: 100%;            /* ou une hauteur fixe */
+}
+h1 {
+  font-family: Arial, sans-serif;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-align: center;
+}
+.changed {
+    background-color: rgb(54, 54, 240);
+    width: 450px;
+    height: 140px;
+    margin-left: 40%;
+}
