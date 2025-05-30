@@ -19,3 +19,23 @@ function levelVerif(level) {
     console.log("Vous devez vous entraîner");
   }
 }
+
+function verifAge(age) {
+  if (age >= 18) {
+    return "Vous êtes majeur";
+  } else {
+    return "Vous êtes mineur";
+  }
+}
+
+function levelVerif(level) {
+  if (level >= 10) {
+    return "Vous avez un bon niveau";
+  } else {
+    return "Vous devez vous entraîner";
+  }
+}
+
+// Exemple d'utilisation
+console.log(verifAge(12));
+console.log(levelVerif(15));
