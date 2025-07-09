@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="formulaire exercice 2">
+
+    <title>Formulaire 2</title>
+
+    <link rel="stylesheet" href="./assets/style/reset.css">
+    <link rel="stylesheet" href="./assets/style/style.css">
+</head>
+
+<body>
+    <div class="form-container">
+
+        <form class="container" action="contact.html">
+            <h1>créer un compte</h1>
+
+            <div class="input-container">
+                <label for="input_firstname">nom</label>
+                <input type="text" name="firstname" id="input_firstname" autocomplete="on" required>
+            </div>
+            <div class="input-container">
+                <label for="inputname">prénom</label>
+                <input type="text" name="firstname" id="inputname" autocomplete="on" required>
+            </div>
+            <div class="input-container">
+                <label for="inputmail">email</label>
+                <input type="email" name="mail" id="inputmail" autocomplete="on" placeholder="contact@gmail.com"
+                    required>
+            </div>
+            <div class="input-container">
+                <label for="inputpassword">Mot de passe</label>
+                <input type="password" name="mail" id="inputpassword"
+                    title="Le mot de passe doit contenir au moins 8 caractères, une miniscule, une majuscule et un chiffre.  "
+                    autocomplete="new-password" minlenght="8" maxlength="20"
+                    pattern="^(?=.[a-z])(?=.[A-Z])(?=.*\d).{8,}$" required>
+            </div>
+            <div class="input-container">
+                <label for="verifpassword">Vérification du mot de passe</label>
+                <input type="password" name="mail" id="verifpassword"
+                    title="Le mot de passe doit contenir au moins 8 caractères, une miniscule, une majuscule et un chiffre.  "
+                    autocomplete="new-password" minlenght="8" maxlength="20"
+                    pattern="^(?=.[a-z])(?=.[A-Z])(?=.*\d).{8,}$" required>
+            </div>
+
+            <div class="input-container">
+                <label for="inputdate">Date de naissance</label>
+                <input type="date" name="date" id="inputdate" autocomplete="on" required>
+            </div>
+
+            <!-- <div class="input-container">
+                <fieldset class="genre">
+                    <legend>Genre</legend>
+                    <div class="container-radio">
+                        <input type="radio" id="women" name="drone" value="femme" checked />
+                        <label for="women">Femme</label>
+                    </div>
+                    <div class="container-radio"> <input type="radio" id="man" name="drone" value="homme" />
+                        <label for="women">homme</label>
+                    </div>
+                    <div class="container-radio">
+                        <input type="radio" id="other" name="drone" value="autre" />
+                        <label for="women">Autre</label>
+                    </div>
+
+                </fieldset>
+            </div> -->
+
+            <div class="input-container">
+
+                <h4>Genre</h4>
+                <fieldset>
+
+                    <input type="radio" id="women" name="drone" value="femme" checked />
+                    <label class="radio-label" for="women">Femme</label>
+
+                    <input type="radio" id="man" name="drone" value="homme" />
+                    <label class="radio-label" for="women">homme</label>
+
+
+                    <input type="radio" id="other" name="drone" value="autre" />
+                    <label class="radio-label" for="women">Autre</label>
+
+                </fieldset>
+
+
+            </div>
+
+
+            <div class="input-container">
+                <label for="about">Pays</label>
+                <select name="demande" id="about">
+                    <option value="fr">france</option>
+                    <option value="uk">angleterre</option>
+                    <option value="ch">suisse</option>
+                    <option value="eu">europe</option>
+                </select>
+            </div>
+
+            <div class="input-container ">
+                <label class="check"><input type="checkbox" name="cgu">J'accepte <span>les conditions
+                        d'utilisation</span> et <span>la politique de confidentialité</span></label>
+            </div>
+            <div class="input-container ">
+                <input class="btn" type="reset" value="réinitialiser">
+                <input class="btn large" type="submit" value="s'incrire">
+            </div>
+
+
+
+
+        </form>
+    </div>
+
+    <script src="./assets/JS/validator.js" defer></script>
+</body>
+
+</html>

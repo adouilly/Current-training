@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Game morpion">
+    <title>Morpion Game</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <h1>Morpion</h1>
+
+
+    <div class="checkBoard">
+        <div class="player">Cross<span class="score scorePlayer" id="score-x"></span></div>
+        <button type="button" class="btn" id="startGame">start game</button>
+
+        <div class="player">Ball<span class="score scorePlayer" id="score-y"></span></div>
+    </div>
+    <div class="boardTable">
+        <div class="cell" id="C0" data-index="0"></div>
+        <div class="cell" id="C1" data-index="1"></div>
+        <div class="cell" id="C2" data-index="2"></div>
+        <div class="cell" id="C3" data-index="3"></div>
+        <div class="cell" id="C4" data-index="4"></div>
+        <div class="cell" id="C5" data-index="5"></div>
+        <div class="cell" id="C6" data-index="6"></div>
+        <div class="cell" id="C7" data-index="7"></div>
+        <div class="cell" id="C8" data-index="8"></div>
+    </div>
+    <div class="resultBoard">
+        <div class="btn" id="matchNull">result Match</div>
+        <button type="button" class="btn" id="newGame">New game</button>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>

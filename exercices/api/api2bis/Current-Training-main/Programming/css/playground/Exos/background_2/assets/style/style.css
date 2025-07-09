@@ -1,0 +1,33 @@
+@font-face {
+  font-family: 'Montserrat';
+  src: url(../fonts/Montserrat.ttf);
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  background: url(../images/constellation.jpg);
+  color: #fff;
+}
+header {
+  text-align: center;
+  line-height: 2;
+}
+h1 {
+  font-size: 2rem;
+}
+.container {
+  padding: 100px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  gap: 50px;
+}
+section {
+  width: 80vw;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  backdrop-filter: grayscale(100%) blur(5px) brightness(28%) saturate(0%)
+    opacity(40%) drop-shadow(10px 10px 5px #000000);
+}

@@ -1,0 +1,193 @@
+:root {
+  --btn-color: #4bb150;
+  --text-color: #f5ebe0;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(../fonts/Montserrat.ttf);
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.875rem;
+  background: url(../images/constellation.jpg) no-repeat center/cover;
+  color: var(--text-color);
+}
+.container {
+  max-width: 660px;
+  padding: 30px 20px 15px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 1.1rem;
+}
+h2 {
+  font-size: 0.6rem;
+}
+h3 {
+  font-size: 0.7rem;
+}
+p {
+  font-size: 0.5rem;
+}
+.btn {
+  font-size: 0.3rem;
+  font-weight: 500;
+  padding: 0.25rem 0.313rem;
+  background: var(--btn-color);
+}
+.btn:hover {
+  background: var(--text-color);
+  color: var(--btn-color);
+}
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.875rem;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  text-transform: capitalize;
+}
+.navbar a {
+  display: inline-block;
+  padding: 15px 5px 5px;
+  font-size: calc(1vw + 6px);
+}
+.navbar:hover :not(:hover) {
+  color: inherit;
+}
+.active {
+  color: var(--btn-color);
+}
+.navbar a:hover {
+  color: var(--btn-color);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  gap: 50px;
+}
+section,
+form {
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px 20px;
+  backdrop-filter: grayscale(100%) blur(5px) brightness(28%) saturate(0%)
+    opacity(40%) drop-shadow(10px 10px 5px #000000);
+}
+.banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+.services-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.services {
+  background: rgba(128, 128, 128, 0.2);
+  padding: 0.938rem;
+  width: 100%;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 30px 30px;
+}
+form {
+  /* overflow: hidden; */
+  width: 100%;
+}
+
+input {
+  height: 1.2rem;
+}
+input,
+textarea {
+  font-size: 0.4rem;
+  text-indent: 0.15rem;
+  text-decoration: none;
+  outline: transparent;
+  width: 100%;
+}
+input::placeholder,
+textarea::placeholder {
+  text-transform: capitalize;
+}
+.large {
+  width: 100%;
+}
+.text {
+  resize: none;
+}
+footer.container {
+  text-align: center;
+  padding-top: 0px;
+}
+footer p {
+  padding: 30px 20px;
+  backdrop-filter: grayscale(100%) blur(5px) brightness(28%) saturate(0%)
+    opacity(40%) drop-shadow(10px 10px 5px #000000);
+  font-size: 0.4rem;
+}
+/* ********medias****** */
+
+@media only screen and (max-width: 600px) {
+  body {
+    background: url(../images/constellation-thumb-w600.webp) center/ cover;
+  }
+}
+@media only screen and (max-width: 900px) {
+  body {
+    background: url(../images/constellation-table-w1000.webp) center/ cover;
+  }
+
+  .services-container {
+    display: flex;
+
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+  }
+}
+@media only screen and (min-width: 650px) {
+  .services-container {
+    flex-direction: row;
+    gap: 20px;
+  }
+  .form-container {
+    width: 60%;
+    margin: 0 auto;
+  }
+  header {
+    flex-direction: row;
+    gap: 5%;
+  }
+}

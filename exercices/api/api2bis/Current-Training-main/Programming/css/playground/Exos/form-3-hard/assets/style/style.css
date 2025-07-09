@@ -1,0 +1,206 @@
+:root {
+  --bt-color: #2c90d3;
+  --color-focus: #bfd4e225;
+  --boder-input: #154768;
+  --bg-form-container: #8eb7d1;
+  --hover-input: #f4340b;
+  --color-h3: #bde038;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(../fonts/Montserrat.ttf);
+}
+html {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+}
+body {
+  padding-top: 50px;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.form-container {
+  max-width: 1000px;
+
+  padding: 30px 30px;
+  margin: 0 auto;
+  background: var(--bg-form-container);
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 20px;
+  background: #fff;
+  -webkit-box-shadow: 3px 4px 13px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 4px 13px 0px rgba(0, 0, 0, 0.5);
+}
+.progress-step {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px 5px;
+}
+.step {
+  width: 40px;
+  height: 40px;
+  padding: 7px 14px;
+  color: aliceblue;
+  background: #2c90d3;
+  border: 1px solid transparent;
+  border-radius: 40px;
+
+  z-index: 1000;
+}
+/* .number-step-1 {
+  display: inline-block;
+  position: relative;
+  width: 12vw;
+  z-index: 50;
+}
+.number-step-1::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 5px;
+  width: 100%;
+  background: #2c90d3;
+  bottom: 27px;
+  left: 60%;
+  transform: translate(-50%);
+  z-index: 1;
+} */
+
+.number-step-1,
+.number-step-2 {
+  display: inline-block;
+  position: relative;
+  width: clamp(88px, 19vw, 196px); /* min 100px, max 300px, fluide au milieu */
+  z-index: 50;
+}
+
+.number-step-1::after,
+.number-step-2::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 5px;
+  width: 100%;
+  background: #2c90d3;
+  bottom: 27px;
+  left: 25px;
+  /* left: 65%;
+  transform: translate(-65%); */
+  z-index: 1;
+}
+span {
+  color: var(--bt-color);
+}
+
+h1 {
+  text-align: center;
+}
+h2 {
+  color: var(--bt-color);
+}
+h3 {
+  color: var(--color-h3);
+  padding: 20px 0;
+}
+textarea {
+  border: 1px solid var(--boder-input);
+}
+
+.input-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+input,
+select {
+  border: 1px solid var(--boder-input);
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+input:hover,
+select:hover {
+  border-color: var(--hover-input);
+}
+input:focus,
+select:focus {
+  background-color: var(--color-focus);
+}
+input:not([type='checkbox']):not([type='radio']),
+select {
+  height: 50px;
+  text-indent: 3px;
+}
+input::placeholder {
+  margin-left: 5px;
+}
+
+label::first-letter,
+select::first-letter,
+/*  balises <option> est très limité et dépend du système d’exploitation. La pseudo-classe ::first-letter est tout simplement ignorée sur les balises <option> dans la majorité des cas. */ option,
+.btn::first-letter {
+  text-transform: capitalize;
+}
+
+.checking label {
+  font-weight: 400;
+  margin-left: 1rem;
+  display: inline-block;
+}
+.checking {
+  margin-bottom: 20px;
+}
+
+.btn:hover .checking {
+  margin-bottom: 15px;
+}
+
+/* *********button******* */
+.btn {
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  border-radius: 5px;
+  background: var(--bt-color);
+  color: aliceblue;
+  height: 40px;
+  width: 30%;
+  border: none;
+  transform: 0.2s;
+  justify-content: flex-start;
+}
+.btn:hover {
+  transform: scale(1.1);
+}
+.flex-btn,
+.flex-row-btn {
+  padding: 20px 0;
+}
+
+.flex-row-btn {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* ******page 3 ***** */
+.thanks {
+  text-align: center;
+  line-height: 1.5;
+}
+.thanks p:first-of-type {
+  margin-bottom: 10px;
+}

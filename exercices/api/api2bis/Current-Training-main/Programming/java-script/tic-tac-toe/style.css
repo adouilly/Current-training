@@ -1,0 +1,140 @@
+:root {
+  --color1: #68c3e7;
+  --color2: #57c785;
+  --color3: #eddd53;
+  --color4: red;
+  --font-size-S: 0.4rem;
+  --font-size-M: 0.7rem;
+  --font-size-L: 0.8rem;
+  --font-size-XL: 3rem;
+  --space-S: 0.5rem;
+  --space-M: 1rem;
+  --space-L: 3rem;
+  --gradient: linear-gradient(90deg, #68c3e7 0%, #57c785 50%, #eddd53 100%);
+  --color-bg-body: #eff7fa;
+  --color-bg-cell: #a9e0bd;
+  --color-bg-cell-win: #00f600;
+  --black: #272626;
+  --padding-button: 0.5rem 0.6rem;
+  --paddingS: 1rem;
+  --paddingM: 1.25rem;
+}
+*,
+::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-wrap: nowrap;
+}
+img,
+span {
+  display: block;
+}
+img {
+  max-width: 100%;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-transform: uppercase;
+
+  max-width: 100%;
+  margin: 0 auto;
+  height: 100vh;
+  gap: var(--space-L);
+  padding: var(--padding);
+  margin-top: 15vh;
+}
+
+body,
+.btn,
+.checkBoard,
+.player,
+.score,
+.resultBoard,
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body,
+.resultBoard {
+  flex-direction: column;
+}
+
+.checkBoard {
+  gap: var(--space-S);
+}
+.resultBoard {
+  gap: var(--space-M);
+  padding: var(--paddingM);
+}
+
+h1 {
+  color: #333333;
+  background: #ffffff;
+  text-shadow: 2px 2px 0px #ffffff, 5px 4px 0px rgba(0, 0, 0, 0.15);
+  font-size: 3rem;
+}
+.btn,
+.player {
+  font-weight: 500;
+  font-size: var(--font-size-M);
+}
+
+.btn {
+  background: linear-gradient(90deg, #68c3e7 0%, #57c785 50%, #eddd53 100%);
+  color: var(--line-table);
+  text-transform: uppercase;
+
+  padding: var(--padding-button);
+  border: none;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+}
+#startGame,
+#newGame {
+  cursor: pointer;
+}
+
+.player {
+  padding: var(--padding-button);
+  background: var(--color2);
+  color: var(--black);
+  border-radius: 16px;
+  max-width: 150px;
+}
+
+.score {
+  height: var(--font-size-S);
+  width: 20px;
+  font-size: 1rem;
+  text-align: center;
+  color: red;
+}
+
+.boardTable {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: var(--space-S);
+  /* margin: 0 auto; */
+}
+.cell {
+  border: 2px solid var(--color2);
+  border-radius: 12px;
+  height: 100px;
+  width: 100px;
+  cursor: pointer;
+  background-position: center;
+  background-size: cover;
+}
+.cell img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}

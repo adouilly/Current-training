@@ -1,0 +1,57 @@
+*,
+*:after,
+*::before {
+  margin: 0;
+  padding: 0;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+h3 {
+  color: blueviolet;
+  font-size: 2.5rem;
+  width: 100%;
+  margin: 10vh auto 0;
+  text-align: center;
+  background: yellowgreen;
+
+  transition: transform 2s ease initial;
+}
+
+.colorEffect {
+  color: chartreuse;
+  background-color: blueviolet;
+}
+
+.loupEffect {
+  transform: scale(1.3);
+}
+
+.cursorBlue,
+.cursorDarkBlue {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: color-burn;
+}
+
+.cursorBlue {
+  height: 200px;
+  width: 200px;
+  border-radius: 200px;
+  background-color: #a9dbca8e;
+  transition: 0.1s ease;
+}
+.cursorDarkBlue {
+  height: 30px;
+  width: 30px;
+  border-radius: 30px;
+  background-color: #0bb7e246;
+  transition: 0.15s ease;
+}

@@ -1,0 +1,75 @@
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style-type: none;
+  box-sizing: border-box;
+}
+
+.section {
+  padding: 40px 20px;
+  max-width: 1500px;
+  margin: 0 auto;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  line-height: 1.8;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}
+.section div {
+  padding-bottom: 50px;
+  width: fit-content;
+}
+
+.section h1,
+.section h2 {
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: rgb(82, 82, 82);
+  text-align: center;
+}
+.section h1 {
+  font-size: 3rem;
+  font-weight: 400;
+  color: rgb(0, 140, 255);
+  text-decoration: underline;
+}
+
+.section span {
+  font-size: 1rem;
+  font-style: italic;
+}
+
+table {
+  border: 1px solid black;
+  text-align: left;
+  -webkit-box-shadow: 5px 5px 15px 5px #000000;
+  box-shadow: 5px 5px 15px 5px #cfcdcd;
+}
+table th,
+table td {
+  border: 1px solid black;
+}
+.title {
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  color: blue;
+  background-color: bisque;
+  border: 1px solid blue;
+}
+thead th,
+tbody th {
+  text-transform: capitalize;
+  padding: 10px 60px 5px 10px;
+  background: rgb(240, 238, 238);
+  text-indent: 20px;
+}
+
+tbody tr td {
+  text-indent: 32px;
+}

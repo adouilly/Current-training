@@ -1,0 +1,160 @@
+html {
+  // font-family: 'Roboto+Condensed', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+// ---------------variables---------------
+//----color
+$color-primary: #fdc98a;
+$color-secondary: #c2c57e;
+$black: #272727;
+$white: #fff;
+$grey: #606060;
+$hover: #ff002b;
+
+$black-rgba: rgba($black, 0.8);
+$green-rgba: rgba($color-secondary, 0.7);
+$grey-rgba: rgba($grey, 0.8);
+
+$font-primary: 'Roboto', sans-serif;
+// $font-secondary: 'Roboto+Condensed', sans-serif;
+
+$btn-padding: 0.8rem 1rem;
+$btn-paddingM: 1rem 1rem;
+
+$spaceS: 16px;
+$spaceM: 20px;
+$spaceL: 32px;
+$spaceXL: 48px;
+// $space3:40px;
+// $space4:calc(#{$pace1} * 2);
+$padS: 8px;
+//16px
+$padM: calc(#{$padS} * 2);
+//16px 32px
+$padL: $padM calc(#{$padS} * 4);
+//64px
+$padXL: calc(#{$padS} * 6);
+
+$border-gold: 1px solid $color-primary;
+//16px
+$font-size-base: 1rem;
+//10px
+$font-sizeS: 0.625rem;
+//12px
+$font-sizeXS: 0.75rem;
+//20px
+$font-sizeM: 1.25rem;
+
+$line-height-S: 1;
+$line-height-M: 1.6;
+$line-height-L: 2;
+
+$widthS: 300px;
+$widthM: 620px;
+
+//****title
+h1,
+h2,
+h3,
+h4 {
+  font-family: $font-primary;
+  font-size: $font-sizeM;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+h2 {
+  color: $color-primary;
+  width: 100%;
+}
+
+
+p {
+  font-weight: 400;
+  line-height: $line-height-M;
+  font-family: $font-primary;
+  letter-spacing: -3%;
+  text-align: center;
+}
+
+.container {
+  max-width: 932px;
+
+  margin: 0 auto 32px;
+}
+.small {
+  max-width: $widthS;
+}
+
+.primary {
+  color: $color-primary;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.green,
+.gold {
+  color: $black;
+}
+
+.green {
+  background-color: $color-secondary;
+}
+
+.light {
+  color: $grey;
+  text-transform: uppercase;
+  font-size: $font-sizeS;
+}
+.text_white {
+  color: $white;
+}
+// Définition de l'animation
+@keyframes effectLine {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  //   50% {
+  //     width: 25%;
+  //     opacity: 0.5;
+  //   }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+// Mixin pour utiliser l'animation
+@mixin lineFrame {
+  animation-name: effectLine;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+// mixin media queries
+$breakpoints: (
+  'phone-down': 400px,
+  'phone-up': 754px, 
+  'tablet-up': 774px,
+  'tablet-down': 900px,
+  'desktop-up': 1024px,
+  'desktop-down': 1280px,
+  'widescreen-up': 1440px,
+);
+
+@mixin media-max($_key) {
+  @media screen and (max-width: map-get($breakpoints, $_key)) {
+    & {
+      @content;
+    }
+  }
+}
+@mixin alignChild {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

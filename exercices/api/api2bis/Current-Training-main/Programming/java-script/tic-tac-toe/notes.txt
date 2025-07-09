@@ -1,0 +1,70 @@
+let imgPath;
+if (currentPlayer === "X") {
+    imgPath = player.X;
+} else {
+    imgPath = player.O;
+}
+img.src = imgPath;
+
+----------------------------------------------------
+// Méthode 1 (ternaire - recommandée pour sa concision)
+currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+
+// Méthode 2 (if/else - plus intuitive pour les débutants)
+if (currentPlayer === 'X') currentPlayer = 'O';
+else currentPlayer = 'X';
+
+// Méthode 3 (tableau - pour les curieux)
+currentPlayer = ['O', 'X'][+(currentPlayer === 'X')]; // + convertit true/false en 1/0
+----------------------------------------------------
+function checkWin() {
+    return winCombos.some(combo => {          // 1. Parcourt toutes les combinaisons gagnantes
+        const [a, b, c] = combo;             // 2. Désassemble la combinaison en 3 cases (a, b, c)
+        return gameBoard[a] &&                // 3. Case 'a' n'est pas vide ?
+               gameBoard[a] === gameBoard[b] && // 4. Case 'a' == case 'b' ?
+               gameBoard[a] === gameBoard[c];   // 5. Case 'a' == case 'c' ?
+    });
+}
+
+
+
+X | O | X
+---------
+O | X | O
+---------
+X |   | 
+
+gameBoard = ['X', 'O', 'X', 'O', 'X', 'O', 'X', '', '']
+
+Étape 2 : Test d'une combinaison
+Prenons la diagonale [2, 4, 6] (cases 2, 4, 6) :
+
+a = 2, b = 4, c = 6
+
+Vérifications :
+
+gameBoard[2] → 'X' (non vide) ✅
+
+gameBoard[2] === gameBoard[4] → 'X' === 'X' ✅
+
+gameBoard[2] === gameBoard[6] → 'X' === 'X' ✅
+
+Résultat : true → Victoire des 'X' !
+Points Clés à Retenir
+.some() :
+
+S'arrête dès qu'une combinaison valide est trouvée (optimisé).
+
+Équivalent à : "Est-ce qu'au moins une combinaison est gagnante ?"
+
+[a, b, c] = combo :
+
+Extrait les 3 index de cases.
+
+Exemple : Si combo = [0, 1, 2], alors a = 0, b = 1, c = 2.
+
+Conditions imbriquées :
+
+gameBoard[a] : Évite les cases vides ('').
+
+Les 2 autres comparaisons vérifient l'alignement.

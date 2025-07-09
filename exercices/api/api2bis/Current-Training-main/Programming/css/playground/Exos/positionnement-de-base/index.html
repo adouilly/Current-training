@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="excercice Positionnement de base easy">
+
+    <title>Positionnement de base : excercice un</title>
+
+    <link rel="stylesheet" href="./assets/style/reset.css">
+    <link rel="stylesheet" href="./assets/style/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="overlay"></div>
+        <video id="responsiveVideo" autoplay muted loop>
+        </video>
+        <h1>découvrez nos services</h1>
+        <p>solution innovante pour votre entreprise</p>
+        <button class="btn" type="button">En savoir
+            plus</button>
+
+    </header>
+    <script>
+        const video = document.getElementById("responsiveVideo");
+        const width = window.innerWidth;
+
+        let source = "";
+
+        if (width >= 1920) {
+            source = "./assets/images/video_1920_1080_30fps.mp4";
+        } else if (width >= 1280) {
+            source = "./assets/images/video_1280_720_30fps.mp4";
+        } else if (width >= 960) {
+            source = "./assets/images/video_960_540_30fps.mp4";
+        } else if (width >= 640) {
+            source = "./assets/images/video_640_360_30fps.mp4";
+        } else {
+            source = "./assets/images/video_426_240_30fps.mp4";
+        }
+
+        const sourceElement = document.createElement("source");
+        sourceElement.src = source;
+        sourceElement.type = "video/mp4";
+        video.appendChild(sourceElement);
+        video.load();
+    </script>
+
+</body>
+
+</html>

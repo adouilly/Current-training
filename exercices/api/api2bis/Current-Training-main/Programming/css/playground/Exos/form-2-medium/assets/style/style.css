@@ -1,0 +1,135 @@
+:root {
+  --bt-color: #2c90d3;
+  --color-focus: #bfd4e225;
+  --boder-input: #154768;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(../fonts/Montserrat.ttf);
+}
+html {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+}
+body {
+  padding-top: 50px;
+}
+.form-container {
+  max-width: 800px;
+
+  padding: 30px 30px;
+  margin: 0 auto;
+  background: rgb(236, 234, 234);
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 20px;
+
+  background: #fff;
+  -webkit-box-shadow: 3px 4px 13px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 4px 13px 0px rgba(0, 0, 0, 0.5);
+}
+h1 {
+  text-align: center;
+}
+
+.input-container {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 5px;
+}
+.input-container:last-child {
+  flex-direction: row;
+  align-items: left;
+  gap: 20px;
+  padding: 20px 0px;
+}
+input,
+select {
+  border: 1px solid var(--boder-input);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input:hover,
+select:hover {
+  border-color: red;
+}
+input:focus,
+select:focus {
+  background-color: var(--color-focus);
+}
+
+input,
+select {
+  height: 40px;
+  text-indent: 3px;
+}
+input::placeholder {
+  margin-left: 5px;
+}
+label,
+select,
+.btn {
+  text-transform: capitalize;
+}
+
+input[type='checkbox'] {
+  margin-right: 8px;
+  height: inherit;
+}
+
+label,
+legend {
+  font-weight: 600;
+}
+fieldset {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.container-radio {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+}
+
+input[type='radio'] {
+  margin-right: 15px;
+
+  display: inline-block;
+}
+.radio-label {
+  margin-right: 15px;
+}
+label:last-child {
+  font-weight: 500;
+  text-transform: none;
+}
+
+.btn {
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  border-radius: 5px;
+  background: var(--bt-color);
+  color: aliceblue;
+  height: 40px;
+  border: none;
+  transform: 0.2s;
+}
+.btn:hover {
+  transform: scale(1.1);
+}
+.btn.large {
+  width: 100%;
+}
+span {
+  color: var(--bt-color);
+}

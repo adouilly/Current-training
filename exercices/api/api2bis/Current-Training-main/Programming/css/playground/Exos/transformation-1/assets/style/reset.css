@@ -1,0 +1,71 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  border: none;
+  list-style-type: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+body {
+  /*  Add accessible line-height
+  line-height: 1.5;*/
+  /*  Improve text rendering valide uniquement sur MacOs */
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+/*  Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+h1::first-letter,
+h2::first-letter,
+h3::first-letter,
+h4::first-letter,
+h5::first-letter,
+h6::first-letter,
+p::first-letter,
+span::first-letter {
+  text-transform: capitalize;
+}
+p {
+  text-wrap: pretty;
+}
+/*  Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg,
+span {
+  display: block;
+  max-width: 100%;
+}
+/*  Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: unset;
+  display: inline-block;
+}
+a {
+  color: unset;
+
+  display: block;
+}

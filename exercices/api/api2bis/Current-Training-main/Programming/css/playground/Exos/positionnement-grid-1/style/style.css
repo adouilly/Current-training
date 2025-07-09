@@ -1,0 +1,86 @@
+:root {
+  --bg-navbar: #1815b9;
+  --color-hover: #f3a172;
+  --links-navbar: #f3f1f1;
+  --section-color1: #b3d5e925;
+  --color-dashed: #b6b6b6;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(../fonts/Montserrat.ttf);
+}
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 20vh;
+  line-height: 1.5;
+}
+a {
+  display: inline-block;
+}
+header {
+  background: var(--bg-navbar);
+  color: var(--links-navbar);
+  padding: 20px 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+
+  min-height: 10vh;
+  box-shadow: 5px 5px 15px 5px rgba(1, 16, 39, 0.28);
+}
+
+.container {
+  width: calc(100% - 60px);
+  padding: 30px 30px;
+  margin: 0 auto;
+}
+
+.grid_container {
+  width: 100%;
+
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(4, 25%);
+  grid-template-rows: repeat(4, 10%);
+  justify-content: center;
+  grid-template-areas:
+    'a a b b'
+    'a a c d'
+    'e f g g'
+    'e h g g';
+}
+.item1 {
+  grid-area: a;
+}
+.item2 {
+  grid-area: b;
+}
+.item3 {
+  grid-area: c;
+}
+.item4 {
+  grid-area: d;
+}
+.item5 {
+  grid-area: e;
+}
+.item6 {
+  grid-area: f;
+}
+.item7 {
+  grid-area: h;
+}
+.item8 {
+  grid-area: g;
+}
+img {
+  display: inline-block;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  -webkit-box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.67);
+  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.67);
+}

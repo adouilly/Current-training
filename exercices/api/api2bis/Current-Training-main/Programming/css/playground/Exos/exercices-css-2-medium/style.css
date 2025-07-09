@@ -1,0 +1,51 @@
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'robot', Times New Roman, Times, serif;
+  line-height: 1.5;
+  color: black;
+}
+main {
+  padding: 20px 20px;
+}
+article {
+  padding: 0 50px;
+}
+article p {
+  padding-top: 10px;
+  font-size: calc(0.78vw + 8px);
+}
+article div {
+  margin-top: 3.333vh;
+  padding: 10px 15px;
+}
+.title {
+  font-size: calc(4vw + 2px);
+  font-weight: 500;
+  font-style: oblique;
+  line-height: 1.2;
+  position: relative;
+}
+
+.left {
+  background: bisque;
+  text-align: left;
+}
+.center {
+  background-color: aquamarine;
+  text-align: center;
+}
+.right {
+  background-color: black;
+  color: azure;
+  text-align: right;
+}
+.justify {
+  background-color: azure;
+  color: black;
+  text-align: justify;
+}

@@ -2,38 +2,43 @@
 const passwordOutput = document.getElementById('password-output');
 const passwordLengthSlider = document.getElementById('password-length');
 const displayPasswordLength = document.getElementById('display-password-length');
-const lowercaseCheckbox = document.getElementById('lowercase');
-const uppercaseCheckbox = document.getElementById('uppercase');
-const numbersCheckbox = document.getElementById('numbers');
-const symbolsCheckbox = document.getElementById('symbols');
 const generateButton = document.getElementById('generateButton');
 
-// Caractères disponibles pour la génération
-const charsets = {
-    lowercase: 'abcdefghijklmnopqrstuvwxyz',
-    uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-    numbers: '0123456789',
-    symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
-};
+// Configuration des types de caractères avec leurs éléments DOM
+const charsetConfig = [
+    {
+        id: 'lowercase',
+        element: document.getElementById('lowercase'),
+        chars: 'abcdefghijklmnopqrstuvwxyz'
+    },
+    {
+        id: 'uppercase',
+        element: document.getElementById('uppercase'),
+        chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    },
+    {
+        id: 'numbers',
+        element: document.getElementById('numbers'),
+        chars: '0123456789'
+    },
+    {
+        id: 'symbols',
+        element: document.getElementById('symbols'),
+        chars: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+    }
+];
 
 // Fonction pour générer un mot de passe
 function generatePassword() {
     const length = parseInt(passwordLengthSlider.value);
     let availableChars = '';
     
-    // Construire la chaîne de caractères disponibles selon les cases cochées
-    if (lowercaseCheckbox.checked) {
-        availableChars += charsets.lowercase;
-    }
-    if (uppercaseCheckbox.checked) {
-        availableChars += charsets.uppercase;
-    }
-    if (numbersCheckbox.checked) {
-        availableChars += charsets.numbers;
-    }
-    if (symbolsCheckbox.checked) {
-        availableChars += charsets.symbols;
-    }
+    // Construire la chaîne de caractères disponibles avec forEach
+    charsetConfig.forEach(config => {
+        if (config.element.checked) {
+            availableChars += config.chars;
+        }
+    });
     
     // Vérifier qu'au moins une option est sélectionnée
     if (availableChars === '') {
@@ -83,11 +88,8 @@ passwordLengthSlider.addEventListener('input', updatePasswordLength);
 generateButton.addEventListener('click', generatePassword);
 passwordOutput.addEventListener('click', copyPassword);
 
-
-
-// Optionnel: Générer automatiquement un nouveau mot de passe quand les options changent
-lowercaseCheckbox.addEventListener('change', generatePassword);
-uppercaseCheckbox.addEventListener('change', generatePassword);
-numbersCheckbox.addEventListener('change', generatePassword);
-symbolsCheckbox.addEventListener('change', generatePassword);
+// Génération automatique quand les options changent - avec forEach
+charsetConfig.forEach(config => {
+    config.element.addEventListener('change', generatePassword);
+});
 passwordLengthSlider.addEventListener('input', generatePassword);

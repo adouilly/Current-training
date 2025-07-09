@@ -1,0 +1,42 @@
+:root {
+  --color1: #fff;
+  --color2: #d48c2e;
+  --fontSizeXL: 3rem;
+  --fontSizeM: 1.6rem;
+  --fontSizeS: 1.2rem;
+  --paddingS: 10px;
+  --paddingM: 15px;
+  --paddingL: 20px;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: var(--paddingL);
+  background-color: #8c8cb411;
+}
+.containerGrid {
+  max-width: 1300px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-rows: repeat(auto-fit, minmax(300px, 1fr));
+
+  gap: var(--paddingS);
+}
+
+img {
+  box-shadow: 5px 5px 8px #545455;
+}
+.name {
+  font-weight: 700;
+  font-size: var(--fontSizeS);
+  color: #444444;
+  text-align: center;
+  text-shadow: 2px 2px 0 #bcbcbc, 4px 4px 0 #9c9c9c;
+  margin-bottom: 20px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

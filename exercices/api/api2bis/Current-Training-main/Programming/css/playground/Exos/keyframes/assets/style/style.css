@@ -1,0 +1,95 @@
+:root {
+  --color: aliceblue;
+  --white1: #fff;
+  --color-bg1: #09082b;
+  --color-base-loader: #4886f885;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--color);
+  text-align: center;
+}
+
+section {
+  background-color: var(--color-bg1);
+  min-height: 50vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+.loader {
+  height: 50px;
+  width: 50px;
+  display: inline-block;
+  position: relative;
+}
+
+/* loader quart de cercle  */
+.loader_quart {
+  border-radius: 50%;
+  border: 6px solid var(--color-base-loader);
+}
+.loader_quart::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  bottom: -6px;
+  right: -6px;
+
+  width: 50px;
+  height: 50px;
+  border: 6px solid transparent;
+  border-top: 6px solid var(--white1);
+  border-radius: 50%;
+
+  animation: speed 2s linear infinite;
+}
+
+@keyframes speed {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.line {
+  height: 6px;
+  width: 40%;
+  background-color: var(--color-base-loader);
+  position: relative;
+}
+
+.line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  width: 0;
+  opacity: 0;
+  background-color: var(--white1);
+  animation: lineprogress 6s ease forwards;
+}
+@keyframes lineprogress {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  50% {
+    width: 50%;
+    opacity: 0.5;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}

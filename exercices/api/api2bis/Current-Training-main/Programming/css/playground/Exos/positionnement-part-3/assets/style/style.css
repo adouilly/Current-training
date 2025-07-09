@@ -1,0 +1,257 @@
+:root {
+  --bg-navbar: #1815b9;
+  --color-hover: #f3a172;
+  --links-navbar: #f3f1f1;
+  --section-color1: #b3d5e925;
+  --color-dashed: #b6b6b6;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(../fonts/Montserrat.ttf);
+}
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 15vh;
+  line-height: 1.5;
+}
+a {
+  display: inline-block;
+}
+header {
+  background: var(--bg-navbar);
+  color: var(--links-navbar);
+  padding: 20px 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 15vh;
+}
+
+.logo {
+  background: url(../images/logo-majestic.webp) no-repeat center/contain;
+  aspect-ratio: 1/1;
+  max-width: 100%;
+  height: 100%;
+}
+.name-logo {
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: calc(2vw + 10px);
+}
+.container-logo {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 100%;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  height: 100%;
+}
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.6rem;
+  padding: 7px 15px 0;
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: calc(1vw + 7px);
+  position: relative;
+}
+.navbar:hover :not(:hover) {
+  color: unset;
+}
+.navbar:hover .active:not(:hover)::after {
+  /* width: 0%; */
+  visibility: hidden;
+}
+.active {
+  color: var(--color-hover);
+}
+
+.links-navbar::after {
+  content: '';
+  height: 3px;
+  display: block;
+  background: var(--color-hover);
+  right: 0;
+  left: 0;
+  width: 0%;
+  transform: translateY(10px);
+
+  transition: width 0.3s ease;
+}
+.links-navbar:hover::after {
+  animation: lineslide 0.2s ease-in-out forwards;
+}
+.active::after {
+  content: '';
+  height: 3px;
+  display: block;
+  background: var(--color-hover);
+  right: 0;
+  left: 0;
+
+  visibility: inherit;
+  transform: translateY(10px);
+}
+.links-navbar:hover {
+  color: var(--color-hover);
+}
+
+/* *********after links transform****** */
+
+@keyframes lineslide {
+  0% {
+    width: 0%;
+    left: 0%;
+  }
+  50% {
+    width: 50%;
+    left: 25%;
+  }
+  100% {
+    width: 100%;
+    left: 0%;
+  }
+}
+
+/* ********button******* */
+.contact {
+  background-color: var(--color-hover);
+  padding: 0.3rem 0.5rem;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.contact:hover {
+  color: var(--bg-navbar);
+  background-color: var(--links-navbar);
+  transform: scale(1.1);
+}
+
+/* ************main**************** */
+.main-container {
+  width: 100%;
+}
+.container {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 20px 20px;
+}
+
+.container-banner {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  line-height: 2;
+  height: fit-content;
+  background-color: #fff;
+  min-height: 50vh;
+}
+.title {
+  text-transform: capitalize;
+  font-size: calc(3vw + 7px);
+  text-shadow: 2px 2px 2px grey;
+}
+p {
+  font-weight: 500;
+  font-size: calc(0.6vw + 10px);
+}
+
+/* *********section********/
+section {
+  min-height: 50vh;
+  padding: 30px 0;
+}
+.pair {
+  background: var(--section-color1);
+}
+.services-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.service {
+  padding: 30px 30px;
+  text-align: center;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 5px 5px 15px 5px rgba(24, 21, 185, 0.22);
+}
+h2 {
+  margin-bottom: 1.8rem;
+  text-transform: capitalize;
+}
+h3 {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+.service p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.img-service {
+  padding: 20px 0;
+}
+.service i {
+  color: var(--bg-navbar);
+}
+/* **************small_container***** */
+
+.container.small {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: left;
+  /* padding: 30px 30px; */
+  width: 100%;
+  margin: 0 auto;
+  gap: 20px;
+}
+.portfolio {
+  text-align: center;
+  padding: 50px 20px;
+  border: 2px dashed var(--color-dashed);
+  border-radius: 15px;
+}
+/* **************footer************ */
+footer {
+  color: var(--links-navbar);
+  background: var(--bg-navbar);
+  min-height: 8vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ******médias****** */
+@media only screen and (max-width: 500px) {
+  .navbar {
+    gap: 0.6rem;
+    padding-bottom: 5px;
+  }
+  .links-navbar::after,
+  .active::after {
+    transform: translateY(0);
+  }
+  .contact {
+    padding: 0.1rem 0.5rem;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .services-container {
+    flex-direction: column;
+  }
+}

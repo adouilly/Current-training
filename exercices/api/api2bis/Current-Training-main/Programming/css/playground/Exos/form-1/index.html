@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="formulaire exercice 1">
+    <title>Formulaire 1</title>
+    <link rel="stylesheet" href="./assets/style/reset.css">
+    <link rel="stylesheet" href="./assets/style/style.css">
+</head>
+
+<body>
+    <div class="form-container">
+
+        <form action="contact.html">
+            <h1>Contactez-nous</h1>
+
+            <div class="input-container">
+                <label for="inputname">nom</label>
+                <input type="text" name="firstname" id="inputname" autocomplete="on">
+            </div>
+            <div class="input-container">
+                <label for="inputmail">email</label>
+                <input type="email" name="mail" id="inputmail" requiredautocomplete="on">
+            </div>
+            <div class="input-container">
+                <label for="about">sujet</label>
+                <select name="demande" id="about">
+                    <option value="info">demande d'information</option>
+                    <option value="quote">devis</option>
+                    <option value="booking">réservation</option>
+                    <option value="reclaim">réclamation</option>
+                </select>
+            </div>
+            <div class="input-container">
+                <label for="textmess">message</label>
+                <textarea name="message" id="textmess" cols="30" rows="5" placeholder="Bonjour,"></textarea>
+            </div>
+            <div class="input-container ">
+                <label class="check"><input type="checkbox" name="cgu">J'accepte les conditions
+                    d'utilisation</label>
+            </div>
+            <div class="input-container ">
+                <input class="btn" type="submit" value="envoyer">
+                <input class="btn" type="reset" value="annuler">
+            </div>
+
+            </fieldset>
+
+
+        </form>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CSS avancée transformation exo 3">
+    <title>Exo transform 3: Variables CSS et thèmes</title>
+    <link rel="stylesheet" href="./assets/style/reset.css">
+    <link rel="stylesheet" href="./assets/style/style.css">
+</head>
+
+<body class="dark-theme">
+    <header class="header-container">
+        <div class="container-logo">
+            <div id="img-logo"><img class="img-logo" src="./assets/img/5615156.webp" alt=""></div>
+            <div class="logo"><a href="#">ThémeCraft</a></div>
+        </div>
+        <nav>
+            <ul class="nav-desktop">
+                <li><a class="link-nav active" href="#">accueil</a></li>
+                <li><a class="link-nav" href="#">services</a></li>
+                <li class="download"><a class="link-nav" href="#">à propos</a>
+                    <ul class="under-nav">
+                        <li><a class="link-nav" href="#">notre équipe</a></li>
+                        <li><a class="link-nav" href="">notre histoire</a></li>
+                    </ul>
+                </li>
+                <li><a class=" link-nav" href="#">blog</a>
+                </li>
+                <li><a class=" link-nav" href="#">contact</a></li>
+            </ul>
+
+        </nav>
+        <input class="checked" type="checkbox" name="mobile" id="mobile">
+        <label for="mobile"><img class="img-burger" src="./assets/img/burger.png" alt="burger"></label>
+        <nav class="menu-burger">
+
+            <ul class="nav-mobile">
+                <li><a class="link-nav active" href="#">accueil</a></li>
+                <li><a class="link-nav" href="#">services</a></li>
+                <li class="download"><a class="link-nav" href="#">à propos</a>
+                    <ul class="under-nav">
+                        <li><a class="link-nav" href="#">notre équipe</a></li>
+                        <li><a class="link-nav" href="">notre histoire</a></li>
+                    </ul>
+                </li>
+                <li><a class=" link-nav" href="#">blog</a>
+                </li>
+                <li><a class=" link-nav" href="#">contact</a></li>
+            </ul>
+        </nav>
+
+    </header>
+    <section class="container">
+        <h1>Bienvenue sur ThémeCraft</h1>
+        <p class="text-title">découvrez la puissance des variables pour créer des thèmes dynamiques.</p>
+        <div class="card-container">
+            <div class="card">
+                <h2>variable class</h2>
+                <p>les variables CSS permettent de centraliser les valeurs de style et de les réutiliser dans toute
+                    votre feuille de style.</p>
+            </div>
+            <div class="card">
+                <h2>thèmes dynamiques</h2>
+                <p>changez facilement l'apparence complète de votre site en modifiant simplement quelques variables.</p>
+            </div>
+            <div class="card">
+                <h2>transitions fluides</h2>
+                <p>créez les transitions entre différents états visuels grâce aux transitions CSS.</p>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p><strong>&#169;</strong>ThèmeCraft - Tous droits réservés</p>
+    </footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+header {
+  background: url(./img/bg_header.jpg) no-repeat center/cover;
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+
+  color: $white;
+  font-family: $font-primary;
+  font-weight: 500;
+  font-size: 1rem;
+  position: relative;
+
+  //***********************NAV*********************
+
+  // .header_nav {
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   gap: 50px;
+  // }
+}
+
+
+.container_links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  text-transform: uppercase;
+  max-height: 70px;
+  padding: 0;
+
+  .link_nav {
+    height: 100%;
+    padding: 0.7rem 0.5rem;
+    transition: 0.2s;
+    flex: 1;
+  }
+  .link_logo {
+    flex: 0 0 300px;
+  }
+  &:hover .link:not(:hover){
+    color: $white;
+    &::after{
+      opacity: 0;
+    }
+  }
+}
+.header-logo{
+  background: url(./img/logo_header.png) no-repeat center/cover;
+  width: 300px;
+  height: 70px;
+  &:hover{
+     background-image: url(./img/logo_hover.png);
+  
+  }
+  
+
+}
+
+
+.link {
+  color: $white;
+  transition: all 0.3s ease;
+  position: relative;
+  text-align: center;
+
+  &:hover {
+    color: $color-primary;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 0%;
+    background: $color-primary;
+    opacity: 0;
+    margin-top: 0.5rem;
+  }
+
+  &:hover::after {
+    @include lineFrame;
+  }
+}
+
+.link.active {
+  color: $color-primary;
+
+  &::after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: $color-primary;
+    opacity: 1;
+    margin-top: 0.5rem;
+  }
+}
+
+.hearder_content {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 300px;
+}
+
+.content {
+  max-width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: right;
+  align-items: center;
+  gap: 20px;
+
+  h1 {
+    text-align: right;
+  }
+
+  p {
+    text-align: right;
+  }
+}
+
+.social_icons {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  max-width: 60px;
+  background-color: $color-secondary;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+// ****************HEADER CONTENT*********************

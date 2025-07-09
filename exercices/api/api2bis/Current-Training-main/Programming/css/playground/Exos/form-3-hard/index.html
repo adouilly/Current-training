@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="formulaire exercice 2">
+    <script src="./assets/JS/validator.js" defer></script>
+    <title>Formulaire 2</title>
+
+    <link rel="stylesheet" href="./assets/style/reset.css">
+    <link rel="stylesheet" href="./assets/style/style.css">
+</head>
+
+<body>
+    <main class="container">
+        <!-- formulaire phase 1 -->
+        <div class="form-container page" id="page-1">
+            <form action="contact.html">
+                <header class="input-container">
+                    <h1>demande de devis</h1>
+                    <div class="progress">
+                        <ul class="progress-step">
+                            <li class="step">1<span class="number-step-1 active"></li>
+                            <li class="step">2<span class="number-step-2"></span></li>
+                            <li class="step">3<span class="number-step"></span></li>
+                        </ul>
+                    </div>
+                </header>
+                <div class="input-container">
+                    <h2 class="title">informations personnelles</h2>
+                </div>
+                <div class="input-container">
+                    <label for="input_firstname">nom</label>
+                    <input type="text" name="firstname" id="input_firstname" autocomplete="on" required>
+                </div>
+                <div class="input-container">
+
+                    <label for="inputname">prénom</label>
+                    <input type="text" name="firstname" id="inputname" autocomplete="on" required>
+                </div>
+                <div class="input-container">
+                    <label for="input-tel">Télèphone</label>
+                    <input type="tel" name="phone" id="input-tel" autocomplete="on"
+                        pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}" required>
+                </div>
+                <div class="input-container">
+                    <label for="inputmail1">email</label>
+                    <input type="email" name="mail" id="inputmail1" autocomplete="on" placeholder="contact@gmail.com"
+                        required>
+                </div>
+                <div class="input-container flex-btn">
+                    <button class="btn" type="button">suivant</button>
+                </div>
+            </form>
+        </div>
+        <!-- formulaire phase 2 -->
+        <div class="form-container page" id="page-2">
+            <form action="contact.html">
+                <header class="input-container">
+                    <h1>demande de devis</h1>
+                    <div class="progress">
+                        <ul class="progress-step">
+                            <li class="step">1<span class="number-step-1 active"></li>
+                            <li class="step">2<span class="number-step-2"></span></li>
+                            <li class="step">3<span class="number-step"></span></li>
+                        </ul>
+                    </div>
+                </header>
+                <div class="input-container">
+                    <h2 class="title">détails du projet</h2>
+                </div>
+                <div class="input-container">
+                    <label for="select-project">type de projet</label>
+                    <select name="project" id="select-project" required>
+                        <option value="">Sélectionner un type</option>
+                        <option value="website">Site internet vitrine</option>
+                        <option value="website-ecommerce">Site internet e-commerce</option>
+                        <option value="manage">Gestion de votre site</option>
+                        <option value="referencing">SEO</option>
+                        <option value="hosting">hébergement</option>
+                    </select>
+                </div>
+                <div class="input-container">
+                    <label for="select-budget">Budget approximatif</label>
+                    <select name="project" id="select-budget" required>
+                        <option value="">Sélectionnez une fourchette</option>
+                        <option value="price-1">1000 € à 2000 €</option>
+                        <option value="price-2">2000 € à 4000 €</option>
+                        <option value="price-3">4000 € à 6000 €</option>
+                        <option value="price-4">6000 € à 10 000 €</option>
+                        <option value="price-5">Plus de 10 000 €</option>
+                    </select>
+                </div>
+                <div class="input-container">
+                    <label for="delivery-date">date de livraison</label>
+                    <input type="date" name="delivery" id="delivery-date">
+                </div>
+                <div class="input-container">
+                    <label for="description_project">Décrivez-votre projet</label>
+                    <textarea name="about-project" id="description_project" cols="30" rows="5"
+                        placeholder="Bonjour,"></textarea>
+                </div>
+                <div class="input-container flex-row-btn">
+                    <button class="btn " type="button">précedent
+                    </button>
+                    <button class="btn" type="button">suivant
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- formulaire phase 3 -->
+        <div class="form-container page" id="page-3">
+            <form action="contact.html">
+                <header class="input-container">
+                    <h1>demande de devis</h1>
+                    <div class="progress">
+                        <ul class="progress-step">
+                            <li class="step">1<span class="number-step-1 active"></li>
+                            <li class="step">2<span class="number-step-2"></span></li>
+                            <li class="step">3<span class="number-step"></span></li>
+                        </ul>
+                    </div>
+                </header>
+                <div class="input-container">
+                    <h2 class="title">préfèrences et soumission</h2>
+                </div>
+                <div class="input-container ">
+                    <fieldset>
+                        <div class="checking"><input type="checkbox" name="responsive" id="responsive" required>
+                            <label for="responsive">design responside</label>
+                        </div>
+
+                        <div class="checking">
+                            <input type="checkbox" name="management" id="management" required>
+                            <label for="management">système de gestion</label>
+                        </div>
+
+                        <div class="checking">
+                            <input type="checkbox" name="analize" id="analysis" required>
+                            <label for="analysis">outils d'analyse</label>
+                        </div>
+
+                        <div class="checking">
+                            <input type="checkbox" name="optimize" id="optimize" required>
+                            <label for="optimize">optimisation SEO</label>
+                        </div>
+
+                        <div class="checking">
+                            <input type="checkbox" name="network" id="network-integration" required>
+                            <label for="network-integration">intégration réseaux</label>
+                        </div>
+
+                    </fieldset>
+                </div>
+                <div class="input-container">
+                    <label for="inputmail2">préfèrences de contact</label>
+                    <input type="email" name="mail" id="inputmail2" autocomplete="on" placeholder="contact@gmail.com"
+                        required>
+                </div>
+                <div class="input-container">
+                    <label for="your_information">Informations complémentaires</label>
+                    <textarea name="other-information" id="your_information" cols="30" rows="5"
+                        placeholder="Bonjour,"></textarea>
+                </div>
+                <div class="input-container flex-row-btn">
+                    <button class="btn" type="button">précedent
+                    </button>
+                    <button class="btn" type="button">suivant
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- formulaire phase 4 -->
+        <div class="form-container page " id="page-4">
+            <form action="contact.html">
+                <header class="input-container">
+                    <h1>demande de devis</h1>
+                    <div class="progress">
+                        <ul class="progress-step">
+                            <li class="step">1<span class="number-step-1 active"></span></li>
+                            <li class="step">2<span class="number-step-2"></span></li>
+                            <li class="step">3<span class="number-step"></span></li>
+                        </ul>
+                    </div>
+                </header>
+                <div class="input-container thanks">
+                    <h3>merci pour votre demande !</h3>
+                    <p>Nous avons bien reçu votre demande de devis et nous vous contacterons très prochainement</p>
+                    <p> Un e-mail de confirmation a étè envoyé à l'adresse : <strong id="address-mail">
+                            Younes.manjal@test.com</strong>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

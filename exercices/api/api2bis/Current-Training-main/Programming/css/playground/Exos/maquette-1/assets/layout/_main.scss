@@ -1,0 +1,145 @@
+main {
+  background-color: $grey;
+}
+
+// ****************première section
+.grid_container {
+  display: grid;
+  grid-template-columns: 75% 25%;
+  gap:$space1;
+  .left_part {
+    display: flex;
+    flex-wrap: wrap;
+    gap:$space1;
+  }
+
+  .left_part .text_gold {
+    padding-left: 50px;
+    position: relative;
+  }
+
+  .left_part .text_gold::before {
+    content: '';
+    height: 100px;
+    width: 4px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: $color-primary;
+  }
+
+  .right_part {
+   align-self: flex-end;
+    position: relative;
+   
+    .bg_hall {
+      width: 220px;
+      height: 340px;
+      background: url(./img/london_hall.jpg) no-repeat center/cover;
+      
+      
+      
+    }
+  }
+
+  .right_part .rectangular {
+    position: absolute;
+    bottom: -20px;
+    left: 40px;
+  }
+}
+
+//*******************section 2
+.flex_container {
+  display: flex;
+  justify-content: space-between;
+  gap:$space1;
+
+  .card {
+    min-height: 434px;
+    padding: $space-card;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 291px;
+    .date {
+      padding: $btn-padding;
+      background-color: $color-rgba;
+      max-width: 100px;
+      font-size: 0.8rem;
+    }
+  }
+
+  .concert_paris {
+    background: url(./img/paris.jpg) no-repeat center/cover;
+  }
+
+  .concert_london {
+    background: url(./img/london.jpg) no-repeat center/cover;
+  }
+  .concert_twelve {
+    max-width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    gap:$space1;
+    padding-top: 0;
+    img {
+      min-width: 150px;
+      height: 150px;
+    }
+  }
+}
+//**********************section3
+.card.service {
+  gap:$space1;
+  padding-left: 0;
+  justify-content: normal;
+}
+.spacial {
+  margin-top: auto;
+}
+
+.logo-section3:nth-child(1) {
+  max-width: 109px;
+  aspect-ratio: 4/3;
+}
+.logo-section3:nth-child(2) {
+  max-width: 109px;
+  aspect-ratio: 4/3;
+}
+
+.concert_twelve.map {
+  justify-content: space-around;
+  padding-top: $space1;
+}
+
+.visual_map {
+  background: url(./img/map.png) no-repeat center/contain;
+  min-width: 387px;
+  min-height: 200px;
+  position: relative;
+  object-fit: cover;
+
+  &::before,
+  &::after {
+    content: '';
+    height: 2px;
+    width: 100%;
+    background-color: $color-primary;
+
+    position: absolute;
+  }
+  &::before {
+    top: -20px;
+    left: 0;
+  }
+  &::after {
+    bottom: -20px;
+    left: 0;
+  }
+}

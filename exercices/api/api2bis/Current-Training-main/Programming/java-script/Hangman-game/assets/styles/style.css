@@ -1,0 +1,145 @@
+:root {
+  --color1: #fff;
+  --color2: #d48c2e;
+  --fontSizeXL: 3rem;
+  --fontSizeM: 1.6rem;
+  --fontSizeS: 1.2rem;
+  --paddingL: 20px;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url(../images/constellation.webp) no-repeat center/cover;
+  color: var(--color1);
+  padding: var(--paddingL);
+  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  align-items: center;
+  gap: 50px;
+}
+h1,
+h2 {
+  font-size: var(--fontSizeXL);
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  color: var(--color2);
+  text-align: center;
+  text-shadow: 2px 2px 2px #ffffff;
+}
+h1 {
+  font-size: var(--fontSizeXL);
+}
+h2 {
+  font-size: var(--fontSizeM);
+}
+.btn {
+  border: 1px solid var(--color2);
+  border-radius: 12px;
+  font-size: var(--fontSizeS);
+  font-weight: 500;
+  text-transform: uppercase;
+  min-width: 150px;
+  text-align: center;
+  background-color: transparent;
+  backdrop-filter: blur(6px);
+  box-shadow: 0px 5px 5px rgba(212, 140, 46, 0.486);
+  padding: 0.5rem 0.8rem;
+  color: inherit;
+  text-shadow: 2px 2px 2px var(--color2);
+  cursor: pointer;
+}
+
+.container_stars {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  min-width: 50vw;
+
+  backdrop-filter: blur(6px);
+  box-shadow: 6px 5px 86px -5px rgba(212, 140, 46, 0.486);
+  border-radius: 50%;
+
+  padding: 60px;
+  gap: 30px;
+}
+.container_stars div {
+  max-width: 50px;
+  max-height: 50px;
+  border: 1px solid var(--color2);
+  padding: 0.2rem;
+
+  border-radius: 50px;
+  object-fit: cover;
+}
+.board_game {
+  display: flex;
+
+  justify-content: space-around;
+  gap: 30px;
+}
+.guess_word {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+#hiddenWord {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  min-width: 40vw;
+  width: 100%;
+  height: 50px;
+  margin: auto;
+  padding: var(--paddingL);
+
+  border: 4px double var(--color2);
+}
+
+#secretWord {
+  color: inherit;
+  font-size: var(--fontSizeM);
+  font-weight: 700;
+  letter-spacing: var(--fontSizeM);
+  text-align: center;
+  text-transform: uppercase;
+}
+.azerty {
+  padding: var(--paddingL);
+  backdrop-filter: blur(6px);
+  border-radius: 30px;
+  max-width: 40vw;
+  min-width: 30vw;
+}
+
+.key_board {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+.touch {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color2);
+  border-radius: 12px;
+  box-shadow: 0px 7px 3px rgba(212, 140, 46, 0.486);
+  text-transform: uppercase;
+  font-size: var(--fontSizeS);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.touch.inactive {
+  pointer-events: none;
+  opacity: 0.5;
+}

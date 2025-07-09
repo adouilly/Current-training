@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="exercice tableau de niveau deux officiel">
+    <title>Tableau</title>
+    <link rel="stylesheet" href="./assets/style/reset.css">
+    <link rel="stylesheet" href="./assets/style/style.css">
+</head>
+
+<body>
+    <main class="container">
+        <div class="table-container">
+            <table>
+                <caption>
+                    rapports des ventes par région
+                </caption>
+                <thead>
+                    <tr>
+                        <th>région</th>
+                        <th>produit</th>
+                        <th>chiffre d'affaires</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th rowspan="2">Europe</th>
+                        <td>ordinateurs</td>
+                        <td>85 000 €</td>
+
+                    </tr>
+                    <tr>
+                        <td>Smartphone</td>
+                        <td>92 500 €</td>
+                    </tr>
+                    <tr>
+                        <th rowspan="2">amérique</th>
+                        <td>ordinateurs</td>
+                        <td>112 000 €</td>
+
+                    </tr>
+                    <tr>
+                        <td>Smartphone</td>
+                        <td>143 800 €</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th class="white" colspan="2">total</th>
+                        <td class="white">433 300 €</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </main>
+
+</body>
+
+</html>

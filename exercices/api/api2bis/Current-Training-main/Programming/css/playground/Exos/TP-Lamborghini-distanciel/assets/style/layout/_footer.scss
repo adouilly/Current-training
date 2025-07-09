@@ -1,0 +1,40 @@
+footer{
+    margin-top: 10px;
+    color: $text-light;
+    background: $bg1;
+    line-height: 1.5;
+    text-transform: capitalize;
+    display: flex;
+    flex-wrap: wrap;
+   
+   
+   
+ 
+    gap: 20px;
+    .column-footer{
+        max-width: 25%;
+      flex: 1;
+    }
+
+    h4{
+        font-size:0.9rem ;
+        font-weight: 700;
+        
+       
+    }
+    ul{
+        font-size:0.9rem ;
+        margin: 0.5rem 0;
+      
+    }
+     &::before{
+        content:'';
+        height: 1px;
+        width: 100%;
+        top: 1rem;
+        background: $grey;
+        display: block;
+
+     }
+    
+}

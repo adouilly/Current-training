@@ -1,0 +1,32 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+}
+
+#map {
+  height: 600px;
+  width: 100%;
+  border: 4px double blue;
+}
+.container_data {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.description {
+  text-align: center;
+  width: 100%;
+  min-height: fit-content;
+  font-size: 1.2rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  box-shadow: 5px 5px 8px rgba(149, 150, 233, 0.384);
+}

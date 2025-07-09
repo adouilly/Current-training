@@ -1,0 +1,48 @@
+
+    .navbar-container {
+        height: auto;
+        // position: fixed;
+        // top: 0;
+        width: 100%;
+        background: $bg1;
+        color: $text-light;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1.25rem;
+        @include media-min(tablet-down) {
+            flex-direction: row;
+            justify-content: center;
+        }
+        @include media-min(desktop-down) {
+            justify-content: space-between;
+        }
+
+    }
+    .navigation{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        gap: 0.7rem;
+        li{
+            padding: 0.4rem 0.5rem;
+            .links{
+                font-size: 0.7rem;
+                @include media-min(tablet-down){
+                    font-size: 0.8rem;
+                }
+                @include media-min(desktop-down){
+                    font-size: 1rem;
+                }
+                &:hover{
+                    color: $link-hover;
+                }
+            }
+
+        }
+
+    }
+
+

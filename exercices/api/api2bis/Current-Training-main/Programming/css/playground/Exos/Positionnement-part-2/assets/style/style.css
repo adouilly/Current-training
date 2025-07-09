@@ -1,0 +1,147 @@
+:root {
+  --bg-navbar: #1815b9;
+  --color-hover: #f3a172;
+  --links-navbar: #f3f1f1;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(../fonts/Montserrat.ttf);
+}
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+a {
+  display: inline-block;
+}
+header {
+  background: var(--bg-navbar);
+  color: var(--links-navbar);
+  padding: 20px 20px;
+}
+
+.logo {
+  background: url(../images/logo-majestic.webp) center/cover;
+  width: 10vw;
+  height: 10vw;
+}
+.name-logo {
+  font-weight: 600;
+  font-size: calc(2vw + 10px);
+}
+.container-logo {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.6rem;
+  padding: 7px 15px 0;
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: calc(1vw + 7px);
+  position: relative;
+}
+.navbar:hover :not(:hover) {
+  color: unset;
+}
+/* voir comment faire disparaître aussi le after sous .active  ?????*/
+
+.active {
+  color: var(--color-hover);
+}
+
+.links-navbar::after {
+  content: '';
+  height: 3px;
+  display: block;
+  background: var(--color-hover);
+  right: 0;
+  left: 0;
+  width: 0%;
+  transform: translateY(10px);
+
+  transition: width 0.3s ease;
+}
+.links-navbar:hover::after {
+  animation: lineslide 0.2s ease-in-out forwards;
+}
+.active::after {
+  content: '';
+  height: 3px;
+  display: block;
+  background: var(--color-hover);
+  right: 0;
+  left: 0;
+  visibility: inherit;
+  transform: translateY(10px);
+}
+.links-navbar:hover {
+  color: var(--color-hover);
+}
+
+/* *********after links transform****** */
+
+@keyframes lineslide {
+  0% {
+    width: 0%;
+    left: 0%;
+  }
+  50% {
+    width: 50%;
+    left: 25%;
+  }
+  100% {
+    width: 100%;
+    left: 0%;
+  }
+}
+
+/* ********button******* */
+.contact {
+  background-color: var(--color-hover);
+  padding: 0.3rem 0.5rem;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.contact:hover {
+  color: var(--bg-navbar);
+  background-color: var(--links-navbar);
+  transform: scale(1.1);
+}
+
+/* ************main**************** */
+
+.main-container {
+  text-align: center;
+}
+.banner-container {
+  line-height: 2;
+  height: 20vh;
+  background: #fff;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 58%,
+    rgba(32, 32, 32, 0.281) 95%
+  );
+}
+.title {
+  margin-top: 50px;
+  text-transform: capitalize;
+  font-size: calc(3.5vw + 7px);
+  text-shadow: 2px 2px 2px grey;
+}
+p {
+  font-weight: 500;
+  font-size: calc(0.7vw + 10px);
+}

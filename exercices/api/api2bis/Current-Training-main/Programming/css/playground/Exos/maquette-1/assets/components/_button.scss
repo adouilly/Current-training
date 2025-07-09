@@ -1,0 +1,87 @@
+.btn {
+  font-family: $font-secondary;
+  text-transform: uppercase;
+  background-color: $color-primary;
+  padding: $btn-padding;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+.round i {
+  margin-left: 0.4rem;
+}
+.round {
+  border-radius: 20px;
+  text-align: center;
+}
+.round:hover,
+.rectangular:hover {
+  color: $color-primary;
+  background-color: $white;
+}
+.rectangular {
+  width: fit-content;
+}
+/*****************spacial button*************/
+.btn.spacial {
+display: flex;
+align-items: center;
+justify-content: right;
+ 
+  color: $color-primary;
+  background: $grey;
+  max-width: 146px;
+  height: 52px;
+  border-left: 5px solid $color-primary;
+  
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    width: 146px;
+    height: 52px;
+    background-color: $color-primary;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transform: translateX(-146px);
+    transition: all 0.3s ease;
+    opacity: 0;
+    z-index: 0;
+    
+  }
+  &:hover{
+    color: $color-secondary;
+    z-index: 100;
+  }
+  &:hover::before{
+    transform: translateX(0);
+    opacity: 1; 
+  }
+  .btn-text {
+    z-index: 1;
+  }
+}
+.btn-form{
+  color: $white;
+border-radius: 12px;
+max-width: 100px;
+&:hover{
+  color:$color-primary ;
+  background: $white;
+}
+}
+
+/*****************social-icon**************/
+.social_icons i {
+  color: $white;
+  padding: 0.5rem;
+  border: 1px solid $white;
+}
+.social_icons i:hover {
+  color: $color-primary;
+  border-color: $color-primary;
+}

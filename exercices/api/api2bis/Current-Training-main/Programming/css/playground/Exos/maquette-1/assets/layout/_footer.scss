@@ -1,0 +1,39 @@
+footer{
+    background: url(./img/bg_footer.jpg) no-repeat center/cover;
+    padding: $space4;
+    .footer_container{
+        max-width: 750px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        
+        
+    }
+    .card_footer{
+        min-width: 375px;
+        min-height:375px ;
+        opacity: 0.9;
+        padding: $space-card;
+        display: flex;
+        flex-direction: column;
+        gap: $space1;
+        input,
+        textarea{
+            outline: none;
+            border-bottom: 1px solid $white;
+            width: 100%;
+        }
+        input[type="submit"]{
+            border: none;
+        }
+        input::placeholder,
+        textarea::placeholder
+        {
+           color: $white;
+           text-transform: capitalize;
+        }
+        textarea{
+            resize: none;
+        }
+    }
+}
