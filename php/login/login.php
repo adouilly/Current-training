@@ -1,12 +1,165 @@
 <?php
+// Démarrage de la session pour gérer les connexions utilisateur
 session_start();
-// Connexion à la base de données
+
+// Configuration de la base de données
 $host = 'localhost';
 $dbname = 'logintest';
 $username = 'root';
 $password = '';
+
+// Connexion à la base de données MySQL avec PDO
 $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+// Configuration pour afficher les erreurs PDO
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// ========================================
+// TRAITEMENT DES FORMULAIRES (AVANT HTML)
+// ========================================
+
+// Traitement de la déconnexion (doit être en premier pour les redirections)
+if (isset($_POST['logout'])) {
+    // Destruction de la session
+    session_destroy();
+    // Redirection vers la page de connexion
+    header("Location: login.php");
+    exit(); // Arrêt de l'exécution du script
+}
+
+// Traitement du formulaire de connexion
+if (isset($_POST['submitConnection'])) {
+    // Sécurisation des données reçues
+    $identifiant = htmlspecialchars($_POST['identifiant'], ENT_QUOTES, 'UTF-8');
+    $mot_de_passe = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
+    
+    // Recherche de l'utilisateur dans la base de données
+    $sql= "SELECT * FROM users WHERE adresse_mail_user = :identifiant";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['identifiant' => $identifiant]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Vérification du mot de passe avec hash
+    if ($result && password_verify($mot_de_passe, $result["password_user"])) {
+        // Connexion réussie : création de la session
+        $_SESSION['user'] = [
+            "id_user" => $result['id_user'],
+            "nom_user" => $result['nom_user'],
+            "prenom_user" => $result['prenom_user'],
+            "age_user" => $result['age_user'],
+            "adresse_mail_user" => $result['adresse_mail_user']
+        ];
+        // Redirection pour éviter la re-soumission du formulaire
+        header("Location: login.php");
+        exit();
+    } else {
+        // Connexion échouée - stocker le message pour l'affichage
+        $error_message = "Identifiant ou mot de passe incorrect.";
+    }
+}
+
+// Variables pour stocker les messages
+$success_message = "";
+$error_message = isset($error_message) ? $error_message : "";
+
+// Traitement du formulaire de mise à jour des informations personnelles
+if (isset($_POST['updateUser'])) {
+    // Sécurisation des données reçues
+    $nom = htmlspecialchars($_POST['nom'], ENT_QUOTES, 'UTF-8');
+    $prenom = htmlspecialchars($_POST['prenom'], ENT_QUOTES, 'UTF-8');
+    $age = intval($_POST['age']); // Conversion en entier pour l'âge
+    $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
+    $userId = $_SESSION['user']['id_user'];
+    
+    // Mise à jour des données en base
+    $sql = "UPDATE users SET nom_user = :nom, prenom_user = :prenom, age_user = :age, adresse_mail_user = :email WHERE id_user = :id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        'nom' => $nom,
+        'prenom' => $prenom,
+        'age' => $age,
+        'email' => $email,
+        'id' => $userId
+    ]);
+    
+    // Mise à jour des données de session pour refléter les changements
+    $_SESSION['user']['nom_user'] = $nom;
+    $_SESSION['user']['prenom_user'] = $prenom;
+    $_SESSION['user']['age_user'] = $age;
+    $_SESSION['user']['adresse_mail_user'] = $email;
+    
+    $success_message = "Informations mises à jour avec succès !";
+}
+
+// Traitement du formulaire de changement de mot de passe
+if (isset($_POST['updatePassword'])) {
+    // Sécurisation des données reçues
+    $current_password = htmlspecialchars($_POST['current_password'], ENT_QUOTES, 'UTF-8');
+    $new_password = htmlspecialchars($_POST['new_password'], ENT_QUOTES, 'UTF-8');
+    $confirm_password = htmlspecialchars($_POST['confirm_password'], ENT_QUOTES, 'UTF-8');
+    $userId = $_SESSION['user']['id_user'];
+    
+    // Récupération du mot de passe actuel depuis la base de données
+    $sql = "SELECT password_user FROM users WHERE id_user = :id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['id' => $userId]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Vérification du mot de passe actuel avec password_verify pour les mots de passe hachés
+    // et comparaison directe pour les anciens mots de passe en clair
+    if (password_verify($current_password, $user['password_user']) || $current_password == $user['password_user']) {
+        // Vérification que les nouveaux mots de passe correspondent
+        if ($new_password === $confirm_password) {
+            // Vérification que le nouveau mot de passe est différent de l'ancien
+            if ($new_password !== $current_password) {
+                // Hachage du nouveau mot de passe pour la sécurité
+                $hashedNewPassword = password_hash($new_password, PASSWORD_DEFAULT);
+                
+                // Mise à jour du mot de passe avec hachage
+                $sql = "UPDATE users SET password_user = :password WHERE id_user = :id";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([
+                    'password' => $hashedNewPassword,
+                    'id' => $userId
+                ]);
+                
+                $success_message = "Mot de passe modifié avec succès !";
+            } else {
+                $error_message = "Le nouveau mot de passe doit être différent de l'ancien.";
+            }
+        } else {
+            $error_message = "Les nouveaux mots de passe ne correspondent pas.";
+        }
+    } else {
+        $error_message = "Mot de passe actuel incorrect.";
+    }
+}
+
+// Traitement du formulaire de création de compte
+if (isset($_POST['submitCreate'])){
+    // Sécurisation des données reçues
+    $nomCreate = htmlspecialchars($_POST['nomCreate'], ENT_QUOTES, 'UTF-8');
+    $prenomCreate = htmlspecialchars($_POST['prenomCreate'], ENT_QUOTES, 'UTF-8');
+    $ageCreate = intval($_POST['ageCreate']); // Conversion en entier
+    $mailCreate = htmlspecialchars($_POST['mailCreate'], ENT_QUOTES, 'UTF-8');
+    $passwordCreate = htmlspecialchars($_POST['passwordCreate'], ENT_QUOTES, 'UTF-8');
+    
+    // Hachage du mot de passe pour la sécurité
+    $hashedPassword = password_hash($passwordCreate, PASSWORD_DEFAULT);
+    
+    // Insertion du nouvel utilisateur en base de données
+    $sqlCreate = "INSERT INTO users (nom_user, prenom_user, age_user, adresse_mail_user, password_user) VALUES (:nom, :prenom, :age, :email, :password)";
+    
+    $stmtCreate = $pdo->prepare($sqlCreate);
+    $stmtCreate->execute([
+        'nom' => $nomCreate,
+        'prenom' => $prenomCreate,
+        'age' => $ageCreate,
+        'email' => $mailCreate,
+        'password' => $hashedPassword // Stockage du mot de passe haché
+    ]);
+    
+    $success_message = "Compte créé avec succès !";
+}
 ?>
 
 <!DOCTYPE html>
@@ -16,35 +169,41 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LoginMethode</title>
     <script>
-        // Fonction pour bloquer complètement le copier-coller sur les champs de mot de passe
+        // Fonction pour désactiver le copier-coller sur les champs de mot de passe
         function disableCopyPaste(element) {
+            // Bloquer le collage (Ctrl+V)
             element.addEventListener('paste', function(e) {
                 e.preventDefault();
                 return false;
             });
+            // Bloquer la copie (Ctrl+C)
             element.addEventListener('copy', function(e) {
                 e.preventDefault();
                 return false;
             });
+            // Bloquer la coupe (Ctrl+X)
             element.addEventListener('cut', function(e) {
                 e.preventDefault();
                 return false;
             });
+            // Bloquer le glisser-déposer
             element.addEventListener('dragstart', function(e) {
                 e.preventDefault();
                 return false;
             });
+            // Désactiver le menu contextuel (clic droit)
             element.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
                 return false;
             });
         }
         
-        // Appliquer la protection dès que la page se charge
+        // Appliquer la protection dès que la page est chargée
         document.addEventListener('DOMContentLoaded', function() {
             var newPassword = document.getElementById('new_password');
             var confirmPassword = document.getElementById('confirm_password');
             
+            // Appliquer la protection aux champs de mot de passe
             if (newPassword) disableCopyPaste(newPassword);
             if (confirmPassword) disableCopyPaste(confirmPassword);
         });
@@ -52,7 +211,9 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 </head>
 <body>
     <?php
+    // Vérifier si l'utilisateur n'est pas connecté
     if (!isset($_SESSION['user'])) {
+        // Afficher le formulaire de connexion
         echo ' <h1>Connexion</h1>
     
     <form method="POST" action="">
@@ -70,9 +231,13 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <input type="submit" name="submitConnection" value="Se connecter">
         </div>
     </form>';
+
+    // Afficher le lien pour créer un compte
     echo '<a href="?page=CreateAccount"><p>Pas de compte créez en un ici</p></a>';
     }
+
     else {
+        // Si l'utilisateur est connecté, afficher le tableau de bord
         echo '<div>
             <h1>Tableau de bord</h1>
             <p>Bonjour ' . htmlspecialchars($_SESSION['user']['prenom_user'], ENT_QUOTES, 'UTF-8') . ', vous êtes connecté.</p>
@@ -136,100 +301,49 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         </div>';
     }
     ?>
+
+    <?php
+    // Affichage des messages de succès ou d'erreur
+    if (!empty($success_message)) {
+        echo "<p style='color: green;'>$success_message</p>";
+    }
+    if (!empty($error_message)) {
+        echo "<p style='color: red;'>$error_message</p>";
+    }
     
-
-<?php
-
-if (isset($_POST['submitConnection'])) {
-    $identifiant = htmlspecialchars($_POST['identifiant'], ENT_QUOTES, 'UTF-8');
-    $mot_de_passe = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
-    $sql= "SELECT * FROM users WHERE adresse_mail_user = :identifiant";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(['identifiant' => $identifiant]);
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($result && $mot_de_passe == $result["password_user"]) {
-        $_SESSION['user'] = [
-            "id_user" => $result['id_user'],
-            "nom_user" => $result['nom_user'],
-            "prenom_user" => $result['prenom_user'],
-            "age_user" => $result['age_user'],
-            "adresse_mail_user" => $result['adresse_mail_user']
-        ];
-        header("Location: login.php");
-        echo "<p>Connexion réussie ! Bienvenue " . htmlspecialchars($result['prenom_user'], ENT_QUOTES, 'UTF-8') . "</p>";
-    } else {
-        echo "<p>Identifiant ou mot de passe incorrect.</p>";
-    }
-}
-    if (isset($_POST['updateUser'])) {
-        $nom = htmlspecialchars($_POST['nom'], ENT_QUOTES, 'UTF-8');
-        $prenom = htmlspecialchars($_POST['prenom'], ENT_QUOTES, 'UTF-8');
-        $age = intval($_POST['age']);
-        $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
-        $userId = $_SESSION['user']['id_user'];
+    // Affichage du formulaire de création de compte si demandé via URL
+    if (isset($_GET['page']) && $_GET['page'] == 'CreateAccount') {
+        echo '<h1>Créer un compte</h1>
+        <form method="POST">
+            <div>
+                <label for="nomCreate">Nom :</label>
+                <input type="text" id="nomCreate" name="nomCreate" required>
+            </div>
+            <div>
+                <label for="prenomCreate">Prénom :</label>
+                <input type="text" id="prenomCreate" name="prenomCreate" required>
+            </div>
+            <div>
+                <label for="ageCreate">Âge :</label>
+                <input type="number" id="ageCreate" name="ageCreate" required>
+            </div>
+            <div>
+                <label for="mailCreate">Email :</label>
+                <input type="email" id="mailCreate" name="mailCreate" required>
+            </div>
+            <div>
+                <label for="passwordCreate">Mot de passe :</label>
+                <input type="password" id="passwordCreate" name="passwordCreate" required>
+            </div>
+            <div>
+                <input type="submit" name="submitCreate" value="Créer un compte">
+            </div>
+        </form>';
         
-        $sql = "UPDATE users SET nom_user = :nom, prenom_user = :prenom, age_user = :age, adresse_mail_user = :email WHERE id_user = :id";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            'nom' => $nom,
-            'prenom' => $prenom,
-            'age' => $age,
-            'email' => $email,
-            'id' => $userId
-        ]);
-        
-        // Mettre à jour les données de session
-        $_SESSION['user']['nom_user'] = $nom;
-        $_SESSION['user']['prenom_user'] = $prenom;
-        $_SESSION['user']['age_user'] = $age;
-        $_SESSION['user']['adresse_mail_user'] = $email;
-        
-        echo "<p style='color: green;'>Informations mises à jour avec succès !</p>";
-    }
-    if (isset($_POST['updatePassword'])) {
-        $current_password = htmlspecialchars($_POST['current_password'], ENT_QUOTES, 'UTF-8');
-        $new_password = htmlspecialchars($_POST['new_password'], ENT_QUOTES, 'UTF-8');
-        $confirm_password = htmlspecialchars($_POST['confirm_password'], ENT_QUOTES, 'UTF-8');
-        $userId = $_SESSION['user']['id_user'];
-        
-        // Récupérer le mot de passe actuel de la base de données
-        $sql = "SELECT password_user FROM users WHERE id_user = :id";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(['id' => $userId]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        // Vérifier le mot de passe actuel
-        if ($current_password == $user['password_user']) {
-            // Vérifier que les nouveaux mots de passe correspondent
-            if ($new_password === $confirm_password) {
-                // Vérifier que le nouveau mot de passe est différent de l'ancien
-                if ($new_password !== $current_password) {
-                    // Mettre à jour le mot de passe
-                    $sql = "UPDATE users SET password_user = :password WHERE id_user = :id";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute([
-                        'password' => $new_password,
-                        'id' => $userId
-                    ]);
-                    
-                    echo "<p style='color: green;'>Mot de passe modifié avec succès !</p>";
-                } else {
-                    echo "<p style='color: red;'>Le nouveau mot de passe doit être différent de l'ancien.</p>";
-                }
-            } else {
-                echo "<p style='color: red;'>Les nouveaux mots de passe ne correspondent pas.</p>";
-            }
-        } else {
-            echo "<p style='color: red;'>Mot de passe actuel incorrect.</p>";
+        if ($success_message == "Compte créé avec succès !") {
+            echo "<p><a href='login.php'>Se connecter</a></p>";
         }
     }
-    if (isset($_POST['logout'])) {
-        session_destroy();
-        echo "<p>Vous avez été déconnecté.</p>";
-        header("Location: login.php");
-        exit();
-    }
-?>
+    ?>
 </body>
 </html>
