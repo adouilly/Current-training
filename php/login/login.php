@@ -70,32 +70,33 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <input type="submit" name="submitConnection" value="Se connecter">
         </div>
     </form>';
+    echo '<a href="?page=CreateAccount"><p>Pas de compte créez en un ici</p></a>';
     }
     else {
         echo '<div>
             <h1>Tableau de bord</h1>
-            <p>Bonjour ' . $_SESSION['user']['prenom_user'] . ', vous êtes connecté.</p>
+            <p>Bonjour ' . htmlspecialchars($_SESSION['user']['prenom_user'], ENT_QUOTES, 'UTF-8') . ', vous êtes connecté.</p>
             
             <h2>Modifier mes informations</h2>
             <form method="POST" action="">
                 <div>
                     <label for="nom">Nom :</label>
-                    <input type="text" id="nom" name="nom" value="' . $_SESSION['user']['nom_user'] . '" required>
+                    <input type="text" id="nom" name="nom" value="' . htmlspecialchars($_SESSION['user']['nom_user'], ENT_QUOTES, 'UTF-8') . '" required>
                 </div>
                 
                 <div>
                     <label for="prenom">Prénom :</label>
-                    <input type="text" id="prenom" name="prenom" value="' . $_SESSION['user']['prenom_user'] . '" required>
+                    <input type="text" id="prenom" name="prenom" value="' . htmlspecialchars($_SESSION['user']['prenom_user'], ENT_QUOTES, 'UTF-8') . '" required>
                 </div>
                 
                 <div>
                     <label for="age">Âge :</label>
-                    <input type="number" id="age" name="age" value="' . $_SESSION['user']['age_user'] . '" required>
+                    <input type="number" id="age" name="age" value="' . htmlspecialchars($_SESSION['user']['age_user'], ENT_QUOTES, 'UTF-8') . '" required>
                 </div>
                 
                 <div>
                     <label for="email">Email :</label>
-                    <input type="email" id="email" name="email" value="' . $_SESSION['user']['adresse_mail_user'] . '" required>
+                    <input type="email" id="email" name="email" value="' . htmlspecialchars($_SESSION['user']['adresse_mail_user'], ENT_QUOTES, 'UTF-8') . '" required>
                 </div>
                 
                 <div>
@@ -140,8 +141,8 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 <?php
 
 if (isset($_POST['submitConnection'])) {
-    $identifiant = $_POST['identifiant'];
-    $mot_de_passe = $_POST['password'];
+    $identifiant = htmlspecialchars($_POST['identifiant'], ENT_QUOTES, 'UTF-8');
+    $mot_de_passe = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
     $sql= "SELECT * FROM users WHERE adresse_mail_user = :identifiant";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(['identifiant' => $identifiant]);
@@ -156,16 +157,16 @@ if (isset($_POST['submitConnection'])) {
             "adresse_mail_user" => $result['adresse_mail_user']
         ];
         header("Location: login.php");
-        echo "<p>Connexion réussie ! Bienvenue " . $result['prenom_user'] . "</p>";
+        echo "<p>Connexion réussie ! Bienvenue " . htmlspecialchars($result['prenom_user'], ENT_QUOTES, 'UTF-8') . "</p>";
     } else {
         echo "<p>Identifiant ou mot de passe incorrect.</p>";
     }
 }
     if (isset($_POST['updateUser'])) {
-        $nom = $_POST['nom'];
-        $prenom = $_POST['prenom'];
-        $age = $_POST['age'];
-        $email = $_POST['email'];
+        $nom = htmlspecialchars($_POST['nom'], ENT_QUOTES, 'UTF-8');
+        $prenom = htmlspecialchars($_POST['prenom'], ENT_QUOTES, 'UTF-8');
+        $age = intval($_POST['age']);
+        $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
         $userId = $_SESSION['user']['id_user'];
         
         $sql = "UPDATE users SET nom_user = :nom, prenom_user = :prenom, age_user = :age, adresse_mail_user = :email WHERE id_user = :id";
@@ -187,9 +188,9 @@ if (isset($_POST['submitConnection'])) {
         echo "<p style='color: green;'>Informations mises à jour avec succès !</p>";
     }
     if (isset($_POST['updatePassword'])) {
-        $current_password = $_POST['current_password'];
-        $new_password = $_POST['new_password'];
-        $confirm_password = $_POST['confirm_password'];
+        $current_password = htmlspecialchars($_POST['current_password'], ENT_QUOTES, 'UTF-8');
+        $new_password = htmlspecialchars($_POST['new_password'], ENT_QUOTES, 'UTF-8');
+        $confirm_password = htmlspecialchars($_POST['confirm_password'], ENT_QUOTES, 'UTF-8');
         $userId = $_SESSION['user']['id_user'];
         
         // Récupérer le mot de passe actuel de la base de données
